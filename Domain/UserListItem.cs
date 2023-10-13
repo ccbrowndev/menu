@@ -7,6 +7,7 @@ namespace menu.Domain
     {
         [PrimaryKey] public int id { get; set; }
         public List<UserListItem> subItems { get; set; }
-        public string text;
+        public string text { get; set; }
+        public bool completed { get; set; }
     }
 }
