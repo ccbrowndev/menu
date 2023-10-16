@@ -3,7 +3,7 @@
 namespace menu.Domain
 {
     [SQLite.Table("LIST")]
-    internal class UserList
+    public class UserList
     {
         [PrimaryKey] public int id { get; set; }
         [SQLite.MaxLength(50)]public string name { get; set; }
