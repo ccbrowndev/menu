@@ -8,10 +8,10 @@ namespace menu
     {
         public static SQLiteConnection GetConnection()
         {
-            string folderPath = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData);
-            string dbPath = Path.Combine(folderPath, "menu", "App_Data", "ListManager.db");
+            var dbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "MenuLocalDatabase.db3");
+            var db = new SQLiteConnection(dbPath);
 
-            return new SQLiteConnection(dbPath);
+            return db;
         }
     }
 }

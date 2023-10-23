@@ -1,4 +1,5 @@
 ﻿using SQLite;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace menu.Domain
 {
@@ -6,6 +7,7 @@ namespace menu.Domain
     public class UserList
     {
         [PrimaryKey] public int id { get; set; }
+        [ForeignKey("User")] public int _id { get; set; }
         [SQLite.MaxLength(50)]public string name { get; set; }
         public List<UserListItem> listItems { get; set; }
     }
