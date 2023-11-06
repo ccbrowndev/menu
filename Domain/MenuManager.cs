@@ -10,12 +10,10 @@ namespace UserSchedule.Services
         /* Initialize database connection */
 
         private readonly SQLiteConnection db;
+
         public MenuManager()
         {
             db = SQLiteDb.GetConnection();
-            db.CreateTable<User>();
-            db.CreateTable<UserList>();
-            db.CreateTable<UserListItem>();
         }
 
         /* Add new Users or lists or Items */
@@ -56,6 +54,17 @@ namespace UserSchedule.Services
             var list = GetListByid(id);
             if (list != null)
             {
+                var deletedList = new DeletedUserList
+                {
+                    // Copy all relevant data from the 'list' to 'deletedList'
+                    id = list.id,
+                    Userid = list.Userid,
+                    name = list.name,
+                    listItems = list.listItems,
+                    DeletedDate = DateTime.UtcNow // Set the deleted date to the current date/time
+                };
+
+                db.Insert(deletedList);
                 db.Delete<UserList>(id);
             }
         }
@@ -69,10 +78,81 @@ namespace UserSchedule.Services
                 var item = GetItemByid(id);
                 if(item != null)
                 {
+                    var deletedItem = new DeletedUserListItem
+                    {
+                        // Copy all relevant data from 'item' to 'deletedItem'
+                        id = item.id,
+                        UserListid = item.UserListid,
+                        subItems = item.subItems,
+                        text = item.text,
+                        completed = item.completed,
+                        ddl = item.ddl,
+                        DeletedDate = DateTime.UtcNow // Set the deleted date to the current date/time
+                    };
+
+                    db.Insert(deletedItem);
                     db.Delete<UserListItem>(id);
                 }
             }
         }
+
+        // Attempt to retrieve the deleted list from the recycle bin
+        public bool RestoreList(int id)
+        {
+            var deletedList = db.Table<DeletedUserList>().FirstOrDefault(l => l.id == id);
+
+            if (deletedList != null)
+            {
+                // Create a new UserList instance and copy properties from the deleted list
+                var restoredList = new UserList
+                {
+                    id = deletedList.id,
+                    Userid = deletedList.Userid,
+                    name = deletedList.name,
+                    listItems = deletedList.listItems
+                };
+
+                db.Insert(restoredList);
+                db.Delete<DeletedUserList>(id);
+
+                return true; // Success
+            }
+
+            return false; // Failed to restore, list not found
+        }
+
+
+        // Attempt to retrieve the deleted item from the recycle bin
+        public bool RestoreItem(int id)
+        {
+            var deletedItem = db.Table<DeletedUserListItem>().FirstOrDefault(i => i.id == id);
+
+            if (deletedItem != null)
+            {
+                // Create a new UserListItem instance and copy properties from the deleted item
+                var restoredItem = new UserListItem
+                {
+                    id = deletedItem.id,
+                    UserListid = deletedItem.UserListid,
+                    subItems = deletedItem.subItems,
+                    text = deletedItem.text,
+                    completed = deletedItem.completed,
+                    ddl = deletedItem.ddl,
+                };
+
+                // Insert the restored item into the original UserListItem table
+                db.Insert(restoredItem);
+
+                // Remove the deleted item from the recycle bin
+                db.Delete<DeletedUserListItem>(id);
+
+                return true; // Success
+            }
+
+            return false; // Failed to restore, item not found
+        }
+
+
 
         /* Seek for Lists or Items*/
 
