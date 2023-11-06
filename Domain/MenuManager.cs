@@ -10,12 +10,10 @@ namespace UserSchedule.Services
         /* Initialize database connection */
 
         private readonly SQLiteConnection db;
+
         public MenuManager()
         {
             db = SQLiteDb.GetConnection();
-            db.CreateTable<User>();
-            db.CreateTable<UserList>();
-            db.CreateTable<UserListItem>();
         }
 
         /* Add new Users or lists or Items */
