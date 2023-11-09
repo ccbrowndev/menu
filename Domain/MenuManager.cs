@@ -2,6 +2,7 @@
 using menu;
 using menu.Domain;
 using menu.Services;
+using System.Collections.Generic;
 
 namespace UserSchedule.Services
 {
@@ -93,6 +94,31 @@ namespace UserSchedule.Services
                     db.Insert(deletedItem);
                     db.Delete<UserListItem>(id);
                 }
+            }
+        }
+
+        // Empty recycle Bin
+        public void EmptyListFromRecycleBin(int id)
+        {
+            var listItems = db.Table<UserListItem>().Where(li => li.UserListid == id).ToList();
+            foreach (var item in listItems)
+            {
+                db.Delete(item);
+            }
+
+            var list = GetListByid(id);
+            if(list != null)
+            {
+                db.Delete<DeletedUserList>(id);
+            }
+        }
+
+        public void EmptyItemFromRecycleBin(int id)
+        {
+            var item = GetItemByid(id);
+            if (item != null)
+            {
+                db.Delete<DeletedUserListItem>(id);
             }
         }
 
