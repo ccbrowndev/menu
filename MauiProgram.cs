@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using menu.ViewModels.Dashboard;
+using menu.Views.Dashboard;
+using Microsoft.Extensions.Logging;
 
 namespace menu
 {
@@ -14,6 +16,12 @@ namespace menu
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
+
+            //views
+            builder.Services.AddSingleton<DashboardPage>();
+
+            //view models
+            builder.Services.AddSingleton<DashboardPageViewModel>();
 
 #if DEBUG
 		builder.Logging.AddDebug();
