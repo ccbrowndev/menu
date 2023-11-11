@@ -32,9 +32,18 @@ namespace menu.Services
         }
 
         // Add a new List
-        public void AddUserList(UserList userList)
+        public UserList AddUserList(UserList userList)
         {
+            int currentCount = db.Table<UserList>().Count();
+            userList.id = currentCount + 1;
             db.Insert(userList);
+            return userList;
+        }
+
+        // Update a List
+        public void UpdateUserList(UserList userList)
+        {
+            db.Update(userList);
         }
 
         // Add a new Item
@@ -64,7 +73,6 @@ namespace menu.Services
                     id = list.id,
                     Userid = list.Userid,
                     name = list.name,
-                    listItems = list.listItems,
                     DeletedDate = DateTime.UtcNow // Set the deleted date to the current date/time
                 };
 
@@ -87,7 +95,6 @@ namespace menu.Services
                         // Copy all relevant data from 'item' to 'deletedItem'
                         id = item.id,
                         UserListid = item.UserListid,
-                        subItems = item.subItems,
                         text = item.text,
                         completed = item.completed,
                         ddl = item.ddl,
@@ -137,8 +144,7 @@ namespace menu.Services
                 {
                     id = deletedList.id,
                     Userid = deletedList.Userid,
-                    name = deletedList.name,
-                    listItems = deletedList.listItems
+                    name = deletedList.name
                 };
 
                 db.Insert(restoredList);
@@ -163,7 +169,6 @@ namespace menu.Services
                 {
                     id = deletedItem.id,
                     UserListid = deletedItem.UserListid,
-                    subItems = deletedItem.subItems,
                     text = deletedItem.text,
                     completed = deletedItem.completed,
                     ddl = deletedItem.ddl,

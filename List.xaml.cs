@@ -20,8 +20,11 @@ public partial class List : ContentPage
         };
 
         MenuManager menuManager = new MenuManager();
-        menuManager.AddUserList(listObject);
+        var addedList = menuManager.AddUserList(listObject);
+
         menuManager.SaveChanges();
+
+        Navigation.PushAsync(new ListDetails(addedList.id));
     }
 
 

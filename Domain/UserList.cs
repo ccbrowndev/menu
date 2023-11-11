@@ -9,6 +9,5 @@ namespace menu.Domain
         [PrimaryKey] public int id { get; set; }
         [ForeignKey("User")] public int Userid { get; set; }
         [SQLite.MaxLength(50)]public string name { get; set; }
-        public List<UserListItem> listItems { get; set; }
     }
 }
