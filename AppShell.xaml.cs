@@ -11,6 +11,7 @@ namespace menu
 
             Routing.RegisterRoute("List", typeof(List));
             Routing.RegisterRoute("Share_Center", typeof(Share_Center));
+            Routing.RegisterRoute("AddNewItem", typeof(AddNewItem));
 
             var flyoutItem = new FlyoutItem()
             {
@@ -28,6 +29,12 @@ namespace menu
                         Title = "Share Center",
                         Route = "Share_Center",
                         ContentTemplate = new DataTemplate(typeof(Share_Center)),
+                    },
+                    new ShellContent
+                    {
+                         Title = "AddNewItem",
+                         Route = "AddNewItem",
+                         ContentTemplate = new DataTemplate(typeof(AddNewItem)),
                     }
                 }
             };
