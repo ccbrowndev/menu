@@ -4,18 +4,21 @@ using menu.Domain;
 using menu.Services;
 using System.Collections.Generic;
 
-namespace UserSchedule.Services
+namespace menu.Services
 {
     public class MenuManager : IMenuManager
     {
         /* Initialize database connection */
 
         private readonly SQLiteConnection db;
-
         public MenuManager()
         {
             db = SQLiteDb.GetConnection();
+            db.CreateTable<User>();
+            db.CreateTable<UserList>();
+            db.CreateTable<UserListItem>();
         }
+
 
         /* Add new Users or lists or Items */
 
@@ -77,7 +80,7 @@ namespace UserSchedule.Services
             if (list != null)
             {
                 var item = GetItemByid(id);
-                if(item != null)
+                if (item != null)
                 {
                     var deletedItem = new DeletedUserListItem
                     {
@@ -107,7 +110,7 @@ namespace UserSchedule.Services
             }
 
             var list = GetListByid(id);
-            if(list != null)
+            if (list != null)
             {
                 db.Delete<DeletedUserList>(id);
             }
@@ -177,7 +180,6 @@ namespace UserSchedule.Services
 
             return false; // Failed to restore, item not found
         }
-
 
 
         /* Seek for Lists or Items*/
