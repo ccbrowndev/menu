@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="menu.AddNewItem"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    Title="AddNewItem"
+    Shell.NavBarIsVisible="False">
+    <VerticalStackLayout Padding="20" Spacing="30">
+        <Grid ColumnDefinitions="Auto,*">
+            <Button
+                Grid.Column="0"
+                HeightRequest="40"
+                HorizontalOptions="Start"
+                Text="B"
+                WidthRequest="40" />
+            <Label
+                Grid.Column="1"
+                FontAttributes="Bold"
+                FontSize="25"
+                HorizontalOptions="Center"
+                Text="Item"
+                VerticalOptions="Center" />
+        </Grid>
+
+        <Entry Margin="20,0,20,0" Placeholder="Title" />
+
+        <Editor
+            Margin="20,0,20,0"
+            AutoSize="TextChanges"
+            Placeholder="Description" />
+
+        <Entry Margin="20,0,20,0" Placeholder="Deadline" />
+
+        <Button
+            Margin="0,400,0,0"
+            HorizontalOptions="End"
+            Text="Save n Continue"
+            VerticalOptions="End" />
+
+    </VerticalStackLayout>
+</ContentPage>
