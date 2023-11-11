@@ -47,9 +47,18 @@ namespace menu.Services
         }
 
         // Add a new Item
-        public void AddUserListItem(UserListItem userListItem)
+        public UserListItem AddUserListItem(UserListItem userListItem)
         {
+            int currentCount = db.Table<UserListItem>().Count();
+            userListItem.id = currentCount + 1;
             db.Insert(userListItem);
+            return userListItem;
+        }
+
+        // Update an Item
+        public void UpdateUserListItem(UserListItem userListItem)
+        {
+            db.Update(userListItem);
         }
 
         // Upload the changes made to the local database (SQLite)

@@ -10,6 +10,8 @@ public partial class ListDetails : ContentPage
 		InitializeComponent();
 	}
 
+
+
     private void OnAddListButtonClicked(object sender, EventArgs e)
     {
         var listObject = new UserList();
@@ -24,7 +26,14 @@ public partial class ListDetails : ContentPage
 
     private void OnAddListItemButtonClicked(object sender, EventArgs e)
     {
-        
+        var itemObject = new UserListItem();
+
+        MenuManager menuManager = new MenuManager();
+        UserListItem addedItem = menuManager.AddUserListItem(itemObject);
+
+        menuManager.SaveChanges();
+
+        Navigation.PushAsync(new ListDetails(addedItem.id));
     }
 
 }

@@ -7,6 +7,6 @@ namespace menu.Services
     {
         int AddUser(User user);
         UserList AddUserList(UserList userList);
-        void AddUserListItem(UserListItem userListItem);
+        UserListItem AddUserListItem(UserListItem userListItem);
     }
 }
