@@ -7,12 +7,18 @@ public partial class AddNewItem : ContentPage
 {
     private int itemId;
     private int listId;
-	public AddNewItem(int _listId, int _itemId)
+
+    public AddNewItem(int _listId, int _itemId)
 	{
 		InitializeComponent();
         this.itemId = _itemId;
         this.listId = _listId;
 	}
+
+    private async void OnNavButtonClicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new ListDetails(listId));
+    }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
     {
