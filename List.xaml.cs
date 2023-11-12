@@ -12,7 +12,12 @@ public partial class List : ContentPage
 
     public bool IsButtonVisible { get; set; }
     private int listId;
-    public List(int listId=1)
+    public List() : this(1)
+    {
+
+
+    }
+    public List(int listId)
     {
         InitializeComponent();
         LoadPickerData();
@@ -25,7 +30,6 @@ public partial class List : ContentPage
         base.OnAppearing();
         LoadPickerData();
 
-        MenuManager menuManager = new MenuManager();
         UserList list = menuManager.GetListByid(listId);
 
         if (list != null && !string.IsNullOrWhiteSpace(list.name))
@@ -50,18 +54,23 @@ public partial class List : ContentPage
         var picker = (Picker)sender;
         var selectedList = (UserList)picker.SelectedItem;
 
-        if (selectedList != null)
+        if (selectedList != null && selectedList.id > 1)
         {
-            Navigation.PushAsync(new ListDetails(selectedList.id));
+            Navigation.PushAsync(new List(selectedList.id));
+        }
+        else if(selectedList != null)
+        {
+            Navigation.PushAsync(new List(1));
         }
     }
 
 
-private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
-    {
-        menuManager.EmptyRecycleBin();
-    }
+    private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
+        {
+            menuManager.EmptyRecycleBin();
+        }
 
+    /*
     private void InputListName_Focused(object sender, FocusEventArgs e)
     {
         inputListName.Text = "";
@@ -74,29 +83,8 @@ private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
 
     private void SaveData(string text)
     {
-        // 实现数据保存逻辑
-        // 例如，保存到本地数据库或发送到服务器
-    }
-
-    private void OnAddListButtonClicked(object sender, EventArgs e)
-    {
-        String listName = inputListName.Text;
-        var listObject = new UserList
-        {
-            name = listName,
-        };
-
-        var addedList = menuManager.AddUserList(listObject);
-
-        menuManager.SaveChanges();
-
-        Navigation.PushAsync(new List(addedList.id));
-    }
-    private void OnUpdateListNameButtonClicked(object sender, EventArgs e)
-    {
         string listName = inputListName.Text;
 
-        MenuManager menuManager = new MenuManager();
         UserList list = menuManager.GetListByid(listId);
 
         list.name = listName;
@@ -105,6 +93,54 @@ private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
 
         menuManager.SaveChanges();
     }
+    */
+
+
+    private void OnAddListButtonClicked(object sender, EventArgs e)
+    {
+        /*String listName = inputListName.Text;
+        var listObject = new UserList
+        {
+            name = listName,
+        };
+
+        var addedList = menuManager.AddUserList(listObject);
+
+        menuManager.SaveChanges();
+        */
+        Navigation.PushAsync(new List());
+    }
+    private void OnUpdateListNameButtonClicked(object sender, EventArgs e)
+    {
+        string listName = inputListName.Text;
+
+        MenuManager menuManager = new MenuManager();
+        UserList list;
+
+        if (listId == 1)
+        {
+            list = new UserList()
+            {
+                name = listName
+            };
+            menuManager.AddUserList(list);
+        }
+        else
+        {
+            list = menuManager.GetListByid(listId);
+            if (list != null)
+            {
+                list.name = listName;
+                menuManager.UpdateUserList(list);
+            }
+            else
+            {
+            }
+        }
+        menuManager.SaveChanges();
+        LoadPickerData();
+    }
+
 
     private void OnAddListItemButtonClicked(object sender, EventArgs e)
     {

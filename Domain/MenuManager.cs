@@ -147,9 +147,13 @@ namespace menu.Services
             var lists = db.Table<UserList>().ToList();
             foreach (var list in lists)
             {
-                db.Delete<UserList>(list.id);
+                if (list.id != 1)
+                {
+                    db.Delete<UserList>(list.id);
+                }
             }
         }
+
 
 
         // Attempt to retrieve the deleted list from the recycle bin

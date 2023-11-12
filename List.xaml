@@ -43,23 +43,36 @@
             </Grid>
 
             <Grid Padding="20,0,20,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <!--<Entry
+    x:Name="inputListName"
+    Grid.Column="0"
+    Focused="InputListName_Focused"
+    HorizontalOptions="FillAndExpand"
+    Placeholder="List Name"
+    Unfocused="InputListName_Unfocused" />-->
 
-                <Entry
-                    x:Name="inputListName"
-                    Grid.Column="0"
-                    Focused="InputListName_Focused"
-                    HorizontalOptions="FillAndExpand"
-                    Placeholder="List Name"
-                    Unfocused="InputListName_Unfocused" />
 
-                <Button
-                    x:Name="updateListName"
-                    Grid.Column="1"
-                    Clicked="OnUpdateListNameButtonClicked"
-                    HorizontalOptions="End"
-                    IsVisible="{Binding IsButtonVisible}"
-                    Text="save"
-                    WidthRequest="60" />
+                    <Entry
+                        x:Name="inputListName"
+                        Grid.Column="0"
+                        Margin="20,0,0,0"
+                        Text="ListName"
+                        
+                         />
+
+                    <Button
+                        x:Name="updateListName"
+                        Grid.Column="1"
+                        Margin="0,0,20,20"
+                        WidthRequest="50"
+                        Clicked="OnUpdateListNameButtonClicked"
+                        Text="↑"
+                        VerticalOptions="End" />
+
 
             </Grid>
 

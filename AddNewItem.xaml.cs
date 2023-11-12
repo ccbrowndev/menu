@@ -17,7 +17,7 @@ public partial class AddNewItem : ContentPage
 
     private async void OnNavButtonClicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new ListDetails(listId));
+        await Navigation.PushAsync(new List(listId));
     }
 
     private async void OnSaveButtonClicked(object sender, EventArgs e)
@@ -42,7 +42,7 @@ public partial class AddNewItem : ContentPage
 
         await DisplayAlert("Success", "Item added.", "OK");
 
-        await Navigation.PushAsync(new ListDetails(listId));
+        await Navigation.PushAsync(new List(listId));
     }
 
 }
