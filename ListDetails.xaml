@@ -34,13 +34,15 @@
             </Grid>
 
 
-            <ListView x:Name="ExistingItemsView">
-                <ListView.ItemTemplate>
+            <CollectionView x:Name="itemsCollectionView">
+                <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <TextCell Detail="{Binding Detail}" Text="{Binding Name}" />
+                        <StackLayout>
+                            <Label Text="{Binding name}" />
+                        </StackLayout>
                     </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
 
             <Grid Margin="0,25,0,0">

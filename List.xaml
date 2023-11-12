@@ -21,7 +21,7 @@
                     <CollectionView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
-                                <Label Text="{Binding Name}" />
+                                <Label Text="{Binding name}" />
                             </StackLayout>
                         </DataTemplate>
                     </CollectionView.ItemTemplate>

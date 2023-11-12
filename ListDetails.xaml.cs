@@ -29,7 +29,7 @@ public partial class ListDetails : ContentPage
         }
 
         var items = menuManager.GetItemsByListid(listId);
-        ExistingItemsView.ItemsSource = items;
+        itemsCollectionView.ItemsSource = items;
     }
 
     private void OnAddListButtonClicked(object sender, EventArgs e)
