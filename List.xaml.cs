@@ -10,18 +10,33 @@ public partial class List : ContentPage
     private MenuManager menuManager = new MenuManager();
     public ObservableCollection<UserList> UserLists { get; set; }
     public bool IsButtonVisible { get; set; }
-    public List()
+    private int listId;
+    public List(int listId=1)
     {
         InitializeComponent();
         LoadPickerData();
         IsButtonVisible = false;
+        this.listId = listId;
     }
 
     protected override void OnAppearing()
     {
         base.OnAppearing();
         LoadPickerData();
+
+        MenuManager menuManager = new MenuManager();
+        UserList list = menuManager.GetListByid(listId);
+
+        if (list != null && !string.IsNullOrWhiteSpace(list.name))
+        {
+            inputListName.Text = list.name;
+        }
+        else
+        {
+            inputListName.Text = "ListName";
+        }
     }
+
 
     private void LoadPickerData()
     {
@@ -70,8 +85,31 @@ private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
 
         menuManager.SaveChanges();
 
-        Navigation.PushAsync(new ListDetails(addedList.id));
+        Navigation.PushAsync(new List(addedList.id));
+    }
+    private void OnUpdateListNameButtonClicked(object sender, EventArgs e)
+    {
+        string listName = inputListName.Text;
+
+        MenuManager menuManager = new MenuManager();
+        UserList list = menuManager.GetListByid(listId);
+
+        list.name = listName;
+
+        menuManager.UpdateUserList(list);
+
+        menuManager.SaveChanges();
     }
 
+    private void OnAddListItemButtonClicked(object sender, EventArgs e)
+    {
+        var itemObject = new UserListItem();
 
+        MenuManager menuManager = new MenuManager();
+        UserListItem addedItem = menuManager.AddUserListItem(itemObject);
+
+        menuManager.SaveChanges();
+
+        Navigation.PushAsync(new AddNewItem(listId, addedItem.id));
+    }
 }
