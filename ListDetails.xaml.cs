@@ -1,16 +1,21 @@
 using menu.Domain;
 using menu.Services;
+using Microsoft.Maui.Controls;
 
 namespace menu;
 
 public partial class ListDetails : ContentPage
 {
     private int listId;
-	public ListDetails(int id)
+
+    public ListDetails(int id)
 	{
 		InitializeComponent();
         this.listId = id;
-	}
+    }
+
+    
+    
 
     protected override void OnAppearing()
     {
