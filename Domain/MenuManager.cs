@@ -229,6 +229,7 @@ namespace menu.Services
             var items = db.Table<UserListItem>().Where(u => u.UserListid == listid).ToList();
             return items;
         }
+
         public List<UserList> GetAllLists()
         {
             var lists = db.Table<UserList>().ToList();

@@ -36,18 +36,10 @@
                     VerticalOptions="End" />
             </Grid>
 
-
-            <CollectionView x:Name="itemsCollectionView">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout>
-                            <Label Text="{Binding name}" />
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-
+            
+            <!-- -->
+            
+            
             <Grid Margin="0,25,0,0">
                 <Button
                     x:Name="addNewListItemPage"

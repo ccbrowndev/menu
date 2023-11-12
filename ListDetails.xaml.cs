@@ -33,8 +33,6 @@ public partial class ListDetails : ContentPage
             inputListName.Text = "ListName"; 
         }
 
-        var items = menuManager.GetItemsByListid(listId);
-        itemsCollectionView.ItemsSource = items;
     }
 
     private void OnAddListButtonClicked(object sender, EventArgs e)
