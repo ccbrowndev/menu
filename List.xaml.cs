@@ -12,44 +12,34 @@ public partial class List : ContentPage
     public List()
     {
         InitializeComponent();
-        UserLists = new ObservableCollection<UserList>();
-        userListsView.ItemsSource = UserLists;
+        LoadPickerData();
     }
 
-    protected override async void OnAppearing()
+    protected override void OnAppearing()
     {
         base.OnAppearing();
-        await LoadDataAsync();
+        LoadPickerData();
     }
 
-    private async Task LoadDataAsync()
+    private void LoadPickerData()
     {
-        // clean ond data
-        UserLists.Clear();
-        // load new
-        var lists = menuManager.GetAllLists();
-        foreach (var list in lists)
-        {
-            UserLists.Add(list);
-        }
+        var allLists = menuManager.GetAllLists();
+        listsPicker.ItemsSource = allLists;
     }
 
-    private void OnItemSelected(object sender, SelectedItemChangedEventArgs e)
+    private void OnPickerSelectedIndexChanged(object sender, EventArgs e)
     {
-        if (e.SelectedItem is UserList selectedList)
+        var picker = (Picker)sender;
+        var selectedList = (UserList)picker.SelectedItem;
+
+        if (selectedList != null)
         {
             Navigation.PushAsync(new ListDetails(selectedList.id));
         }
-
-        ((ListView)sender).SelectedItem = null;
     }
 
-    private void TextCell_Tapped(object sender, EventArgs e)
-    {
-        // If there is data inserted into the list, change this row to a clickable button
-    }
 
-    private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
+private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
     {
         menuManager.EmptyRecycleBin();
     }

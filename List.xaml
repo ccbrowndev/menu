@@ -15,23 +15,11 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <!--<Picker x:Name="pickList" Grid.Column="0" />-->
-
-                <ListView
-                    x:Name="userListsView"
-                    ItemSelected="OnItemSelected"
-                    ItemsSource="{Binding UserLists}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <TextCell
-                                Detail="{Binding id}"
-                                Tapped="TextCell_Tapped"
-                                Text="{Binding name}" />
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
-
-
+                <Picker
+                    x:Name="listsPicker"
+                    Title="Select a List"
+                    ItemDisplayBinding="{Binding name}"
+                    SelectedIndexChanged="OnPickerSelectedIndexChanged" />
 
                 <Entry
                     x:Name="inputListName"
