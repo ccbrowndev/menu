@@ -8,6 +8,7 @@
     <VerticalStackLayout Padding="20" Spacing="30">
         <Grid ColumnDefinitions="Auto,*">
             <Button
+                x:Name="B"
                 Grid.Column="0"
                 HeightRequest="40"
                 HorizontalOptions="Start"
@@ -22,20 +23,35 @@
                 VerticalOptions="Center" />
         </Grid>
 
-        <Entry Margin="20,0,20,0" Placeholder="Title" />
+        <Entry
+            x:Name="Title"
+            Margin="20,0,20,0"
+            Placeholder="Title" />
 
         <Editor
+            x:Name="Description"
             Margin="20,0,20,0"
             AutoSize="TextChanges"
             Placeholder="Description" />
 
-        <Entry Margin="20,0,20,0" Placeholder="Deadline" />
-
         <Button
+            x:Name="Save"
             Margin="0,400,0,0"
+            Clicked="OnSaveButtonClicked"
             HorizontalOptions="End"
             Text="Save n Continue"
             VerticalOptions="End" />
+
+        <StackLayout Margin="10">
+            <Label
+                FontSize="Medium"
+                HeightRequest="30"
+                Text="Deadline" />
+            <DatePicker x:Name="datePicker" Margin="0,0,0,10" />
+            <TimePicker x:Name="timePicker" Margin="0,0,0,10" />
+        </StackLayout>
+
+
 
     </VerticalStackLayout>
 </ContentPage>

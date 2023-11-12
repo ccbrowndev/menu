@@ -104,9 +104,10 @@ namespace menu.Services
                         // Copy all relevant data from 'item' to 'deletedItem'
                         id = item.id,
                         UserListid = item.UserListid,
-                        text = item.text,
+                        name = item.name,
+                        details = item.details,
                         completed = item.completed,
-                        ddl = item.ddl,
+                        deadline = item.deadline,
                         DeletedDate = DateTime.UtcNow // Set the deleted date to the current date/time
                     };
 
@@ -140,6 +141,16 @@ namespace menu.Services
                 db.Delete<DeletedUserListItem>(id);
             }
         }
+
+        public void EmptyRecycleBin()
+        {
+            var lists = db.Table<UserList>().ToList();
+            foreach (var list in lists)
+            {
+                db.Delete<UserList>(list.id);
+            }
+        }
+
 
         // Attempt to retrieve the deleted list from the recycle bin
         public bool RestoreList(int id)
@@ -178,9 +189,10 @@ namespace menu.Services
                 {
                     id = deletedItem.id,
                     UserListid = deletedItem.UserListid,
-                    text = deletedItem.text,
+                    name = deletedItem.name,
+                    details = deletedItem.details,
                     completed = deletedItem.completed,
-                    ddl = deletedItem.ddl,
+                    deadline = deletedItem.deadline,
                 };
 
                 // Insert the restored item into the original UserListItem table
@@ -210,6 +222,17 @@ namespace menu.Services
         {
             var item = db.Table<UserListItem>().FirstOrDefault(u => u.id == itemid);
             return item;
+        }
+
+        public List<UserListItem> GetItemsByListid(int listid)
+        {
+            var items = db.Table<UserListItem>().Where(u => u.UserListid == listid).ToList();
+            return items;
+        }
+        public List<UserList> GetAllLists()
+        {
+            var lists = db.Table<UserList>().ToList();
+            return lists;
         }
 
 

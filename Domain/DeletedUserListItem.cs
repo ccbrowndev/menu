@@ -8,10 +8,10 @@ namespace menu.Domain
     {
         [PrimaryKey] public int id { get; set; }
         [ForeignKey("UserList")] public int UserListid { get; set; }
-        public List<UserListItem> subItems { get; set; }
-        public string text { get; set; }
+        public string name { get; set; }
+        public string details { get; set; }
         public bool completed { get; set; }
-        public DateTime ddl { get; set; }
+        public DateTime deadline { get; set; }
         public DateTime DeletedDate { get; set; }
     }
 }

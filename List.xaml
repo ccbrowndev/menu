@@ -15,7 +15,18 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <Picker x:Name="pickList" Grid.Column="0" />
+                <!--<Picker x:Name="pickList" Grid.Column="0" />-->
+
+                <CollectionView x:Name="listsCollectionView">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Label Text="{Binding Name}" />
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
 
                 <Entry
                     x:Name="inputListName"
@@ -65,6 +76,8 @@
                     Text="+"
                     VerticalOptions="End" />
             </Grid>
+
+            <Button Clicked="OnEmptyRecycleBinClicked" Text="Empty Recycle Bin" />
 
         </StackLayout>
     </ScrollView>
