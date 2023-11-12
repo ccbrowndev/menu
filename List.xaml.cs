@@ -9,10 +9,12 @@ public partial class List : ContentPage
 {
     private MenuManager menuManager = new MenuManager();
     public ObservableCollection<UserList> UserLists { get; set; }
+    public bool IsButtonVisible { get; set; }
     public List()
     {
         InitializeComponent();
         LoadPickerData();
+        IsButtonVisible = false;
     }
 
     protected override void OnAppearing()
@@ -44,7 +46,17 @@ private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
         menuManager.EmptyRecycleBin();
     }
 
+    private void InputListName_Focused(object sender, FocusEventArgs e)
+    {
+        IsButtonVisible = true;
+        OnPropertyChanged(nameof(IsButtonVisible));
+    }
 
+    private void InputListName_Unfocused(object sender, FocusEventArgs e)
+    {
+        IsButtonVisible = false;
+        OnPropertyChanged(nameof(IsButtonVisible));
+    }
 
     private void OnAddListButtonClicked(object sender, EventArgs e)
     {
