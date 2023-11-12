@@ -48,16 +48,11 @@
                     x:Name="inputListName"
                     Grid.Column="0"
                     Focused="InputListName_Focused"
-                    Placeholder="Textbar"
-                    Unfocused="InputListName_Unfocused"
-                    WidthRequest="200" />
+                    HorizontalOptions="FillAndExpand"
+                    Placeholder="List Name"
+                    Unfocused="InputListName_Unfocused" />
 
-                <Button
-                    Grid.Column="1"
-                    HorizontalOptions="End"
-                    IsVisible="{Binding IsButtonVisible}"
-                    Text="save"
-                    WidthRequest="60" />
+
             </Grid>
 
             <!--  left up right down  -->
