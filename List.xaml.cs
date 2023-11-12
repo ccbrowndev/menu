@@ -9,6 +9,7 @@ public partial class List : ContentPage
 {
     private MenuManager menuManager = new MenuManager();
     public ObservableCollection<UserList> UserLists { get; set; }
+
     public bool IsButtonVisible { get; set; }
     private int listId;
     public List(int listId=1)
@@ -63,14 +64,18 @@ private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
 
     private void InputListName_Focused(object sender, FocusEventArgs e)
     {
-        IsButtonVisible = true;
-        OnPropertyChanged(nameof(IsButtonVisible));
+        inputListName.Text = "";
     }
 
     private void InputListName_Unfocused(object sender, FocusEventArgs e)
     {
-        IsButtonVisible = false;
-        OnPropertyChanged(nameof(IsButtonVisible));
+        SaveData(inputListName.Text);
+    }
+
+    private void SaveData(string text)
+    {
+        // 实现数据保存逻辑
+        // 例如，保存到本地数据库或发送到服务器
     }
 
     private void OnAddListButtonClicked(object sender, EventArgs e)
