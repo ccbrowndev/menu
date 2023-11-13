@@ -2,8 +2,14 @@
 <ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="menu.Views.ListItemView">
-    <Grid ColumnDefinitions=".25*, .75*">
-        <CheckBox IsChecked="{Binding completed}"></CheckBox>
-        <Entry Grid.Column="1" Text="{Binding name}"/>
-    </Grid>
+    <SwipeView>
+        <SwipeView.RightItems>
+            <SwipeItem Text="Delete"
+                       BackgroundColor="DarkRed"/>
+        </SwipeView.RightItems>
+        <Grid ColumnDefinitions=".25*, .75*">
+            <CheckBox IsChecked="{Binding completed}"></CheckBox>
+            <Entry Grid.Column="1" Text="{Binding name}"/>
+        </Grid>
+    </SwipeView>
 </ContentView>
