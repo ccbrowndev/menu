@@ -1,6 +1,5 @@
 using menu.Domain;
 using menu.Services;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
 namespace menu;
@@ -29,6 +28,7 @@ public partial class List : ContentPage
     {
         base.OnAppearing();
         LoadPickerData();
+        LoadCollectionViewData(listId);
 
         UserList list = menuManager.GetListByid(listId);
 
@@ -49,10 +49,17 @@ public partial class List : ContentPage
         listsPicker.ItemsSource = allLists;
     }
 
+    private void LoadCollectionViewData(int selectedList)
+    {
+        var listItems = menuManager.GetItemsByListid(selectedList);
+        listCollectionView.ItemsSource = listItems;
+    }
+
     private void OnPickerSelectedIndexChanged(object sender, EventArgs e)
     {
         var picker = (Picker)sender;
         var selectedList = (UserList)picker.SelectedItem;
+        LoadCollectionViewData(selectedList.id);
 
         if (selectedList != null && selectedList.id > 1)
         {

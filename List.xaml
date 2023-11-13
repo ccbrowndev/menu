@@ -3,6 +3,7 @@
     x:Class="menu.List"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:menu.Views"
     Title="List">
     <ScrollView>
         <StackLayout>
@@ -77,6 +78,14 @@
             </Grid>
 
             <!--  left up right down  -->
+            <CollectionView x:Name="listCollectionView"
+                            Grid.ColumnSpan="3">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <local:ListItemView />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <Grid
                 Margin="25,25,25,0"
                 BackgroundColor="LightBlue"
