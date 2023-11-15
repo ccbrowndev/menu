@@ -34,7 +34,7 @@ namespace menu.Services
         // Add a new List
         public UserList AddUserList(UserList userList)
         {
-            int currentCount = db.Table<UserList>().Count();
+            int currentCount = db.Table<UserList>().Count(); //id
             userList.id = currentCount + 1;
             db.Insert(userList);
             return userList;
