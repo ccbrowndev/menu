@@ -9,12 +9,12 @@ public partial class List : ContentPage
 {
     private MenuManager menuManager = new MenuManager();
     public ObservableCollection<UserList> UserLists { get; set; }
+    public ObservableCollection<UserListItem> UserListItems { get; set; }
 
     public bool IsButtonVisible { get; set; }
     private int listId;
     public List() : this(1)
     {
-
 
     }
     public List(int listId)
@@ -23,6 +23,7 @@ public partial class List : ContentPage
         LoadPickerData();
         IsButtonVisible = false;
         this.listId = listId;
+        BindingContext = this;
     }
 
     protected override void OnAppearing()
@@ -68,12 +69,14 @@ public partial class List : ContentPage
     private void OnEmptyRecycleBinClicked(object sender, EventArgs e)
         {
             menuManager.EmptyRecycleBin();
-        }
+            LoadPickerData();
+    }
 
-    /*
+    
     private void InputListName_Focused(object sender, FocusEventArgs e)
     {
-        inputListName.Text = "";
+        UserList list = menuManager.GetListByid(listId);
+        inputListName.Text = list.name;
     }
 
     private void InputListName_Unfocused(object sender, FocusEventArgs e)
@@ -82,35 +85,6 @@ public partial class List : ContentPage
     }
 
     private void SaveData(string text)
-    {
-        string listName = inputListName.Text;
-
-        UserList list = menuManager.GetListByid(listId);
-
-        list.name = listName;
-
-        menuManager.UpdateUserList(list);
-
-        menuManager.SaveChanges();
-    }
-    */
-
-
-    private void OnAddListButtonClicked(object sender, EventArgs e)
-    {
-        /*String listName = inputListName.Text;
-        var listObject = new UserList
-        {
-            name = listName,
-        };
-
-        var addedList = menuManager.AddUserList(listObject);
-
-        menuManager.SaveChanges();
-        */
-        Navigation.PushAsync(new List());
-    }
-    private void OnUpdateListNameButtonClicked(object sender, EventArgs e)
     {
         string listName = inputListName.Text;
 
@@ -140,17 +114,57 @@ public partial class List : ContentPage
         menuManager.SaveChanges();
         LoadPickerData();
     }
+    
 
+    private void OnAddListButtonClicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new List());
+    }
 
     private void OnAddListItemButtonClicked(object sender, EventArgs e)
     {
-        var itemObject = new UserListItem();
+
+        string listName = inputListName.Text;
 
         MenuManager menuManager = new MenuManager();
+        UserList list;
+
+        if (listId == 1)
+        {
+            list = new UserList()
+            {
+                name = listName
+            };
+            menuManager.AddUserList(list);
+        }
+        else
+        {
+            list = menuManager.GetListByid(listId);
+            if (list != null)
+            {
+                list.name = listName;
+                menuManager.UpdateUserList(list);
+            }
+            else
+            {
+            }
+        }
+        menuManager.SaveChanges();
+
+        var itemObject = new UserListItem();
+        itemObject.id = list.id;
+
         UserListItem addedItem = menuManager.AddUserListItem(itemObject);
 
         menuManager.SaveChanges();
 
-        Navigation.PushAsync(new AddNewItem(listId, addedItem.id));
+        Navigation.PushAsync(new AddNewItem(list.id, addedItem.id));
     }
+
+    private void OnLogoButtonClicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new ListDetails(listId));
+    }
+
+ 
 }

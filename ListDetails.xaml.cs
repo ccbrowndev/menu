@@ -1,76 +1,73 @@
 using menu.Domain;
 using menu.Services;
 using Microsoft.Maui.Controls;
+using System.Collections.ObjectModel;
+
 
 namespace menu;
 
 public partial class ListDetails : ContentPage
 {
+    private MenuManager menuManager = new MenuManager();
+    public ObservableCollection<UserList> UserLists { get; set; }
+
+    private readonly List<UserListItem> items;
+
+
+    public bool IsButtonVisible { get; set; }
     private int listId;
+    public ListDetails() : this(1)
+    {
 
-    public ListDetails(int id)
+    }
+    public ListDetails(int listId)
 	{
-		InitializeComponent();
-        this.listId = id;
+        InitializeComponent();
+        IsButtonVisible = false;
+        this.listId = listId;
+
+
+        this.items = menuManager.GetItemsByListid(listId);
+
+        FillCalendar(listId);
     }
 
-    
-    
 
-    protected override void OnAppearing()
+    private void FillCalendar(int _listId)
     {
-        base.OnAppearing();
+        // ???????
+        calendarGrid.Children.Clear();
 
-        MenuManager menuManager = new MenuManager();
-        UserList list = menuManager.GetListByid(listId);
-
-        if (list != null && !string.IsNullOrWhiteSpace(list.name))
+        for (int i = 0; i < 12; i++)
         {
-            inputListName.Text = list.name;
+            List<UserListItem> _items = items.Where(s => s.UserListid == _listId).ToList();
+
+            foreach (var item in _items)
+            {
+                Button _itemButton = new Button
+                {
+                    Text = item.name,
+                };
+
+                Grid.SetRow(_itemButton, i + 1);
+
+                int itemId = item.id;
+                _itemButton.Clicked += OnScheduleButtonClicked;
+
+                calendarGrid.Children.Add(_itemButton);
+            }
         }
-        else
+    }
+
+    private void OnScheduleButtonClicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        if (button != null)
         {
-            inputListName.Text = "ListName"; 
+            int itemId = (int)button.CommandParameter;
+            // ?? itemId
         }
-
     }
 
-    private void OnAddListButtonClicked(object sender, EventArgs e)
-    {
-        var listObject = new UserList();
-
-        MenuManager menuManager = new MenuManager();
-        UserList addedList = menuManager.AddUserList(listObject);
-
-        menuManager.SaveChanges();
-
-        Navigation.PushAsync(new ListDetails(addedList.id));
-    }
-
-    private void OnUpdateListNameButtonClicked(object sender, EventArgs e) 
-    {
-        string listName = inputListName.Text;
-
-        MenuManager menuManager = new MenuManager();
-        UserList list = menuManager.GetListByid(listId);
-
-        list.name = listName;
-
-        menuManager.UpdateUserList(list);
-
-        menuManager.SaveChanges();
-    }
-
-    private void OnAddListItemButtonClicked(object sender, EventArgs e)
-    {
-        var itemObject = new UserListItem();
-
-        MenuManager menuManager = new MenuManager();
-        UserListItem addedItem = menuManager.AddUserListItem(itemObject);
-
-        menuManager.SaveChanges();
-
-        Navigation.PushAsync(new AddNewItem(listId,addedItem.id));
-    }
 
 }

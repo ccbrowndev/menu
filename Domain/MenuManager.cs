@@ -4,6 +4,7 @@ using menu.Domain;
 using menu.Services;
 using System.Collections.Generic;
 
+
 namespace menu.Services
 {
     public class MenuManager : IMenuManager
@@ -142,14 +143,42 @@ namespace menu.Services
             }
         }
 
+        // 暂时的
         public void EmptyRecycleBin()
         {
             var lists = db.Table<UserList>().ToList();
+            
             foreach (var list in lists)
             {
                 if (list.id != 1)
                 {
                     db.Delete<UserList>(list.id);
+                }
+            }
+            
+        }
+
+        public void EmptyItems()
+        {
+            var items = db.Table<UserListItem>().ToList();
+
+            foreach (var item in items)
+            {
+                db.Delete<UserList>(item.id);
+            }
+        }
+
+        // Empty
+
+        public void EmptyItemRecycleBin(int listid)
+        {
+            var items = db.Table<UserListItem>().ToList();
+
+            foreach (var item in items)
+            {
+                if (item.UserListid == listid)
+                {
+                    db.Delete<UserListItem>(item.UserListid);
                 }
             }
         }
