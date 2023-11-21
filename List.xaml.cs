@@ -24,6 +24,13 @@ public partial class List : ContentPage
         IsButtonVisible = false;
         this.listId = listId;
         BindingContext = this;
+        InitListItems();
+    }
+
+    private void InitListItems()
+    {
+        UserListItems = new ObservableCollection<UserListItem>(menuManager.GetItemsByListid(listId));
+        ListItemsView.ItemsSource = UserListItems;
     }
 
     protected override void OnAppearing()

@@ -3,34 +3,34 @@
     x:Class="menu.List"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:local="clr-namespace:menu.Domain"
     Title="List">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem x:Name="shareList"
+                     Text="Share"
+                     IconImageSource="dotnet_bot.png"/>
+    </ContentPage.ToolbarItems>
     <ScrollView>
         <StackLayout>
 
-            <Grid Margin="25,25,25,25">
+            <Grid Margin="25,25,25,25"
+                  ColumnDefinitions=".75*, .25*">
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+                <Border Padding="10,0"
+                        Margin="15,0">
+                    <Picker x:Name="listsPicker"
+                            Title="Select a List"
+                            ItemDisplayBinding="{Binding name}"
+                            SelectedIndexChanged="OnPickerSelectedIndexChanged" />
+                </Border>
 
-                <Picker
-                    x:Name="listsPicker"
-                    Title="Select a List"
-                    Grid.Column="0"
-                    ItemDisplayBinding="{Binding name}"
-                    SelectedIndexChanged="OnPickerSelectedIndexChanged"
-                    WidthRequest="80" />
+                <Button x:Name="addNewListPage"
+                        Grid.Column="1"
+                        Clicked="OnAddListButtonClicked"
+                        Text="New List"
+                        WidthRequest="100" />
 
-                <Button
-                    x:Name="addNewListPage"
-                    Grid.Column="1"
-                    Clicked="OnAddListButtonClicked"
-                    Text="List"
-                    WidthRequest="100" />
-
-                <Button
+                <!--<Button
                     x:Name="shareList"
                     Grid.Column="2"
                     Text="share"
@@ -38,27 +38,51 @@
                     <Button.ImageSource>
                         <FileImageSource />
                     </Button.ImageSource>
-                </Button>
+                </Button>-->
 
             </Grid>
 
             <Grid Padding="20,0,20,0">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Entry
+                <Entry Margin="50, 0"
                     x:Name="inputListName"
                     Grid.Column="0"
                     Focused="InputListName_Focused"
                     HorizontalOptions="FillAndExpand"
                     Placeholder="List Name"
-                    Unfocused="InputListName_Unfocused" />
+                    Unfocused="InputListName_Unfocused"/>
 
             </Grid>
 
             <!--  left up right down  -->
+            <CollectionView x:Name="ListItemsView">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type local:UserListItem}">
+                        <Grid Margin="25,25,25,0"
+                              BackgroundColor="LightBlue"
+                              HeightRequest="50">
+
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <CheckBox x:Name="logo"/>
+
+                            <!--<Button
+        x:Name="logo"
+        Grid.Column="0"
+        Clicked="OnLogoButtonClicked"
+        Text="logo" />-->
+
+                            <Entry x:Name="inputItem"
+                                   Grid.Column="1"
+                                   Margin="20,0,0,0"
+                                   Text="{Binding name}"
+                                   VerticalTextAlignment="Center" />
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
             <Grid
                 Margin="25,25,25,0"
                 BackgroundColor="LightBlue"
@@ -66,15 +90,16 @@
 
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
-
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
 
-                <Button
+                <CheckBox x:Name="logo"/>
+
+                <!--<Button
                     x:Name="logo"
                     Grid.Column="0"
                     Clicked="OnLogoButtonClicked"
-                    Text="logo" />
+                    Text="logo" />-->
 
                 <Entry
                     x:Name="inputItem"
