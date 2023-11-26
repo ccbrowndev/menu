@@ -78,6 +78,12 @@
             </Frame>
         </Grid>
 
+        <Button Grid.Row="4"
+                HorizontalOptions="Start"
+                VerticalOptions="End"
+                Text="Save List"
+                Command="{Binding SaveListCommand}"/>
+
         <Button Grid.Row="4" Grid.Column="1"
                 HorizontalOptions="End"
                 VerticalOptions="End"

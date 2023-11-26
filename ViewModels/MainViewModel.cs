@@ -157,5 +157,15 @@ namespace menu.ViewModels
             SelectedList = newList;
             Items = new ObservableCollection<ListItem>();
         }
+
+        [RelayCommand]
+        void SaveList()
+        {
+            if (Items == null || Items.Count == 0)
+                return;
+
+            SelectedList.ListItems = Items.ToList();
+            db.SaveUserList(SelectedList);
+        }
     }
 }
