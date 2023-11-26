@@ -82,6 +82,7 @@ namespace menu.ViewModels
             Items.Add(newListItem);
             db.SaveListItem(newListItem);
             SelectedList.ListItems = Items.ToList();
+            db.SaveUserList(SelectedList);
             Text = string.Empty;
             InputCompleted = false;
         }
@@ -94,6 +95,7 @@ namespace menu.ViewModels
                 Items.Remove(li);
                 db.DeleteListItem(li);
                 SelectedList.ListItems = Items.ToList();
+                db.SaveUserList(SelectedList);
             }
         }
 
@@ -149,7 +151,7 @@ namespace menu.ViewModels
 
             UserList newList = new()
             {
-                Name = "Test" + (ListCollection.Count + 1),
+                Name = "New List " + (ListCollection.Count + 1),
                 ListItems = new List<ListItem>()
             };
 
