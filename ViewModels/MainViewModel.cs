@@ -18,9 +18,9 @@ namespace menu.ViewModels
             ListCollectionHeight = (displayInfo.Height / displayInfo.Density) * .25;
             ItemCollectionHeight = (displayInfo.Height / displayInfo.Density) * .5;
 
-            LoadListData();
+            ListCollection = new ObservableCollection<UserList>(db.GetUserLists());
             SelectedList = ListCollection.FirstOrDefault();
-            LoadItemData(SelectedList.Id);
+            Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
         }
 
         [ObservableProperty]
@@ -48,18 +48,6 @@ namespace menu.ViewModels
         [ObservableProperty]
         string text;
 
-        void LoadListData()
-        {
-            List<UserList> dbUserLists = db.GetUserLists();
-            ListCollection = new ObservableCollection<UserList>(dbUserLists);
-        }
-
-        void LoadItemData(int listId)
-        {
-            List<ListItem> dbListItems = db.GetListItemsByListId(listId);
-            Items = new ObservableCollection<ListItem>(dbListItems);
-        }
-        
         [RelayCommand]
         void ToggleListCollectionVisibility()
         {
@@ -72,6 +60,11 @@ namespace menu.ViewModels
             if (string.IsNullOrWhiteSpace(Text))
                 return;
 
+            if (Items == null || Items.Count == 0)
+            {
+                SelectedList.Id = db.SaveUserList(SelectedList);
+            }
+
             ListItem newListItem = new()
             {
                 UserListId = SelectedList.Id,
@@ -81,7 +74,6 @@ namespace menu.ViewModels
 
             Items.Add(newListItem);
             db.SaveListItem(newListItem);
-            SelectedList.ListItems = Items.ToList();
             Text = string.Empty;
             InputCompleted = false;
         }
@@ -93,7 +85,6 @@ namespace menu.ViewModels
             {
                 Items.Remove(li);
                 db.DeleteListItem(li);
-                SelectedList.ListItems = Items.ToList();
             }
         }
 
@@ -125,12 +116,9 @@ namespace menu.ViewModels
             {
                 UserList newSelectedList = e.CurrentSelection[0] as UserList;
 
-                if (newSelectedList.ListItems == null || newSelectedList.ListItems.Count == 0)
-                {
-                    newSelectedList.ListItems = db.GetListItemsByListId(newSelectedList.Id);
-                }
-                Items = new ObservableCollection<ListItem>(newSelectedList.ListItems);
-                ToggleListCollectionVisibility();
+                Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
+
+                IsVisible = false;
             } catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
@@ -144,18 +132,16 @@ namespace menu.ViewModels
             if (Items == null || Items.Count == 0)
                 return;
 
-            SelectedList.ListItems = Items.ToList();
             db.SaveUserList(SelectedList);
 
             UserList newList = new()
             {
-                Name = "Test" + (ListCollection.Count + 1),
-                ListItems = new List<ListItem>()
+                Name = "New List " + (ListCollection.Count + 1),
             };
 
             ListCollection.Add(newList);
             SelectedList = newList;
-            Items = new ObservableCollection<ListItem>(SelectedList.ListItems);
+            Items = new ObservableCollection<ListItem>();
         }
     }
 }

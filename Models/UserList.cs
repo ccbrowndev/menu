@@ -11,7 +11,5 @@ namespace menu.Models
         [MaxLength(50)]
         [Column("name")]
         public string Name { get; set; }
-        [Ignore]
-        public List<ListItem> ListItems { get; set; }
     }
 }

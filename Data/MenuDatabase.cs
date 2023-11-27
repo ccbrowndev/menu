@@ -24,14 +24,10 @@ namespace menu.Data
             {
                 db.Insert(defaultUserList);
 
-                lists = db.Query<UserList>("SELECT * FROM user_lists");
-                int defaultListId = lists.First().Id;
-
-                foreach (ListItem li in defaultUserList.ListItems)
-                {
-                    li.UserListId = defaultListId;
-                    db.Insert(li);
-                }
+                db.Insert(changeTitleItem);
+                db.Insert(addListItemItem);
+                db.Insert(addListItem);
+                db.Insert(deleteListItemItem);
             }
 
             return lists;
@@ -41,11 +37,14 @@ namespace menu.Data
         {
             if (list.Id != 0)
             {
-                return db.Update(list);
+                db.Update(list);
+                return list.Id; 
             }
             else
             {
-                return db.Insert(list);
+                db.Insert(list);
+                int newListId = db.Query<int>("SELECT seq FROM sqlite_sequence WHERE name=\"user_lists\"").First();
+                return newListId;
             }
         }
 
@@ -63,7 +62,6 @@ namespace menu.Data
                 throw new Exception(string.Format("Error occurred trying to delete UserList {0}", list));
             }
         }
-
 
 
         public List<ListItem> GetListItemsByListId(int id)
@@ -105,32 +103,32 @@ namespace menu.Data
         private readonly UserList defaultUserList = new()
         {
             Name = "Welcome",
-            ListItems = new List<ListItem>()
-            {
-                changeTitleItem, addListItemItem, addListItem, deleteListItemItem
-            }
         };
 
         private static readonly ListItem changeTitleItem = new()
         {
+            UserListId = 1,
             Text = "Tap \"Welcome\" to change the list title.",
             IsComplete = false
         };
 
         private static readonly ListItem addListItemItem = new()
         {
+            UserListId = 1,
             Text = "Type into the placeholder below to add items.",
             IsComplete = false
         };
 
         private static readonly ListItem addListItem = new()
         {
+            UserListId = 1,
             Text = "Click the add button to create a new list.",
             IsComplete = false
         };
 
         private static readonly ListItem deleteListItemItem = new()
         {
+            UserListId = 1,
             Text = "Swipe to the left on an item to reveal the delete button.",
             IsComplete = false
         };
