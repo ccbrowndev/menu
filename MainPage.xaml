@@ -1,41 +1,88 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewmodel="clr-namespace:menu.ViewModels"
+             xmlns:model="clr-namespace:menu.Models"
+             x:DataType="viewmodel:MainViewModel"
              x:Class="menu.MainPage">
+    <Shell.TitleView>
+        <Button Text="View Lists"
+                Command="{Binding ToggleListCollectionVisibilityCommand}"/>
+    </Shell.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Share"/>
+    </ContentPage.ToolbarItems>
 
-    <ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
+    <Grid RowDefinitions="Auto, 50, Auto, Auto, *"
+          Padding="10"
+          RowSpacing="10" ColumnSpacing="10">
+        
+        <CollectionView ItemsSource="{Binding ListCollection}"
+                        SelectionMode="Single"
+                        SelectedItem="{Binding SelectedList}"
+                        SelectionChangedCommand="{Binding SelectedListChangedCommand}"
+                        IsVisible="{Binding IsVisible}"
+                        MaximumHeightRequest="{Binding ListCollectionHeight}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:UserList}">
+                    <Label Text="{Binding Name}"
+                           FontSize="14"
+                           HorizontalTextAlignment="Center"
+                           Padding="0,5"/>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
+        <Entry Grid.Row="1"
+               Margin="50, 0"
+               HorizontalTextAlignment="Center"
+               Text="{Binding SelectedList.Name}"
+               ReturnCommand="{Binding UpdateTitleCommand}"
+               Placeholder="Title"/>
 
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
+        <CollectionView Grid.Row="2"
+                        ItemsSource="{Binding Items}"
+                        MaximumHeightRequest="{Binding ItemCollectionHeight}">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="{x:Type model:ListItem}">
+                    <SwipeView>
+                        <SwipeView.RightItems>
+                            <SwipeItems>
+                                <SwipeItem Text="Delete"
+                                           BackgroundColor="Red"
+                                           Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
+                                           CommandParameter="{Binding .}"/>
+                            </SwipeItems>
+                        </SwipeView.RightItems>
+                        <Grid ColumnDefinitions="Auto, *"
+                              Padding="0,5"
+                              Margin="25, 0">
+                            <CheckBox IsChecked="{Binding IsComplete}"/>
+                            <Frame Grid.Column="1">
+                                <Label Text="{Binding Text}"
+                                       FontSize="18"/>
+                            </Frame>
+                        </Grid>
+                    </SwipeView>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
 
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
+        <Grid Grid.Row="3" ColumnDefinitions="Auto, *"
+              Margin="25,0">
+            <CheckBox IsChecked="{Binding InputCompleted}"/>
+            <Frame Grid.Column="1">
+                <Entry Text="{Binding Text}"
+                       ReturnCommand="{Binding AddCommand}"
+                       Placeholder="Enter task"/>
+            </Frame>
+        </Grid>
 
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-        </VerticalStackLayout>
-    </ScrollView>
-
+        <Button Grid.Row="4" Grid.Column="1"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Text="Add List"
+                Command="{Binding AddListCommand}"/>
+        
+    </Grid>
 </ContentPage>
