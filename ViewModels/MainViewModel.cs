@@ -11,7 +11,13 @@ namespace menu.ViewModels
         {
             Id = 1,
             Name = "Welcome",
-            ListItems = new List<ListItem>()
+            ListItems = new()
+            {
+                new() { Id=1, UserListId=1, Text="Tap \"Welcome\" to change title.", IsComplete=false},
+                new() { Id=2, UserListId=1, Text="Type into placeholder to add an item.", IsComplete=false},
+                new() { Id=3, UserListId=1, Text="Tap the Add List button to add a list.", IsComplete = false},
+                new() { Id=4, UserListId=1, Text="Swipe to the left to access the delete button.", IsComplete=false}
+            } 
         };
 
         public MainViewModel()
@@ -26,7 +32,7 @@ namespace menu.ViewModels
                 defaultUserList
             };
             SelectedList = defaultUserList;
-            Items = new ObservableCollection<ListItem>();
+            Items = new ObservableCollection<ListItem>(defaultUserList.ListItems);
         }
 
         [ObservableProperty]
