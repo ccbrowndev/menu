@@ -93,6 +93,7 @@
             Date="{Binding Deadline, Mode=TwoWay}"
             Format="D" />
 
+<<<<<<< Updated upstream
         <Button
             Grid.Row="4"
             Grid.Column="1"
@@ -101,5 +102,13 @@
             Text="Add List"
             VerticalOptions="End" />
 
+=======
+        <Button Grid.Row="4" Grid.Column="1"
+                HorizontalOptions="End"
+                VerticalOptions="End"
+                Text="Add List"
+                Command="{Binding AddListCommand}"/>
+        
+>>>>>>> Stashed changes
     </Grid>
 </ContentPage>

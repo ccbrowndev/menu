@@ -34,6 +34,7 @@ namespace menu.ViewModels
             };
             SelectedList = defaultUserList;
             Items = new ObservableCollection<ListItem>(defaultUserList.ListItems);
+            Lists = new ObservableCollection<UserList>();
         }
 
 
@@ -52,6 +53,9 @@ namespace menu.ViewModels
 
         [ObservableProperty]
         ObservableCollection<ListItem> items;
+
+        [ObservableProperty]
+        ObservableCollection<UserList> lists;
 
         [ObservableProperty]
         UserList selectedList;
@@ -157,6 +161,7 @@ namespace menu.ViewModels
             //ScheduleNotificationForItem(newList);
         }
 
+<<<<<<< Updated upstream
         //[RelayCommand]
         //public void ScheduleNotificationForItem(UserList list)
         //{
@@ -173,5 +178,21 @@ namespace menu.ViewModels
         //    }
         //}
 
+=======
+        public async Task CheckDeadlinesAsync()
+        {
+            var listsWithTodaysDeadline = GetListsWithTodaysDeadline();
+            if (listsWithTodaysDeadline.Any())
+            {
+                await Shell.Current.DisplayAlert("Deadline Today", "You have list whose deadline is today.", "OK");
+            }
+        }
+
+        public List<UserList> GetListsWithTodaysDeadline()
+        {
+            var today = DateTime.Now.Date;
+            return Lists.Where(list => list.Deadline.Date == today).ToList();
+        }
+>>>>>>> Stashed changes
     }
 }
