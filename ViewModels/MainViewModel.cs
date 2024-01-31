@@ -2,6 +2,7 @@
 using CommunityToolkit.Mvvm.Input;
 using menu.Models;
 using System.Collections.ObjectModel;
+using Microsoft.Maui.ApplicationModel;
 
 namespace menu.ViewModels
 {
@@ -35,6 +36,7 @@ namespace menu.ViewModels
             Items = new ObservableCollection<ListItem>(defaultUserList.ListItems);
         }
 
+
         [ObservableProperty]
         double listCollectionHeight;
 
@@ -59,6 +61,9 @@ namespace menu.ViewModels
 
         [ObservableProperty]
         string text;
+
+        [ObservableProperty]
+        DateTime deadline = DateTime.Now.AddDays(7);
 
         [RelayCommand]
         void ToggleListCollectionVisibility()
@@ -141,12 +146,32 @@ namespace menu.ViewModels
             {
                 Id = newId,
                 Name = "Test" + newId,
-                ListItems = new List<ListItem>()
+                ListItems = new List<ListItem>(),
+                Deadline = Deadline
             };
 
             ListCollection.Add(newList);
             SelectedList = newList;
             Items = new ObservableCollection<ListItem>(SelectedList.ListItems);
+
+            //ScheduleNotificationForItem(newList);
         }
+
+        //[RelayCommand]
+        //public void ScheduleNotificationForItem(UserList list)
+        //{
+        //    if (list.Deadline > DateTime.Now)
+        //    {
+        //        var notification = new NotificationRequest
+        //        {
+        //            Title = "Deadline Reminder",
+        //            Description = $"Your item \"{list.Name}\" is due!",
+        //            Schedule = new NotificationSchedule(list.Deadline.Value)
+        //        };
+
+        //        NotificationCenter.Current.Schedule(notification);
+        //    }
+        //}
+
     }
 }

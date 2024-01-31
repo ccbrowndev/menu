@@ -1,66 +1,73 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel="clr-namespace:menu.ViewModels"
-             xmlns:model="clr-namespace:menu.Models"
-             x:DataType="viewmodel:MainViewModel"
-             x:Class="menu.MainPage">
+<ContentPage
+    x:Class="menu.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:menu.Models"
+    xmlns:viewmodel="clr-namespace:menu.ViewModels"
+    x:DataType="viewmodel:MainViewModel">
     <Shell.TitleView>
-        <Button Text="View Lists"
-                Command="{Binding ToggleListCollectionVisibilityCommand}"/>
+        <Button Command="{Binding ToggleListCollectionVisibilityCommand}" Text="View Lists" />
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Share"/>
+        <ToolbarItem Text="Share" />
     </ContentPage.ToolbarItems>
 
-    <Grid RowDefinitions="Auto, 50, Auto, Auto, *"
-          Padding="10"
-          RowSpacing="10" ColumnSpacing="10">
-        
-        <CollectionView ItemsSource="{Binding ListCollection}"
-                        SelectionMode="Single"
-                        SelectedItem="{Binding SelectedList}"
-                        SelectionChangedCommand="{Binding SelectedListChangedCommand}"
-                        IsVisible="{Binding IsVisible}"
-                        MaximumHeightRequest="{Binding ListCollectionHeight}">
+    <Grid
+        Padding="10"
+        ColumnSpacing="10"
+        RowDefinitions="Auto, 50, Auto, Auto, *"
+        RowSpacing="10">
+
+        <CollectionView
+            IsVisible="{Binding IsVisible}"
+            ItemsSource="{Binding ListCollection}"
+            MaximumHeightRequest="{Binding ListCollectionHeight}"
+            SelectedItem="{Binding SelectedList}"
+            SelectionChangedCommand="{Binding SelectedListChangedCommand}"
+            SelectionMode="Single">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:UserList}">
-                    <Label Text="{Binding Name}"
-                           FontSize="14"
-                           HorizontalTextAlignment="Center"
-                           Padding="0,5"/>
+                    <Label
+                        Padding="0,5"
+                        FontSize="14"
+                        HorizontalTextAlignment="Center"
+                        Text="{Binding Name}" />
                 </DataTemplate>
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Entry Grid.Row="1"
-               Margin="50, 0"
-               HorizontalTextAlignment="Center"
-               Text="{Binding SelectedList.Name}"
-               ReturnCommand="{Binding UpdateTitleCommand}"
-               Placeholder="Title"/>
+        <Entry
+            Grid.Row="1"
+            Margin="50,0"
+            HorizontalTextAlignment="Center"
+            Placeholder="Title"
+            ReturnCommand="{Binding UpdateTitleCommand}"
+            Text="{Binding SelectedList.Name}" />
 
-        <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding Items}"
-                        MaximumHeightRequest="{Binding ItemCollectionHeight}">
+        <CollectionView
+            Grid.Row="2"
+            ItemsSource="{Binding Items}"
+            MaximumHeightRequest="{Binding ItemCollectionHeight}">
             <CollectionView.ItemTemplate>
                 <DataTemplate x:DataType="{x:Type model:ListItem}">
                     <SwipeView>
                         <SwipeView.RightItems>
                             <SwipeItems>
-                                <SwipeItem Text="Delete"
-                                           BackgroundColor="Red"
-                                           Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
-                                           CommandParameter="{Binding .}"/>
+                                <SwipeItem
+                                    BackgroundColor="Red"
+                                    Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
+                                    CommandParameter="{Binding .}"
+                                    Text="Delete" />
                             </SwipeItems>
                         </SwipeView.RightItems>
-                        <Grid ColumnDefinitions="Auto, *"
-                              Padding="0,5"
-                              Margin="25, 0">
-                            <CheckBox IsChecked="{Binding IsComplete}"/>
+                        <Grid
+                            Margin="25,0"
+                            Padding="0,5"
+                            ColumnDefinitions="Auto, *">
+                            <CheckBox IsChecked="{Binding IsComplete}" />
                             <Frame Grid.Column="1">
-                                <Label Text="{Binding Text}"
-                                       FontSize="18"/>
+                                <Label FontSize="18" Text="{Binding Text}" />
                             </Frame>
                         </Grid>
                     </SwipeView>
@@ -68,21 +75,31 @@
             </CollectionView.ItemTemplate>
         </CollectionView>
 
-        <Grid Grid.Row="3" ColumnDefinitions="Auto, *"
-              Margin="25,0">
-            <CheckBox IsChecked="{Binding InputCompleted}"/>
+        <Grid
+            Grid.Row="3"
+            Margin="25,0"
+            ColumnDefinitions="Auto, *">
+            <CheckBox IsChecked="{Binding InputCompleted}" />
             <Frame Grid.Column="1">
-                <Entry Text="{Binding Text}"
-                       ReturnCommand="{Binding AddCommand}"
-                       Placeholder="Enter task"/>
+                <Entry
+                    Placeholder="Enter task"
+                    ReturnCommand="{Binding AddCommand}"
+                    Text="{Binding Text}" />
             </Frame>
         </Grid>
 
-        <Button Grid.Row="4" Grid.Column="1"
-                HorizontalOptions="End"
-                VerticalOptions="End"
-                Text="Add List"
-                Command="{Binding AddListCommand}"/>
-        
+        <DatePicker
+            Grid.Row="4"
+            Date="{Binding Deadline, Mode=TwoWay}"
+            Format="D" />
+
+        <Button
+            Grid.Row="4"
+            Grid.Column="1"
+            Command="{Binding AddListCommand}"
+            HorizontalOptions="End"
+            Text="Add List"
+            VerticalOptions="End" />
+
     </Grid>
 </ContentPage>
