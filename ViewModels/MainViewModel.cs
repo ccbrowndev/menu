@@ -33,6 +33,7 @@ namespace menu.ViewModels
             };
             SelectedList = defaultUserList;
             Items = new ObservableCollection<ListItem>(defaultUserList.ListItems);
+            Lists = new ObservableCollection<UserList>();
         }
 
         [ObservableProperty]
@@ -52,6 +53,9 @@ namespace menu.ViewModels
         ObservableCollection<ListItem> items;
 
         [ObservableProperty]
+        ObservableCollection<UserList> lists;
+
+        [ObservableProperty]
         UserList selectedList;
 
         [ObservableProperty]
@@ -59,6 +63,9 @@ namespace menu.ViewModels
 
         [ObservableProperty]
         string text;
+
+        [ObservableProperty]
+        DateTime deadline = DateTime.Now.AddDays(7);
 
         [RelayCommand]
         void ToggleListCollectionVisibility()
@@ -141,12 +148,30 @@ namespace menu.ViewModels
             {
                 Id = newId,
                 Name = "Test" + newId,
-                ListItems = new List<ListItem>()
+                ListItems = new List<ListItem>(),
+                Deadline = Deadline
             };
 
             ListCollection.Add(newList);
             SelectedList = newList;
             Items = new ObservableCollection<ListItem>(SelectedList.ListItems);
+        }
+
+
+        [RelayCommand]
+        public async Task CheckDeadlinesAsync()
+        {
+            var listsWithTodaysDeadline = GetListsWithTodaysDeadline();
+            if (listsWithTodaysDeadline.Any())
+            {
+                await Shell.Current.DisplayAlert("Deadline Today", "You have list whose deadline is today.", "OK");
+            }
+        }
+
+        public List<UserList> GetListsWithTodaysDeadline()
+        {
+            var today = DateTime.Now.Date;
+            return Lists.Where(list => list.Deadline.Date == today).ToList();
         }
     }
 }
