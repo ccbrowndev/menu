@@ -93,8 +93,14 @@
             Date="{Binding Deadline, Mode=TwoWay}"
             Format="D" />
 
+        <TimePicker
+            Grid.Row="5"
+            Format="HH:mm"
+            Time="{Binding Deadline, Mode=TwoWay}" />
+
+
         <Button
-            Grid.Row="4"
+            Grid.Row="6"
             Grid.Column="1"
             Command="{Binding AddListCommand}"
             HorizontalOptions="End"

@@ -170,8 +170,8 @@ namespace menu.ViewModels
 
         public List<UserList> GetListsWithTodaysDeadline()
         {
-            var today = DateTime.Now.Date;
-            return Lists.Where(list => list.Deadline.Date == today).ToList();
+            var now = DateTime.Now;
+            return Lists.Where(list => list.Deadline > now && (list.Deadline - now).TotalMinutes <= 60).ToList();
         }
     }
 }
