@@ -1,94 +1,149 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewmodel="clr-namespace:menu.ViewModels"
-             xmlns:model="clr-namespace:menu.Models"
-             x:DataType="viewmodel:MainViewModel"
-             x:Class="menu.MainPage">
+<ContentPage
+    x:Class="menu.MainPage"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:menu.Models"
+    xmlns:viewmodel="clr-namespace:menu.ViewModels"
+    x:DataType="viewmodel:MainViewModel">
     <Shell.TitleView>
-        <Button Text="View Lists"
-                Command="{Binding ToggleListCollectionVisibilityCommand}"/>
+        <Button
+            BackgroundColor="#90C7F0"
+            Command="{Binding ToggleListCollectionVisibilityCommand}"
+            FontAttributes="Bold"
+            FontSize="Large"
+            Text="View Lists" />
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Share"/>
+        <ToolbarItem Text="Share" />
     </ContentPage.ToolbarItems>
 
-    <Grid RowDefinitions="Auto, 50, Auto, Auto, *"
-          Padding="10"
-          RowSpacing="10" ColumnSpacing="10">
-        
-        <CollectionView ItemsSource="{Binding ListCollection}"
-                        x:Name="UserListCollectionView"
-                        SelectionMode="Single"
-                        SelectedItem="{Binding SelectedList}"
-                        IsVisible="{Binding IsVisible}"
-                        MaximumHeightRequest="{Binding ListCollectionHeight}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:UserList}">
-                    <Label Text="{Binding Name}"
-                           FontSize="14"
-                           HorizontalTextAlignment="Center"
-                           Padding="0,5"/>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
+    <Grid
+        ColumnSpacing="10"
+        RowDefinitions="Auto, 50, Auto, Auto, *"
+        RowSpacing="10"
+        VerticalOptions="FillAndExpand">
 
-        <Entry Grid.Row="1"
-               Margin="50, 0"
-               HorizontalTextAlignment="Center"
-               Text="{Binding SelectedList.Name}"
-               ReturnCommand="{Binding UpdateTitleCommand}"
-               Placeholder="Title"/>
+        <Image Aspect="AspectFill" Source="background.svg" />
 
-        <CollectionView Grid.Row="2"
-                        ItemsSource="{Binding Items}"
-                        MaximumHeightRequest="{Binding ItemCollectionHeight}">
-            <CollectionView.ItemTemplate>
-                <DataTemplate x:DataType="{x:Type model:ListItem}">
-                    <SwipeView>
-                        <SwipeView.RightItems>
-                            <SwipeItems>
-                                <SwipeItem Text="Delete"
-                                           BackgroundColor="Red"
-                                           Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
-                                           CommandParameter="{Binding .}"/>
-                            </SwipeItems>
-                        </SwipeView.RightItems>
-                        <Grid ColumnDefinitions="Auto, *"
-                              Padding="0,5"
-                              Margin="25, 0">
-                            <CheckBox IsChecked="{Binding IsComplete}"/>
-                            <Frame Grid.Column="1">
-                                <Label Text="{Binding Text}"
-                                       FontSize="18"/>
-                            </Frame>
-                        </Grid>
-                    </SwipeView>
-                </DataTemplate>
-            </CollectionView.ItemTemplate>
-        </CollectionView>
 
-        <Grid Grid.Row="3" ColumnDefinitions="Auto, *"
-              Margin="25,0">
-            <CheckBox IsChecked="{Binding InputCompleted}"/>
-            <Frame Grid.Column="1">
-                <Entry Text="{Binding Text}"
-                       ReturnCommand="{Binding AddCommand}"
-                       Placeholder="Enter task"/>
-            </Frame>
-        </Grid>
+        <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+            <CollectionView
+                x:Name="UserListCollectionView"
+                Margin="10,0"
+                IsVisible="{Binding IsVisible}"
+                ItemsSource="{Binding ListCollection}"
+                MaximumHeightRequest="{Binding ListCollectionHeight}"
+                SelectedItem="{Binding SelectedList}"
+                SelectionMode="Single">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:UserList}">
+                        <Label
+                            Padding="0,5"
+                            BackgroundColor="#46CDD0"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Name}"
+                            TextColor="White" />
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
 
-        <Button Grid.Row="4"
-                HorizontalOptions="Start"
-                VerticalOptions="End"
-                Text="Save List"
-                Command="{Binding SaveListCommand}"/>
+            <Entry
+                Grid.Row="1"
+                Margin="50,0,50,10"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalTextAlignment="Center"
+                Placeholder="Title"
+                ReturnCommand="{Binding UpdateTitleCommand}"
+                Text="{Binding SelectedList.Name}"
+                TextColor="White" />
 
-        <Button Grid.Row="4" Grid.Column="1"
-                HorizontalOptions="End"
-                VerticalOptions="End"
-                Text="Add List"
-                Command="{Binding AddListCommand}"/>
-        
+            <CollectionView
+                Grid.Row="2"
+                ItemsSource="{Binding Items}"
+                MaximumHeightRequest="{Binding ItemCollectionHeight}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:ListItem}">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Red"
+                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Delete" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid
+                                Margin="15,0"
+                                Padding="0,10,15,0"
+                                ColumnDefinitions="Auto, *">
+                                <CheckBox IsChecked="{Binding IsComplete}" />
+                                <Frame Grid.Column="1">
+                                    <Label FontSize="18" Text="{Binding Text}" />
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Grid
+                Grid.Row="3"
+                Margin="15,25"
+                Padding="0,0,15,0"
+                ColumnDefinitions="Auto, *">
+                <CheckBox IsChecked="{Binding InputCompleted}" />
+                <Frame Grid.Column="1">
+                    <Entry
+                        Placeholder="Enter task"
+                        ReturnCommand="{Binding AddCommand}"
+                        Text="{Binding Text}" />
+                </Frame>
+            </Grid>
+
+            <StackLayout Padding="60,20,30,0">
+                <Grid>
+                    <Button
+                        BackgroundColor="#46CDE0"
+                        BorderColor="#A1EAD6"
+                        BorderWidth="2"
+                        Command="{Binding SaveListCommand}"
+                        FontAttributes="Bold"
+                        HorizontalOptions="Start"
+                        Text="Save List"
+                        TextColor="White"
+                        VerticalOptions="End" />
+
+                    <Button
+                        BackgroundColor="#46CDE0"
+                        BorderColor="#A1EAD6"
+                        BorderWidth="2"
+                        Command="{Binding AddListCommand}"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="Add List"
+                        TextColor="White"
+                        VerticalOptions="Start" />
+                </Grid>
+
+            </StackLayout>
+
+        </StackLayout>
+
+
+
+
     </Grid>
+
+
+
+
+
+
+
 </ContentPage>
+
