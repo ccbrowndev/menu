@@ -13,6 +13,7 @@ namespace menu.Models
         public string Name { get; set; }
         [Column("deadline")]
         public DateTime Deadline { get; set; }
-
+        [Ignore]
+public List<ListItem> ListItems { get; set; }
     }
 }

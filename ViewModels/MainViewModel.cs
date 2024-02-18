@@ -24,7 +24,7 @@ namespace menu.ViewModels
             ListCollection = new ObservableCollection<UserList>(db.GetUserLists());
             SelectedList = ListCollection.FirstOrDefault();
             Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
-
+            
               
         }
 
@@ -146,7 +146,7 @@ namespace menu.ViewModels
             UserList newList = new()
             {
                 Name = "New List " + (ListCollection.Count + 1),
-                ListItems = new List<ListItem>()
+                ListItems = new List<ListItem>(),
                 Deadline = Deadline,
             };
 
