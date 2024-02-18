@@ -107,6 +107,7 @@ namespace menu.ViewModels
                 if (list.Id == SelectedList.Id)
                 {
                     list.Name = SelectedList.Name;
+                    list.Deadline = SelectedList.Deadline;
                     newListCollection.Add(list);
                     db.SaveUserList(list);
                 } else
