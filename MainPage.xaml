@@ -40,6 +40,10 @@
                ReturnCommand="{Binding UpdateTitleCommand}"
                Placeholder="Title"/>
 
+        <DatePicker
+    Grid.Row="4"
+Format="D" />
+
         <CollectionView Grid.Row="2"
                         ItemsSource="{Binding Items}"
                         MaximumHeightRequest="{Binding ItemCollectionHeight}">
@@ -78,10 +82,7 @@
             </Frame>
         </Grid>
 
-        <DatePicker
-        Grid.Row="4"
-    Date="{Binding Deadline, Mode=TwoWay}"
-    Format="D" />
+        
 
         <Button Grid.Row="4" Grid.Column="1"
                 HorizontalOptions="End"

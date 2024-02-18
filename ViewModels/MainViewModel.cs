@@ -3,6 +3,9 @@ using CommunityToolkit.Mvvm.Input;
 using menu.Data;
 using menu.Models;
 using System.Collections.ObjectModel;
+using menu;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 namespace menu.ViewModels
 {
@@ -22,7 +25,7 @@ namespace menu.ViewModels
             SelectedList = ListCollection.FirstOrDefault();
             Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
 
-            Lists = new ObservableCollection<UserList>();
+              
         }
 
         [ObservableProperty]
@@ -51,7 +54,7 @@ namespace menu.ViewModels
         string text;
 
         [ObservableProperty]
-        ObservableCollection<UserList> lists;
+        DateTime deadline = DateTime.Now.AddDays(7);
 
         [RelayCommand]
         void ToggleListCollectionVisibility()
@@ -142,6 +145,7 @@ namespace menu.ViewModels
             UserList newList = new()
             {
                 Name = "New List " + (ListCollection.Count + 1),
+                Deadline = Deadline,
             };
 
             ListCollection.Add(newList);
@@ -150,5 +154,21 @@ namespace menu.ViewModels
 
             
         }
+
+        public async Task CheckDeadlinesAsync()
+        {
+            var listsWithTodaysDeadline = GetListsWithTodaysDeadline();
+            if (listsWithTodaysDeadline.Any())
+            {
+                await Shell.Current.DisplayAlert("Deadline Today", "You have list whose deadline is today.", "OK");
+            }
+        }
+
+        public List<UserList> GetListsWithTodaysDeadline()
+        {
+            var today = DateTime.Now.Date;
+            return ListCollection.Where(list => list.Deadline.Date == today).ToList();
+        }
+
     }
 }
