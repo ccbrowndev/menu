@@ -28,6 +28,7 @@ namespace menu.Data
                 db.Insert(addListItemItem);
                 db.Insert(addListItem);
                 db.Insert(deleteListItemItem);
+                lists = db.Query<UserList>("SELECT * FROM user_lists");
             }
 
             return lists;
