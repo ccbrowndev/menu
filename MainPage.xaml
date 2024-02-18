@@ -42,6 +42,7 @@
 
         <DatePicker
     Grid.Row="4"
+Date="{Binding Deadline, Mode=TwoWay}"
 Format="D" />
 
         <CollectionView Grid.Row="2"
