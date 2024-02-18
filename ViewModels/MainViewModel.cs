@@ -21,6 +21,8 @@ namespace menu.ViewModels
             ListCollection = new ObservableCollection<UserList>(db.GetUserLists());
             SelectedList = ListCollection.FirstOrDefault();
             Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
+
+            Lists = new ObservableCollection<UserList>();
         }
 
         [ObservableProperty]
@@ -47,6 +49,9 @@ namespace menu.ViewModels
 
         [ObservableProperty]
         string text;
+
+        [ObservableProperty]
+        ObservableCollection<UserList> lists;
 
         [RelayCommand]
         void ToggleListCollectionVisibility()
@@ -142,6 +147,8 @@ namespace menu.ViewModels
             ListCollection.Add(newList);
             SelectedList = newList;
             Items = new ObservableCollection<ListItem>();
+
+            
         }
     }
 }

@@ -11,5 +11,8 @@ namespace menu.Models
         [MaxLength(50)]
         [Column("name")]
         public string Name { get; set; }
+        [Column("deadline")]
+        public DateTime Deadline { get; set; }
+
     }
 }

@@ -78,6 +78,11 @@
             </Frame>
         </Grid>
 
+        <DatePicker
+        Grid.Row="4"
+    Date="{Binding Deadline, Mode=TwoWay}"
+    Format="D" />
+
         <Button Grid.Row="4" Grid.Column="1"
                 HorizontalOptions="End"
                 VerticalOptions="End"
