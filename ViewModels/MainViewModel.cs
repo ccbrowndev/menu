@@ -146,14 +146,24 @@ namespace menu.ViewModels
             UserList newList = new()
             {
                 Name = "New List " + (ListCollection.Count + 1),
+                ListItems = new List<ListItem>()
                 Deadline = Deadline,
             };
 
             ListCollection.Add(newList);
             SelectedList = newList;
             Items = new ObservableCollection<ListItem>();
+        }
 
-            
+        [RelayCommand]
+        void SaveList()
+        {
+            if (Items == null || Items.Count == 0)
+                return;
+
+            SelectedList.ListItems = Items.ToList();
+            db.SaveUserList(SelectedList);
+
         }
 
         public async Task CheckDeadlinesAsync()

@@ -10,6 +10,7 @@ namespace menu
             BindingContext = vm;
             UserListCollectionView.SelectionChanged += vm.OnListCollectionSelectionChanged; 
         }
+
     }
 
 }
