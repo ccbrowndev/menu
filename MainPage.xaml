@@ -61,6 +61,11 @@
                 Text="{Binding SelectedList.Name}"
                 TextColor="White" />
 
+            <DatePicker
+                Grid.Row="4"
+                Date="{Binding SelectedList.Deadline, Mode=TwoWay}"
+                Format="D" />
+          
             <CollectionView
                 Grid.Row="2"
                 ItemsSource="{Binding Items}"
@@ -133,7 +138,6 @@
             </StackLayout>
 
         </StackLayout>
-
 
 
 
