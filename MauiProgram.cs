@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using menu.Data;
+using menu.ViewModels;
+using Microsoft.Extensions.Logging;
 
 namespace menu
 {
@@ -15,8 +17,12 @@ namespace menu
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
                 });
 
+            builder.Services.AddSingleton<MainPage>();
+            builder.Services.AddSingleton<MainViewModel>();
+            builder.Services.AddSingleton<MenuDatabase>();
+
 #if DEBUG
-		builder.Logging.AddDebug();
+    		builder.Logging.AddDebug();
 #endif
 
             return builder.Build();
