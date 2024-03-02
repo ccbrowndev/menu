@@ -11,6 +11,14 @@ namespace menu
             UserListCollectionView.SelectionChanged += vm.OnListCollectionSelectionChanged; 
         }
 
+        private async void OnNavigateButtonClicked(object sender, EventArgs e)
+        {
+            var sharePage = new Share();
+
+            await Shell.Current.Navigation.PushAsync(sharePage);
+        }
+
+
     }
 
 }

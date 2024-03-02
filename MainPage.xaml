@@ -15,7 +15,7 @@
             Text="View Lists" />
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="Share" />
+        <ToolbarItem Text="Share" Clicked="OnNavigateButtonClicked"/>
     </ContentPage.ToolbarItems>
 
     <Grid

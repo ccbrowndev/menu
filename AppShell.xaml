@@ -11,4 +11,8 @@
         Title="List"
         ContentTemplate="{DataTemplate local:MainPage}"
         Route="MainPage" />
+    <ShellContent
+        Title="Share Center"
+        ContentTemplate="{DataTemplate local:ShareCenter}"
+        Route="ShareCenter"/>
 </Shell>

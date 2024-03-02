@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="menu.ShareCenter"
+             Title="ShareCenter">
+    <Shell.TitleView>
+        <Button
+            BackgroundColor="#90C7F0"
+            Command="{Binding notDecidedYet}"
+            FontAttributes="Bold"
+            FontSize="Large"
+            Text="Share Center"
+        />
+    </Shell.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="" />
+    </ContentPage.ToolbarItems>
+
+    <Grid
+    ColumnSpacing="10"
+    RowDefinitions="Auto, 50, Auto, Auto, *"
+    RowSpacing="10"
+    VerticalOptions="FillAndExpand">
+
+        <Image Aspect="AspectFill" Source="background.svg" />
+
+    </Grid>
+
+</ContentPage>

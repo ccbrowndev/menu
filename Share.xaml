@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="menu.Share"
+             Title="Share">
+    <Grid
+        ColumnSpacing="10"
+        RowDefinitions="Auto, 50, Auto, Auto, *"
+        RowSpacing="10"
+        VerticalOptions="FillAndExpand">
+
+        <Image Aspect="AspectFill" Source="background2.svg" />
+
+        <Grid Padding="20,10,20,10" VerticalOptions="FillAndExpand">
+
+            <BoxView Color="White" Opacity="0.4" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+
+            <VerticalStackLayout>
+                <Label Text="Share to :" FontSize="25" TextColor="White" FontAttributes="Bold" Margin="20,15,20,15"/>
+                <HorizontalStackLayout HeightRequest="45" VerticalOptions="Center" Margin="20,0,0,15" WidthRequest="150">
+                    <Button Text="-" Clicked="DecreaseCount" FontAttributes="Bold" FontSize="20" BackgroundColor="#388e3c"/>
+                    <Label x:Name="ShareCountEntry" Text="1" VerticalOptions="Center" WidthRequest="30" FontAttributes="Bold" Margin="15,0,0,0"/>
+                    <Button Text="+" Clicked="IncreaseCount" FontAttributes="Bold" FontSize="20" BackgroundColor="White" TextColor="#388e3c"/>
+                </HorizontalStackLayout>
+
+                <Label Text="Permission :" FontSize="25" TextColor="White" FontAttributes="Bold" Margin="20,0,20,15"/>
+                <HorizontalStackLayout HeightRequest="45" Margin="20,0,0,15" WidthRequest="235">
+                    <Button Text="Can View" Clicked="CanViewClicked" FontAttributes="Bold" BackgroundColor="#388e3c"/>
+                    <Button Text="Can Edit" Clicked="CanEditClicked" FontAttributes="Bold" BackgroundColor="White" Margin="45,0,0,0" TextColor="#388e3c"/>
+                </HorizontalStackLayout>
+
+                <CollectionView BackgroundColor="White" WidthRequest="100" HeightRequest="100"/>
+
+                <Button Text="Generate" Clicked="GenerateClicked" Margin="0,15,0,15"/>
+
+                <HorizontalStackLayout>
+                    <Entry x:Name="GeneratedCodeEntry" Text="%SHKSPSUJSU9WWI8E" IsReadOnly="True"/>
+                    <Button Text="COPY" Clicked="CopyClicked" />
+                </HorizontalStackLayout>
+
+            </VerticalStackLayout>
+
+        </Grid>
+
+
+    </Grid>
+
+
+</ContentPage>
