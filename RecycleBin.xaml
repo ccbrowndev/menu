@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="menu.RecycleBin"
+             Title="RecycleBin"
+             xmlns:model="clr-namespace:menu.Models"
+             xmlns:viewmodel="clr-namespace:menu.ViewModels"
+             x:DataType="viewmodel:MainViewModel">
+    <Shell.TitleView>
+        <Button
+            BackgroundColor="#90C7F0"
+            FontAttributes="Bold"
+            FontSize="Large"
+            Text="Recycle Bin"
+        />
+    </Shell.TitleView>
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="" />
+    </ContentPage.ToolbarItems>
+
+
+    <Grid
+            ColumnSpacing="10"
+            RowDefinitions="Auto, 50, Auto, Auto, *"
+            RowSpacing="10"
+            VerticalOptions="FillAndExpand">
+
+        <Image Grid.Row="0" Aspect="AspectFill" Source="background.svg" />
+
+        <VerticalStackLayout
+                Grid.Row="0">
+            <CollectionView
+                    BackgroundColor="White"
+                    ItemsSource="{Binding Items}"
+                    MaximumHeightRequest="{Binding ItemCollectionHeight}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:ListItem}">
+                        <Grid
+                                Margin="15,0"
+                                Padding="0,10,15,0"
+                                ColumnDefinitions="Auto, *">
+                            <CheckBox IsChecked="{Binding IsComplete}" />
+                            <Frame Grid.Column="1">
+                                <Label FontSize="18" Text="{Binding Text}" />
+                            </Frame>
+                        </Grid>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <HorizontalStackLayout HeightRequest="45" Margin="20,20,0,15" WidthRequest="235">
+                <Button Text="Recover" Clicked="RecoveredClicked" FontAttributes="Bold" BackgroundColor="Navy"/>
+                <Button Text="Delete" Clicked="DeletedClicked"  FontAttributes="Bold" BackgroundColor="White" Margin="45,0,0,0" TextColor="Navy"/>
+
+            </HorizontalStackLayout>
+        </VerticalStackLayout>
+    </Grid>
+</ContentPage>
