@@ -1,8 +1,15 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:menu.ViewModels"
              x:Class="menu.Share"
              Title="Share">
+    
+    <!--  新   -->
+    <ContentPage.BindingContext>
+        <vm:MainViewModel />
+    </ContentPage.BindingContext>
+
     <Grid
         ColumnSpacing="10"
         RowDefinitions="Auto, 50, Auto, Auto, *"
@@ -30,13 +37,17 @@
                 </HorizontalStackLayout>
 
                 <CollectionView BackgroundColor="White" WidthRequest="100" HeightRequest="100"/>
+                
+                <!-- <Button Text="Generate" Clicked="GenerateClicked" Margin="0,15,0,15"/> -->
+                <Button Text="Generate" Command="{Binding GenerateShareCodeCommand}" Margin="0,15,0,15"/>
+                <Entry x:Name="GeneratedCodeEntry" Text="{Binding ShareCode}" IsReadOnly="True"/>
 
-                <Button Text="Generate" Clicked="GenerateClicked" Margin="0,15,0,15"/>
-
+                <!-- x:Name="GeneratedCodeEntry" -->
                 <HorizontalStackLayout>
-                    <Entry x:Name="GeneratedCodeEntry" Text="%SHKSPSUJSU9WWI8E" IsReadOnly="True"/>
+                    <Entry x:Name="ReadOnlyShareCodeEntry" Text="%SHKSPSUJSU9WWI8E" IsReadOnly="True"/>
                     <Button Text="COPY" Clicked="CopyClicked" />
                 </HorizontalStackLayout>
+                
 
             </VerticalStackLayout>
 
