@@ -24,8 +24,8 @@ namespace menu.ViewModels
             ListCollection = new ObservableCollection<UserList>(db.GetUserLists());
             SelectedList = ListCollection.FirstOrDefault();
             Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
-            
-              
+            TrashUserLists = new ObservableCollection<UserList>(database.GetTrashUserLists());
+
         }
 
         [ObservableProperty]
@@ -55,6 +55,11 @@ namespace menu.ViewModels
 
         [ObservableProperty]
         DateTime deadline = DateTime.Now.AddDays(7);
+
+        [ObservableProperty]
+        ObservableCollection<UserList> trashUserLists;
+
+
 
         [RelayCommand]
         void ToggleListCollectionVisibility()
@@ -165,6 +170,43 @@ namespace menu.ViewModels
             db.SaveUserList(SelectedList);
 
         }
+
+        [RelayCommand]
+        void MoveToTrash(UserList list)
+        {
+            list.IsInTrash = true;
+            db.SaveUserList(list);
+            ListCollection.Remove(list);
+        }
+        [RelayCommand]
+        void RecoverList(UserList list)
+        {
+            db.RestoreFromTrash(list);
+            RefreshTrashList();
+        }
+
+        [RelayCommand]
+        void DeleteForever(UserList list)
+        {
+            db.DeleteUserListPermanently(list);
+            RefreshTrashList();
+        }
+
+        public void RefreshTrashList()
+        {
+            TrashUserLists = new ObservableCollection<UserList>(db.GetTrashUserLists());
+        }
+
+        [RelayCommand]
+        void DeleteList(UserList list)
+        {
+            if (list == null) return;
+
+            db.MoveToTrash(list);
+            ListCollection.Remove(list);
+        }
+
+
 
         public async Task CheckDeadlinesAsync()
         {

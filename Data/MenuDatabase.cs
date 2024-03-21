@@ -16,9 +16,17 @@ namespace menu.Data
             db.CreateTable<ListItem>();
         }
 
-        public List<UserList> GetUserLists()
+        public List<UserList> GetUserLists(bool includeTrash = false)
         {
-            List<UserList> lists = db.Query<UserList>("SELECT * FROM user_lists");
+            List<UserList> lists;
+            if (includeTrash)
+            {
+                lists = db.Query<UserList>("SELECT * FROM user_lists");
+            }
+            else
+            {
+                lists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 0");
+            }
 
             if (lists == null || lists.Count == 0)
             {
@@ -28,10 +36,23 @@ namespace menu.Data
                 db.Insert(addListItemItem);
                 db.Insert(addListItem);
                 db.Insert(deleteListItemItem);
-                lists = db.Query<UserList>("SELECT * FROM user_lists");
+
+                if (includeTrash)
+                {
+                    lists = db.Query<UserList>("SELECT * FROM user_lists");
+                }
+                else
+                {
+                    lists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 0");
+                }
             }
 
             return lists;
+        }
+
+        public List<UserList> GetTrashUserLists()
+        {
+            return db.Table<UserList>().Where(u => u.IsInTrash).ToList();
         }
 
         public int SaveUserList(UserList list)
@@ -49,7 +70,19 @@ namespace menu.Data
             }
         }
 
-        public UserList DeleteUserList(UserList list)
+        public void MoveToTrash(UserList list)
+        {
+            list.IsInTrash = true;
+            db.Update(list);
+        }
+
+        public void RestoreFromTrash(UserList list)
+        {
+            list.IsInTrash = false;
+            db.Update(list);
+        }
+
+        public UserList DeleteUserListPermanently(UserList list)
         {
             int result = db.Delete(list);
             if (result == 0)
