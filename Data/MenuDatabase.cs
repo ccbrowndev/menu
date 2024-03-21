@@ -16,17 +16,11 @@ namespace menu.Data
             db.CreateTable<ListItem>();
         }
 
-        public List<UserList> GetUserLists(bool includeTrash = false)
+        public List<UserList> GetUserLists()
         {
             List<UserList> lists;
-            if (includeTrash)
-            {
-                lists = db.Query<UserList>("SELECT * FROM user_lists");
-            }
-            else
-            {
+            
                 lists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 0");
-            }
 
             if (lists == null || lists.Count == 0)
             {
@@ -37,14 +31,7 @@ namespace menu.Data
                 db.Insert(addListItem);
                 db.Insert(deleteListItemItem);
 
-                if (includeTrash)
-                {
-                    lists = db.Query<UserList>("SELECT * FROM user_lists");
-                }
-                else
-                {
                     lists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 0");
-                }
             }
 
             return lists;
@@ -52,7 +39,23 @@ namespace menu.Data
 
         public List<UserList> GetTrashUserLists()
         {
-            return db.Table<UserList>().Where(u => u.IsInTrash).ToList();
+            List<UserList> trashLists;
+
+            trashLists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 1");
+
+            if (trashLists == null || trashLists.Count == 0)
+            {
+                db.Insert(defaultUserList);
+
+                db.Insert(changeTitleItem);
+                db.Insert(addListItemItem);
+                db.Insert(addListItem);
+                db.Insert(deleteListItemItem);
+
+                trashLists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 1");
+            }
+
+            return trashLists;
         }
 
         public int SaveUserList(UserList list)

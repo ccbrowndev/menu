@@ -15,7 +15,8 @@
             Text="Recycle Bin" />
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Text="" />
+        <ToolbarItem Command="{Binding RecoverSelectedListsCommand}" Text="Restore" />
+        <ToolbarItem Command="{Binding DeleteForeverCommand}" Text="Delete Forever" />
     </ContentPage.ToolbarItems>
 
 
@@ -32,56 +33,26 @@
 
         <VerticalStackLayout Grid.Row="0">
             <CollectionView
-                BackgroundColor="White"
                 ItemsSource="{Binding TrashUserLists}"
-                MaximumHeightRequest="{Binding ListCollectionHeight}">
+                SelectedItems="{Binding SelectedTrashItems}"
+                SelectionMode="Multiple">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="model:UserList">
-                        <Grid Padding="10" ColumnDefinitions="*, Auto, Auto">
-                            <Label
-                                Grid.Column="0"
-                                FontSize="Medium"
-                                Text="{Binding Name}"
-                                VerticalOptions="Center" />
-                            <Button
-                                Grid.Column="1"
-                                Margin="5,0"
-                                BackgroundColor="LightGreen"
-                                Command="{Binding Path=BindingContext.RecoverListCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                CommandParameter="{Binding .}"
-                                HorizontalOptions="End"
-                                Text="Recover" />
-                            <Button
-                                Grid.Column="2"
-                                Margin="5,0"
-                                BackgroundColor="LightCoral"
-                                Command="{Binding Path=BindingContext.DeleteForeverCommand, Source={RelativeSource AncestorType={x:Type ContentPage}}}"
-                                CommandParameter="{Binding .}"
-                                HorizontalOptions="End"
-                                Text="Delete Forever" />
-                        </Grid>
+                    <DataTemplate>
+                        <Frame
+                            Margin="10"
+                            Padding="10"
+                            BorderColor="#cccccc">
+                            <StackLayout>
+                                <Label
+                                    FontAttributes="Bold"
+                                    FontSize="Medium"
+                                    Text="{Binding Text}" />
+                                <Label FontSize="Small" Text="{Binding Deadline, StringFormat='{0:yyyy-MM-dd}'}" />
+                            </StackLayout>
+                        </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-            <HorizontalStackLayout
-                Margin="20,20,0,15"
-                HeightRequest="45"
-                WidthRequest="235">
-                <Button
-                    BackgroundColor="Navy"
-                    Clicked="RecoveredClicked"
-                    FontAttributes="Bold"
-                    Text="Recover" />
-                <Button
-                    Margin="45,0,0,0"
-                    BackgroundColor="White"
-                    Clicked="DeletedClicked"
-                    FontAttributes="Bold"
-                    Text="Delete"
-                    TextColor="Navy" />
-
-            </HorizontalStackLayout>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>

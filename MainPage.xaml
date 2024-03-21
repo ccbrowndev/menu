@@ -16,10 +16,6 @@
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
         <ToolbarItem Clicked="OnNavigateButtonClicked" Text="Share" />
-        <ToolbarItem
-            Command="{Binding DeleteListCommand}"
-            CommandParameter="{Binding SelectedList}"
-            Text="Delete" />
     </ContentPage.ToolbarItems>
 
     <Grid
@@ -135,12 +131,25 @@
                         BackgroundColor="#8CAEDE"
                         BorderColor="#DFD8F7"
                         BorderWidth="2"
+                        Command="{Binding DeleteListCommand}"
+                        FontAttributes="Bold"
+                        HorizontalOptions="End"
+                        Text="Delete List"
+                        TextColor="White"
+                        VerticalOptions="Start" />
+
+                    <Button
+                        BackgroundColor="#8CAEDE"
+                        BorderColor="#DFD8F7"
+                        BorderWidth="2"
                         Command="{Binding AddListCommand}"
                         FontAttributes="Bold"
                         HorizontalOptions="End"
                         Text="Add List"
                         TextColor="White"
                         VerticalOptions="Start" />
+
+
 
                 </Grid>
 

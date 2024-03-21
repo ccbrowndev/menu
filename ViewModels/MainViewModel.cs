@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using menu;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace menu.ViewModels
 {
@@ -24,8 +25,7 @@ namespace menu.ViewModels
             ListCollection = new ObservableCollection<UserList>(db.GetUserLists());
             SelectedList = ListCollection.FirstOrDefault();
             Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
-            TrashUserLists = new ObservableCollection<UserList>(database.GetTrashUserLists());
-
+            TrashUserLists = new ObservableCollection<UserList>(db.GetTrashUserLists());
         }
 
         [ObservableProperty]
@@ -58,6 +58,9 @@ namespace menu.ViewModels
 
         [ObservableProperty]
         ObservableCollection<UserList> trashUserLists;
+
+        [ObservableProperty]
+        ObservableCollection<UserList> selectedTrashItems = new ObservableCollection<UserList>();
 
 
 
@@ -178,19 +181,36 @@ namespace menu.ViewModels
             db.SaveUserList(list);
             ListCollection.Remove(list);
         }
-        [RelayCommand]
-        void RecoverList(UserList list)
-        {
-            db.RestoreFromTrash(list);
-            RefreshTrashList();
-        }
 
         [RelayCommand]
-        void DeleteForever(UserList list)
+        void RecoverSelectedLists()
         {
-            db.DeleteUserListPermanently(list);
-            RefreshTrashList();
+            if (SelectedTrashItems != null && SelectedTrashItems.Count > 0)
+            {
+                foreach (var list in SelectedTrashItems.ToList())
+                {
+                    db.RestoreFromTrash(list);
+                }
+                RefreshTrashList(); 
+                SelectedTrashItems.Clear(); 
+            }
         }
+
+
+        [RelayCommand]
+        void DeleteSelectedListsForever()
+        {
+            if (SelectedTrashItems != null && SelectedTrashItems.Count > 0)
+            {
+                foreach (var list in SelectedTrashItems.ToList())
+                {
+                    db.DeleteUserListPermanently(list);
+                }
+                RefreshTrashList(); 
+                SelectedTrashItems.Clear();
+            }
+        }
+
 
         public void RefreshTrashList()
         {
@@ -198,12 +218,28 @@ namespace menu.ViewModels
         }
 
         [RelayCommand]
-        void DeleteList(UserList list)
-        {
-            if (list == null) return;
 
-            db.MoveToTrash(list);
-            ListCollection.Remove(list);
+        async Task DeleteList()
+        {
+            if (Items == null) return;
+
+            bool isConfirmed = await Shell.Current.DisplayAlert(
+                "Confirm Delete",
+                $"Are you sure you want to delete '{SelectedList.Name}'?",
+                "Yes", "No");
+
+            if (isConfirmed)
+            {
+                db.MoveToTrash(SelectedList);
+                ListCollection.Remove(SelectedList);
+
+                var welcomeList = ListCollection.FirstOrDefault(l => l.Name == "Welcome") ?? ListCollection.FirstOrDefault();
+                if (welcomeList != null)
+                {
+                    SelectedList = welcomeList;
+                    Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
+                }
+            }
         }
 
 
