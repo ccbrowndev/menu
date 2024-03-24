@@ -19,13 +19,17 @@ namespace menu.ViewModels
             db = database;
             IsVisible = false;
             var displayInfo = DeviceDisplay.MainDisplayInfo;
+
             ListCollectionHeight = (displayInfo.Height / displayInfo.Density) * .25;
             ItemCollectionHeight = (displayInfo.Height / displayInfo.Density) * .5;
 
             ListCollection = new ObservableCollection<UserList>(db.GetUserLists());
             SelectedList = ListCollection.FirstOrDefault();
             Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
-            TrashUserLists = new ObservableCollection<UserList>(db.GetTrashUserLists());
+
+            TrashListCollection = new ObservableCollection<UserList>(db.GetTrashUserLists());
+            SelectedTrashList = TrashListCollection.FirstOrDefault();
+            TrashUserLists = new ObservableCollection<UserList>(db.GetTrashLists());
         }
 
         [ObservableProperty]
@@ -42,7 +46,16 @@ namespace menu.ViewModels
         ObservableCollection<UserList> listCollection;
 
         [ObservableProperty]
+        ObservableCollection<UserList> trashListCollection;
+
+        [ObservableProperty]
         ObservableCollection<ListItem> items;
+
+        [ObservableProperty]
+        ObservableCollection<UserList> trashUserLists;
+
+        [ObservableProperty]
+        UserList selectedTrashList;
 
         [ObservableProperty]
         UserList selectedList;
@@ -55,9 +68,6 @@ namespace menu.ViewModels
 
         [ObservableProperty]
         DateTime deadline = DateTime.Now.AddDays(7);
-
-        [ObservableProperty]
-        ObservableCollection<UserList> trashUserLists;
 
         [ObservableProperty]
         ObservableCollection<UserList> selectedTrashItems = new ObservableCollection<UserList>();

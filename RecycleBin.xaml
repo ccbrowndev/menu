@@ -14,11 +14,6 @@
             FontSize="Large"
             Text="Recycle Bin" />
     </Shell.TitleView>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding RecoverSelectedListsCommand}" Text="Restore" />
-        <ToolbarItem Command="{Binding DeleteForeverCommand}" Text="Delete Forever" />
-    </ContentPage.ToolbarItems>
-
 
     <Grid
         ColumnSpacing="10"
@@ -26,33 +21,28 @@
         RowSpacing="10"
         VerticalOptions="FillAndExpand">
 
-        <Image
-            Grid.Row="0"
-            Aspect="AspectFill"
-            Source="background.svg" />
 
-        <VerticalStackLayout Grid.Row="0">
+        <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
             <CollectionView
+                Grid.Row="2"
                 ItemsSource="{Binding TrashUserLists}"
-                SelectedItems="{Binding SelectedTrashItems}"
-                SelectionMode="Multiple">
+                MaximumHeightRequest="{Binding ItemCollectionHeight}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate>
-                        <Frame
-                            Margin="10"
-                            Padding="10"
-                            BorderColor="#cccccc">
-                            <StackLayout>
-                                <Label
-                                    FontAttributes="Bold"
-                                    FontSize="Medium"
-                                    Text="{Binding Text}" />
-                                <Label FontSize="Small" Text="{Binding Deadline, StringFormat='{0:yyyy-MM-dd}'}" />
-                            </StackLayout>
-                        </Frame>
+                    <DataTemplate x:DataType="{x:Type model:UserList}">
+                        <SwipeView>
+                            <Grid
+                                Margin="15,0"
+                                Padding="0,10,15,0"
+                                ColumnDefinitions="Auto, *">
+                                <CheckBox IsChecked="{Binding IsInTrash}" />
+                                <Frame Grid.Column="1">
+                                    <Label FontSize="18" Text="{Binding Name}" />
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </VerticalStackLayout>
+        </StackLayout>
     </Grid>
 </ContentPage>

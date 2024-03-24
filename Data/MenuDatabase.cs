@@ -106,6 +106,11 @@ namespace menu.Data
             return db.Table<ListItem>().Where(li => li.UserListId == id).ToList();
         }
 
+        public List<UserList> GetTrashLists()
+        {
+            return db.Table<UserList>().Where(li => li.IsInTrash == true).ToList();
+        }
+
         public ListItem GetListItemById(int id)
         {
             return db.Table<ListItem>().Where(li => li.Id == id).FirstOrDefault();
