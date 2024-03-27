@@ -10,6 +10,7 @@
     <Shell.TitleView>
         <Button
             BackgroundColor="#90C7F0"
+            Command="{Binding ToggleListCollectionVisibilityCommand}"
             FontAttributes="Bold"
             FontSize="Large"
             Text="Recycle Bin" />
@@ -21,30 +22,88 @@
         RowSpacing="10"
         VerticalOptions="FillAndExpand">
 
-        <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+        <Image Aspect="AspectFill" Source="background.svg" />
 
+
+        <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
             <CollectionView
                 x:Name="UserListCollectionView"
-                Grid.Row="2"
                 Margin="10,0"
                 IsVisible="{Binding IsVisible}"
-                ItemsSource="{Binding TrashListCollection}"
-                MaximumHeightRequest="{Binding ItemCollectionHeight}"
-                SelectedItem="{Binding SelectedTrashList}"
-                SelectionMode="Multiple">
+                ItemsSource="{Binding ListCollection}"
+                MaximumHeightRequest="{Binding ListCollectionHeight}"
+                SelectedItem="{Binding SelectedList}"
+                SelectionMode="Single">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:UserList}">
-                        <Grid
-                            Margin="15,0"
-                            Padding="0,10,15,0"
-                            ColumnDefinitions="Auto, *">
-                            <Frame Grid.Column="1">
-                                <Label FontSize="18" Text="{Binding Name}" />
-                            </Frame>
-                        </Grid>
+                        <Label
+                            Padding="0,5"
+                            BackgroundColor="#46CDD0"
+                            FontAttributes="Bold"
+                            FontSize="16"
+                            HorizontalTextAlignment="Center"
+                            Text="{Binding Name}"
+                            TextColor="White" />
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+
+
+            <Entry
+                Grid.Row="1"
+                Margin="50,0,50,10"
+                FontAttributes="Bold"
+                FontSize="20"
+                HorizontalTextAlignment="Center"
+                Placeholder="Title"
+                ReturnCommand="{Binding UpdateTitleCommand}"
+                Text="{Binding SelectedList.Name}"
+                TextColor="White" />
+
+            <CollectionView
+                Grid.Row="2"
+                ItemsSource="{Binding Items}"
+                MaximumHeightRequest="{Binding ItemCollectionHeight}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="{x:Type model:ListItem}">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Red"
+                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Delete" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid
+                                Margin="15,0"
+                                Padding="0,10,15,0"
+                                ColumnDefinitions="Auto, *">
+                                <CheckBox IsChecked="{Binding IsComplete}" />
+                                <Frame Grid.Column="1">
+                                    <Label FontSize="18" Text="{Binding Text}" />
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+
+            <Grid
+                Grid.Row="3"
+                Margin="15,25,15,15"
+                Padding="0,0,15,0"
+                ColumnDefinitions="Auto, *">
+                <CheckBox IsChecked="{Binding InputCompleted}" />
+                <Frame Grid.Column="1">
+                    <Entry
+                        Placeholder="Enter task"
+                        ReturnCommand="{Binding AddCommand}"
+                        Text="{Binding Text}" />
+                </Frame>
+            </Grid>
+
         </StackLayout>
     </Grid>
 </ContentPage>

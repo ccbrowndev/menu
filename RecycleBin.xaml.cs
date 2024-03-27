@@ -4,9 +4,11 @@ namespace menu
 {
     public partial class RecycleBin : ContentPage
     {
-        public RecycleBin()
+        public RecycleBin(MainViewModel vm)
         {
             InitializeComponent();
+            BindingContext = vm;
+            UserListCollectionView.SelectionChanged += vm.OnListCollectionSelectionChanged;
         }
 
         private void RecoveredClicked(object sender, EventArgs e)
