@@ -1,14 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:vm="clr-namespace:menu.ViewModels"
-             x:Class="menu.Share"
-             Title="Share">
-    
-    <!--  新   -->
-    <ContentPage.BindingContext>
-        <vm:MainViewModel />
-    </ContentPage.BindingContext>
+<ContentPage
+    x:Class="menu.Share"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:vm="clr-namespace:menu.ViewModels"
+    Title="Share">
+
+    <!--  新  -->
 
     <Grid
         ColumnSpacing="10"
@@ -20,34 +18,94 @@
 
         <Grid Padding="20,10,20,10" VerticalOptions="FillAndExpand">
 
-            <BoxView Color="White" Opacity="0.4" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand"/>
+            <BoxView
+                HorizontalOptions="FillAndExpand"
+                Opacity="0.4"
+                VerticalOptions="FillAndExpand"
+                Color="White" />
 
             <VerticalStackLayout>
-                <Label Text="Share to :" FontSize="25" TextColor="White" FontAttributes="Bold" Margin="20,15,20,15"/>
-                <HorizontalStackLayout HeightRequest="45" VerticalOptions="Center" Margin="20,0,0,15" WidthRequest="150">
-                    <Button Text="-" Clicked="DecreaseCount" FontAttributes="Bold" FontSize="20" BackgroundColor="#388e3c"/>
-                    <Label x:Name="ShareCountEntry" Text="1" VerticalOptions="Center" WidthRequest="30" FontAttributes="Bold" Margin="15,0,0,0"/>
-                    <Button Text="+" Clicked="IncreaseCount" FontAttributes="Bold" FontSize="20" BackgroundColor="White" TextColor="#388e3c"/>
+                <Label
+                    Margin="20,15,20,15"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="Share to :"
+                    TextColor="White" />
+                <HorizontalStackLayout
+                    Margin="20,0,0,15"
+                    HeightRequest="45"
+                    VerticalOptions="Center"
+                    WidthRequest="150">
+                    <Button
+                        BackgroundColor="#388e3c"
+                        Clicked="DecreaseCount"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="-" />
+                    <Label
+                        x:Name="ShareCountEntry"
+                        Margin="15,0,0,0"
+                        FontAttributes="Bold"
+                        Text="1"
+                        VerticalOptions="Center"
+                        WidthRequest="30" />
+                    <Button
+                        BackgroundColor="White"
+                        Clicked="IncreaseCount"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="+"
+                        TextColor="#388e3c" />
                 </HorizontalStackLayout>
 
-                <Label Text="Permission :" FontSize="25" TextColor="White" FontAttributes="Bold" Margin="20,0,20,15"/>
-                <HorizontalStackLayout HeightRequest="45" Margin="20,0,0,15" WidthRequest="235">
-                    <Button Text="Can View" Clicked="CanViewClicked" FontAttributes="Bold" BackgroundColor="#388e3c"/>
-                    <Button Text="Can Edit" Clicked="CanEditClicked" FontAttributes="Bold" BackgroundColor="White" Margin="45,0,0,0" TextColor="#388e3c"/>
+                <Label
+                    Margin="20,0,20,15"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="Permission :"
+                    TextColor="White" />
+                <HorizontalStackLayout
+                    Margin="20,0,0,15"
+                    HeightRequest="45"
+                    WidthRequest="235">
+                    <Button
+                        BackgroundColor="#388e3c"
+                        Clicked="CanViewClicked"
+                        FontAttributes="Bold"
+                        Text="Can View" />
+                    <Button
+                        Margin="45,0,0,0"
+                        BackgroundColor="White"
+                        Clicked="CanEditClicked"
+                        FontAttributes="Bold"
+                        Text="Can Edit"
+                        TextColor="#388e3c" />
                 </HorizontalStackLayout>
 
-                <CollectionView BackgroundColor="White" WidthRequest="100" HeightRequest="100"/>
-                
+                <CollectionView
+                    BackgroundColor="White"
+                    HeightRequest="100"
+                    WidthRequest="100" />
+
                 <!-- <Button Text="Generate" Clicked="GenerateClicked" Margin="0,15,0,15"/> -->
-                <Button Text="Generate" Command="{Binding GenerateShareCodeCommand}" Margin="0,15,0,15"/>
-                <Entry x:Name="GeneratedCodeEntry" Text="{Binding ShareCode}" IsReadOnly="True"/>
+                <Button
+                    Margin="0,15,0,15"
+                    Command="{Binding GenerateShareCodeCommand}"
+                    Text="Generate" />
+                <Entry
+                    x:Name="GeneratedCodeEntry"
+                    IsReadOnly="True"
+                    Text="{Binding ShareCode}" />
 
-                <!-- x:Name="GeneratedCodeEntry" -->
+                <!--  x:Name="GeneratedCodeEntry"  -->
                 <HorizontalStackLayout>
-                    <Entry x:Name="ReadOnlyShareCodeEntry" Text="%SHKSPSUJSU9WWI8E" IsReadOnly="True"/>
-                    <Button Text="COPY" Clicked="CopyClicked" />
+                    <Entry
+                        x:Name="ReadOnlyShareCodeEntry"
+                        IsReadOnly="True"
+                        Text="%SHKSPSUJSU9WWI8E" />
+                    <Button Clicked="CopyClicked" Text="COPY" />
                 </HorizontalStackLayout>
-                
+
 
             </VerticalStackLayout>
 

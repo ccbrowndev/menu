@@ -12,34 +12,6 @@ namespace menu.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         MenuDatabase db;
-        // 新增一个默认构造函数
-        public MainViewModel()
-        {
-            db = new MenuDatabase(); // 或者从依赖注入容器中获取实例
-            Initialize();
-        }
-
-        private void Initialize()
-        {
-            IsVisible = false;
-
-            // 获取显示信息并计算列表和项的高度
-            var displayInfo = DeviceDisplay.MainDisplayInfo;
-            ListCollectionHeight = (displayInfo.Height / displayInfo.Density) * .25;
-            ItemCollectionHeight = (displayInfo.Height / displayInfo.Density) * .5;
-
-            // 加载用户列表和第一个列表的项
-            ListCollection = new ObservableCollection<UserList>(db.GetUserLists());
-            SelectedList = ListCollection.FirstOrDefault();
-
-            if (SelectedList != null)
-            {
-                Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
-            }
-
-            // 设置其他需要在构造函数中初始化的属性
-            Deadline = DateTime.Now.AddDays(7);
-        }
 
         public MainViewModel(MenuDatabase database)
         {
@@ -161,7 +133,10 @@ namespace menu.ViewModels
         void ShareList()
         {
             if (SelectedList == null)
+            {
+                Shell.Current.DisplayAlert("Generate Code", $"no list selected", "OK");
                 return;
+            }
 
             var code = GenerateShareCode(SelectedList);
             Shell.Current.DisplayAlert("Share Code", $"Your share code: {code}", "OK");
@@ -229,8 +204,8 @@ namespace menu.ViewModels
         void SaveList()
         {
             if (Items == null || Items.Count == 0)
-                return;
-
+            return;
+            
             SelectedList.ListItems = Items.ToList();
             db.SaveUserList(SelectedList);
 
@@ -257,6 +232,7 @@ namespace menu.ViewModels
             var random = new Random();
             string code;
             bool isUnique;
+            list = SelectedList;
 
             do
             {
