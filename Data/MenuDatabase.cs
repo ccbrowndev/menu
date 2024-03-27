@@ -75,8 +75,14 @@ namespace menu.Data
 
         public void MoveToTrash(UserList list)
         {
-            list.IsInTrash = true;
-            db.Update(list);
+            if(list.Id == 1)
+            {
+                db.Update(list);
+            }
+            if(list.Id != 1) {
+                list.IsInTrash = false;
+                db.Update(list);
+            }
         }
 
         public void RestoreFromTrash(UserList list)

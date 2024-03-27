@@ -34,7 +34,6 @@
                                 Margin="15,0"
                                 Padding="0,10,15,0"
                                 ColumnDefinitions="Auto, *">
-                                <CheckBox IsChecked="{Binding IsInTrash}" />
                                 <Frame Grid.Column="1">
                                     <Label FontSize="18" Text="{Binding Name}" />
                                 </Frame>
