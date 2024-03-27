@@ -22,10 +22,16 @@
         VerticalOptions="FillAndExpand">
 
         <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+
             <CollectionView
+                x:Name="UserListCollectionView"
                 Grid.Row="2"
-                ItemsSource="{Binding TrashUserLists}"
-                MaximumHeightRequest="{Binding ItemCollectionHeight}">
+                Margin="10,0"
+                IsVisible="{Binding IsVisible}"
+                ItemsSource="{Binding TrashListCollection}"
+                MaximumHeightRequest="{Binding ItemCollectionHeight}"
+                SelectedItem="{Binding SelectedTrashList}"
+                SelectionMode="Multiple">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:UserList}">
                         <Grid
