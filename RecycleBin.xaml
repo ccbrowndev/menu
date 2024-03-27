@@ -21,7 +21,6 @@
         RowSpacing="10"
         VerticalOptions="FillAndExpand">
 
-
         <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
             <CollectionView
                 Grid.Row="2"
@@ -29,16 +28,14 @@
                 MaximumHeightRequest="{Binding ItemCollectionHeight}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:UserList}">
-                        <SwipeView>
-                            <Grid
-                                Margin="15,0"
-                                Padding="0,10,15,0"
-                                ColumnDefinitions="Auto, *">
-                                <Frame Grid.Column="1">
-                                    <Label FontSize="18" Text="{Binding Name}" />
-                                </Frame>
-                            </Grid>
-                        </SwipeView>
+                        <Grid
+                            Margin="15,0"
+                            Padding="0,10,15,0"
+                            ColumnDefinitions="Auto, *">
+                            <Frame Grid.Column="1">
+                                <Label FontSize="18" Text="{Binding Name}" />
+                            </Frame>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
