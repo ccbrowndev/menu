@@ -138,7 +138,7 @@ namespace menu.ViewModels
                 return;
             }
 
-            var code = GenerateShareCode(SelectedList);
+            var code = GenerateShareCode();
             Shell.Current.DisplayAlert("Share Code", $"Your share code: {code}", "OK");
         }
 
@@ -158,9 +158,9 @@ namespace menu.ViewModels
 
         //新
         [RelayCommand]
-        void GenerateShareCode()
+        void GetShareCode()
         {
-            ShareCode = GenerateShareCode(SelectedList);
+            ShareCode = GenerateShareCode();
         }
 
 
@@ -227,12 +227,11 @@ namespace menu.ViewModels
         }
 
         //新
-        public string GenerateShareCode(UserList list)
+        public string GenerateShareCode()
         {
             var random = new Random();
             string code;
             bool isUnique;
-            list = SelectedList;
 
             do
             {
@@ -242,8 +241,8 @@ namespace menu.ViewModels
                 isUnique = !db.GetUserLists().Any(l => l.ShareCode == code);
             } while (!isUnique);
 
-            list.ShareCode = code;
-            db.SaveUserList(list); // 确保更新数据库中的列表
+            SelectedList.ShareCode = code;
+            db.SaveUserList(SelectedList); // 确保更新数据库中的列表
 
             return code;
         }

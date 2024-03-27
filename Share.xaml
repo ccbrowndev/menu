@@ -90,7 +90,7 @@
                 <!-- <Button Text="Generate" Clicked="GenerateClicked" Margin="0,15,0,15"/> -->
                 <Button
                     Margin="0,15,0,15"
-                    Command="{Binding GenerateShareCodeCommand}"
+                    Command="{Binding GetShareCodeCommand}"
                     Text="Generate" />
                 <Entry
                     x:Name="GeneratedCodeEntry"
