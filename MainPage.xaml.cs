@@ -14,7 +14,11 @@ namespace menu
 
         private async void OnNavigateButtonClicked(object sender, EventArgs e)
         {
-            var sharePage = new Share();
+            var viewModel = BindingContext as MainViewModel;
+            var selectedList = viewModel?.SelectedList;
+            var db = viewModel?.db;
+
+            var sharePage = new Share(db, selectedList);
 
             await Shell.Current.Navigation.PushAsync(sharePage);
         }

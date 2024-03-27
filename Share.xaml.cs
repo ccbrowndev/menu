@@ -2,17 +2,24 @@ using System;
 using System.ComponentModel;
 using Microsoft.Maui.Controls;
 using Microsoft.Maui.ApplicationModel;
+using menu.Models;
+using menu.Data;
 
 namespace menu;
 
 public partial class Share : ContentPage
 {
-	public Share()
+    private UserList selectedlist;
+    MenuDatabase db;
+    public Share(MenuDatabase database, UserList thelist)
 	{
 		InitializeComponent();
-	}
+        selectedlist = thelist;
+        db = database;
+    }
 
     private int _shareCount = 1;
+    
 
     private void DecreaseCount(object sender, EventArgs e)
     {
@@ -38,9 +45,25 @@ public partial class Share : ContentPage
         
     }
 
-    private void GenerateClicked(object sender, EventArgs e)
+    
+    private string GenerateClicked(object sender, EventArgs e)
     {
-        
+        var random = new Random();
+        string code;
+        bool isUnique;
+
+        do
+        {
+            code = new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 10)
+              .Select(s => s[random.Next(s.Length)]).ToArray());
+
+            isUnique = !db.GetUserLists().Any(l => l.ShareCode == code);
+        } while (!isUnique);
+
+        selectedlist.ShareCode = code;
+        db.SaveUserList(selectedlist);
+
+        return code;
     }
 
     private async void CopyClicked(object sender, EventArgs e)
