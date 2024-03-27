@@ -114,7 +114,7 @@
                 Format="D"
                 TextColor="White" />
 
-            <StackLayout Padding="60,20,30,0">
+            <StackLayout Padding="30,20,30,0">
                 <Grid>
                     <Button
                         BackgroundColor="#8CAEDE"
@@ -133,7 +133,7 @@
                         BorderWidth="2"
                         Command="{Binding DeleteListCommand}"
                         FontAttributes="Bold"
-                        HorizontalOptions="End"
+                        HorizontalOptions="Center"
                         Text="Delete List"
                         TextColor="White"
                         VerticalOptions="Start" />

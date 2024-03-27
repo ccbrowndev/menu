@@ -14,11 +14,6 @@
             FontSize="Large"
             Text="Recycle Bin" />
     </Shell.TitleView>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Command="{Binding RecoverSelectedListsCommand}" Text="Restore" />
-        <ToolbarItem Command="{Binding DeleteForeverCommand}" Text="Delete Forever" />
-    </ContentPage.ToolbarItems>
-
 
     <Grid
         ColumnSpacing="10"
@@ -26,12 +21,7 @@
         RowSpacing="10"
         VerticalOptions="FillAndExpand">
 
-        <Image
-            Grid.Row="0"
-            Aspect="AspectFill"
-            Source="background.svg" />
-
-        <VerticalStackLayout Grid.Row="0">
+        <VerticalStackLayout BackgroundColor="Black" Grid.Row="0" Margin="0,20,0,0" WidthRequest="300" HeightRequest="300">
             <CollectionView
                 ItemsSource="{Binding TrashUserLists}"
                 SelectedItems="{Binding SelectedTrashItems}"
@@ -46,13 +36,24 @@
                                 <Label
                                     FontAttributes="Bold"
                                     FontSize="Medium"
-                                    Text="{Binding Text}" />
-                                <Label FontSize="Small" Text="{Binding Deadline, StringFormat='{0:yyyy-MM-dd}'}" />
+                                    Text="{Binding Text}"
+                                    BackgroundColor="White"
+                                    TextColor="White"
+                                    />
+                                <Label FontSize="Small" Text="{Binding Deadline}" TextColor="White" />
                             </StackLayout>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
         </VerticalStackLayout>
+
+        <StackLayout Grid.Row="1" Margin="20,20,20,0">
+            <Grid>
+                <Button Command="{Binding RecoverSelectedListsCommand}" Text="Restore" HorizontalOptions="Start"/>
+                <Button Command="{Binding DeleteSelectedListsForeverCommand}" Text="Delete Forever" HorizontalOptions="End" />
+            </Grid>
+        </StackLayout>
+        
     </Grid>
 </ContentPage>
