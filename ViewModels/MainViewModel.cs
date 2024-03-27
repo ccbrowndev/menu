@@ -126,6 +126,7 @@ namespace menu.ViewModels
                 {
                     list.Name = SelectedList.Name;
                     list.Deadline = SelectedList.Deadline;
+                    list.IsInTrash = SelectedList.IsInTrash;
                     newListCollection.Add(list);
                     db.SaveUserList(list);
                 } else
@@ -166,6 +167,7 @@ namespace menu.ViewModels
                 Name = "New List " + (ListCollection.Count + 1),
                 ListItems = new List<ListItem>(),
                 Deadline = Deadline,
+                IsInTrash = false,
             };
 
             ListCollection.Add(newList);
@@ -184,13 +186,6 @@ namespace menu.ViewModels
 
         }
 
-        [RelayCommand]
-        void MoveToTrash(UserList list)
-        {
-            list.IsInTrash = true;
-            db.SaveUserList(list);
-            ListCollection.Remove(list);
-        }
 
         [RelayCommand]
         void RecoverSelectedLists()

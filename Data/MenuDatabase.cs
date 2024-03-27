@@ -80,7 +80,7 @@ namespace menu.Data
                 db.Update(list);
             }
             if(list.Id != 1) {
-                list.IsInTrash = false;
+                list.IsInTrash = true;
                 db.Update(list);
             }
         }
