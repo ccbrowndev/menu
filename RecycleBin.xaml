@@ -26,83 +26,28 @@
 
 
         <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
-            <CollectionView
-                x:Name="UserListCollectionView"
-                Margin="10,0"
-                IsVisible="{Binding IsVisible}"
-                ItemsSource="{Binding ListCollection}"
-                MaximumHeightRequest="{Binding ListCollectionHeight}"
-                SelectedItem="{Binding SelectedList}"
-                SelectionMode="Single">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:UserList}">
-                        <Label
-                            Padding="0,5"
-                            BackgroundColor="#46CDD0"
-                            FontAttributes="Bold"
-                            FontSize="16"
-                            HorizontalTextAlignment="Center"
-                            Text="{Binding Name}"
-                            TextColor="White" />
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
-
-
-            <Entry
-                Grid.Row="1"
-                Margin="50,0,50,10"
-                FontAttributes="Bold"
-                FontSize="20"
-                HorizontalTextAlignment="Center"
-                Placeholder="Title"
-                ReturnCommand="{Binding UpdateTitleCommand}"
-                Text="{Binding SelectedList.Name}"
-                TextColor="White" />
 
             <CollectionView
                 Grid.Row="2"
-                ItemsSource="{Binding Items}"
+                ItemsSource="{Binding TrashUserLists}"
                 MaximumHeightRequest="{Binding ItemCollectionHeight}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:ListItem}">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem
-                                        BackgroundColor="Red"
-                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
-                                        CommandParameter="{Binding .}"
-                                        Text="Delete" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <Grid
-                                Margin="15,0"
-                                Padding="0,10,15,0"
-                                ColumnDefinitions="Auto, *">
-                                <CheckBox IsChecked="{Binding IsComplete}" />
-                                <Frame Grid.Column="1">
-                                    <Label FontSize="18" Text="{Binding Text}" />
-                                </Frame>
-                            </Grid>
-                        </SwipeView>
+                    <DataTemplate x:DataType="{x:Type model:UserList}">
+                        <Grid
+                            Margin="15,0"
+                            Padding="0,10,15,0"
+                            ColumnDefinitions="Auto, *">
+                            <!--<CheckBox
+                                Grid.Column="0"
+                                IsChecked="{Binding IsSelected}"
+                                VerticalOptions="Center" />-->
+                            <Frame Grid.Column="1">
+                                <Label FontSize="18" Text="{Binding Name}" />
+                            </Frame>
+                        </Grid>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-            <Grid
-                Grid.Row="3"
-                Margin="15,25,15,15"
-                Padding="0,0,15,0"
-                ColumnDefinitions="Auto, *">
-                <CheckBox IsChecked="{Binding InputCompleted}" />
-                <Frame Grid.Column="1">
-                    <Entry
-                        Placeholder="Enter task"
-                        ReturnCommand="{Binding AddCommand}"
-                        Text="{Binding Text}" />
-                </Frame>
-            </Grid>
 
         </StackLayout>
     </Grid>

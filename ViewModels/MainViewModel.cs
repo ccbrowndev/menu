@@ -12,7 +12,7 @@ namespace menu.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        MenuDatabase db;
+        public MenuDatabase db;
 
         public MainViewModel(MenuDatabase database)
         {
