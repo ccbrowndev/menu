@@ -8,7 +8,7 @@
     Title="RecycleBin"
     x:DataType="viewmodel:MainViewModel">
     <Shell.TitleView>
-        <Button
+        <Label
             BackgroundColor="#90C7F0"
             FontAttributes="Bold"
             FontSize="Large"
@@ -25,14 +25,15 @@
             <CollectionView
                 Grid.Row="2"
                 ItemsSource="{Binding TrashUserLists}"
-                MaximumHeightRequest="{Binding ItemCollectionHeight}">
+                MaximumHeightRequest="{Binding ItemCollectionHeight}"
+                >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:UserList}">
                         <Grid
                             Margin="15,0"
                             Padding="0,10,15,0"
                             ColumnDefinitions="Auto, *">
-                            <Frame Grid.Column="1">
+                            <Frame Grid.Column="0">
                                 <Label FontSize="18" Text="{Binding Name}" />
                             </Frame>
                         </Grid>

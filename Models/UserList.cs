@@ -15,6 +15,9 @@ namespace menu.Models
         public DateTime Deadline { get; set; }
         [Column("is_in_trash")]
         public bool IsInTrash { get; set; } = false;
+        [Indexed]
+        [Column("user_pid")]
+        public int pid { get; set; }
         [Ignore]
         public List<ListItem> ListItems { get; set; }
     }
