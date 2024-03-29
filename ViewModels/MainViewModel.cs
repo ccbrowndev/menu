@@ -201,10 +201,7 @@ namespace menu.ViewModels
         [RelayCommand]
         void DeleteSelectedListsForever()
         {
-            foreach (var list in TrashListCollection.ToList())
-            {
-                db.DeleteUserListPermanently(list);
-            }
+            db.DeleteUserListPermanently();
             RefreshTrashList();
         }
 

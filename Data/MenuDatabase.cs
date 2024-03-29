@@ -91,9 +91,9 @@ namespace menu.Data
             db.Update(list);
         }
 
-        public void DeleteUserListPermanently(UserList list)
+        public void DeleteUserListPermanently()
         {
-            db.Delete<UserList>(list);
+            db.Execute("DELETE FROM user_lists WHERE is_in_trash = 1");
         }
 
 
