@@ -7,15 +7,7 @@
     xmlns:viewmodel="clr-namespace:menu.ViewModels"
     Title="RecycleBin"
     x:DataType="viewmodel:MainViewModel">
-    <Shell.TitleView>
-        <Button
-            BackgroundColor="#90C7F0"
-            Command="{Binding ToggleListCollectionVisibilityCommand}"
-            FontAttributes="Bold"
-            FontSize="Large"
-            Text="Recycle Bin" />
-    </Shell.TitleView>
-
+    
     <Grid
         ColumnSpacing="10"
         RowDefinitions="Auto, 50, Auto, Auto, *"
@@ -25,11 +17,11 @@
         <Image Aspect="AspectFill" Source="background.svg" />
 
 
-        <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+        <StackLayout Padding="10,10,0,0" VerticalOptions="FillAndExpand">
 
             <CollectionView
-                Grid.Row="2"
                 ItemsSource="{Binding TrashUserLists}"
+                HeightRequest="650"
                 MaximumHeightRequest="{Binding ItemCollectionHeight}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:UserList}">
@@ -42,7 +34,11 @@
                                 IsChecked="{Binding IsSelected}"
                                 VerticalOptions="Center" />-->
                             <Frame Grid.Column="1">
-                                <Label FontSize="18" Text="{Binding Name}" />
+                                <Label FontSize="18" Text="{Binding Name}">
+                                    <Label.GestureRecognizers>
+                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnLabelTapped" />
+                                    </Label.GestureRecognizers>
+                                </Label>
                             </Frame>
                         </Grid>
                     </DataTemplate>

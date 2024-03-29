@@ -264,5 +264,6 @@ namespace menu.ViewModels
             return ListCollection.Where(list => list.Deadline.Date == today).ToList();
         }
 
+       
     }
 }

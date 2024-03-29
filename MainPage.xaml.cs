@@ -25,7 +25,7 @@ namespace menu
 
             await Shell.Current.Navigation.PushAsync(bin);
         }
-        
+
 
     }
 

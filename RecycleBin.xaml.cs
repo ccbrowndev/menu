@@ -4,6 +4,9 @@ namespace menu
 {
     public partial class RecycleBin : ContentPage
     {
+        private bool isPressing;
+        private object longPressTimer;
+
         public RecycleBin(MainViewModel vm)
         {
             InitializeComponent();
@@ -26,6 +29,23 @@ namespace menu
             else
             {
 
+            }
+        }
+
+        private async void OnLabelTapped(object sender, EventArgs e)
+        {
+            string action = await DisplayActionSheet("Option", "Cancel", null, "Recover", "Completely Delete");
+
+            switch (action)
+            {
+                case "Recover":
+                    //
+                    await DisplayAlert("Option", "You chose to recover", "OK");
+                    break;
+                case "Completely Delete":
+                    //
+                    await DisplayAlert("Option", "you chose to completely delete", "OK");
+                    break;
             }
         }
     }

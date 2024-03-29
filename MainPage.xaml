@@ -13,9 +13,11 @@
             FontAttributes="Bold"
             FontSize="Large"
             Text="View Lists" />
+        
     </Shell.TitleView>
     <ContentPage.ToolbarItems>
-        <ToolbarItem Clicked="OnNavigateButtonClicked1" Text="Share" />
+        <ToolbarItem Clicked="OnNavigateButtonClicked" Text="Share" />
+        <ToolbarItem Clicked="OnNavigateButtonClicked1" Text="Bin" />
     </ContentPage.ToolbarItems>
 
     <Grid
@@ -61,35 +63,40 @@
                 Text="{Binding SelectedList.Name}"
                 TextColor="White" />
 
-            <CollectionView
-                Grid.Row="2"
-                ItemsSource="{Binding Items}"
-                MaximumHeightRequest="{Binding ItemCollectionHeight}">
-                <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:ListItem}">
-                        <SwipeView>
-                            <SwipeView.RightItems>
-                                <SwipeItems>
-                                    <SwipeItem
-                                        BackgroundColor="Red"
-                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
-                                        CommandParameter="{Binding .}"
-                                        Text="Delete" />
-                                </SwipeItems>
-                            </SwipeView.RightItems>
-                            <Grid
-                                Margin="15,0"
-                                Padding="0,10,15,0"
-                                ColumnDefinitions="Auto, *">
-                                <CheckBox IsChecked="{Binding IsComplete}" />
-                                <Frame Grid.Column="1">
-                                    <Label FontSize="18" Text="{Binding Text}" />
-                                </Frame>
-                            </Grid>
-                        </SwipeView>
-                    </DataTemplate>
-                </CollectionView.ItemTemplate>
-            </CollectionView>
+
+
+                <CollectionView
+                    Grid.Row="2"
+                    ItemsSource="{Binding Items}"
+                    MaximumHeightRequest="{Binding ItemCollectionHeight}">
+                    <CollectionView.ItemTemplate>
+                        <DataTemplate x:DataType="{x:Type model:ListItem}">
+                            <SwipeView>
+                                <SwipeView.RightItems>
+                                    <SwipeItems>
+                                        <SwipeItem
+                        BackgroundColor="Red"
+                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=DeleteCommand}"
+                        CommandParameter="{Binding .}"
+                        Text="Delete" />
+                                    </SwipeItems>
+                                </SwipeView.RightItems>
+                                <Grid
+                Margin="15,0"
+                Padding="0,10,15,0"
+                ColumnDefinitions="Auto, *">
+                                    <CheckBox IsChecked="{Binding IsComplete}" />
+                                    <Frame Grid.Column="1">
+                                        <Label FontSize="18" Text="{Binding Text}" />
+                                    </Frame>
+                                </Grid>
+                            </SwipeView>
+                        </DataTemplate>
+                    </CollectionView.ItemTemplate>
+                </CollectionView>
+
+
+
 
             <Grid
                 Grid.Row="3"
@@ -114,9 +121,8 @@
                 Format="D"
                 TextColor="White" />
 
-            <StackLayout Padding="60,20,30,0">
-                <Grid>
-                    <Button
+            <HorizontalStackLayout Padding="60,20,30,0">
+                <Button
                         BackgroundColor="#8CAEDE"
                         BorderColor="#DFD8F7"
                         BorderWidth="2"
@@ -127,7 +133,7 @@
                         TextColor="White"
                         VerticalOptions="End" />
 
-                    <Button
+                <Button
                         BackgroundColor="#8CAEDE"
                         BorderColor="#DFD8F7"
                         BorderWidth="2"
@@ -136,9 +142,10 @@
                         HorizontalOptions="End"
                         Text="Delete List"
                         TextColor="White"
-                        VerticalOptions="Start" />
+                        VerticalOptions="Start" 
+                        Margin="20,0,20,0"/>
 
-                    <Button
+                <Button
                         BackgroundColor="#8CAEDE"
                         BorderColor="#DFD8F7"
                         BorderWidth="2"
@@ -150,12 +157,9 @@
                         VerticalOptions="Start" />
 
 
+            </HorizontalStackLayout>
 
-                </Grid>
-
-
-
-            </StackLayout>
+            
 
         </StackLayout>
 
