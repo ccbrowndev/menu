@@ -33,22 +33,43 @@
                 MaximumHeightRequest="{Binding ItemCollectionHeight}">
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:UserList}">
-                        <Grid
-                            Margin="15,0"
-                            Padding="0,10,15,0"
-                            ColumnDefinitions="Auto, *">
-                            <!--<CheckBox
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Green"
+                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=RecoverSelectedListsCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Delete" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid
+                                Margin="15,0"
+                                Padding="0,10,15,0"
+                                ColumnDefinitions="Auto, *">
+                                <!--<CheckBox
                                 Grid.Column="0"
                                 IsChecked="{Binding IsSelected}"
                                 VerticalOptions="Center" />-->
-                            <Frame Grid.Column="1">
-                                <Label FontSize="18" Text="{Binding Name}" />
-                            </Frame>
-                        </Grid>
+                                <Frame Grid.Column="1">
+                                    <Label FontSize="18" Text="{Binding Name}" />
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
+            <Button
+                Margin="20,50,20,0"
+                BackgroundColor="#8CAEDE"
+                BorderColor="#DFD8F7"
+                BorderWidth="2"
+                Command="{Binding DeleteSelectedListsForeverCommand}"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Text="Delete List"
+                TextColor="White"
+                VerticalOptions="Center" />
         </StackLayout>
     </Grid>
 </ContentPage>

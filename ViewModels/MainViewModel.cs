@@ -114,6 +114,7 @@ namespace menu.ViewModels
             }
         }
 
+
         [RelayCommand]
         void UpdateTitle()
         {
@@ -188,16 +189,12 @@ namespace menu.ViewModels
 
 
         [RelayCommand]
-        void RecoverSelectedLists()
+        void RecoverSelectedLists(UserList li)
         {
-            if (SelectedTrashItems != null && SelectedTrashItems.Count > 0)
+            if (li != null)
             {
-                foreach (var list in SelectedTrashItems.ToList())
-                {
-                    db.RestoreFromTrash(list);
-                }
+                db.RestoreFromTrash(li);
                 RefreshTrashList(); 
-                SelectedTrashItems.Clear(); 
             }
         }
 
@@ -205,15 +202,11 @@ namespace menu.ViewModels
         [RelayCommand]
         void DeleteSelectedListsForever()
         {
-            if (SelectedTrashItems != null && SelectedTrashItems.Count > 0)
+            foreach (var list in TrashListCollection.ToList())
             {
-                foreach (var list in SelectedTrashItems.ToList())
-                {
-                    db.DeleteUserListPermanently(list);
-                }
-                RefreshTrashList(); 
-                SelectedTrashItems.Clear();
+                db.DeleteUserListPermanently(list);
             }
+            RefreshTrashList(); 
         }
 
 

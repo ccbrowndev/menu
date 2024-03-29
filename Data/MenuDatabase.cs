@@ -91,19 +91,9 @@ namespace menu.Data
             db.Update(list);
         }
 
-        public UserList DeleteUserListPermanently(UserList list)
+        public void  DeleteUserListPermanently(UserList list)
         {
-            int result = db.Delete(list);
-            if (result == 0)
-            {
-                return null;
-            } else if (result == 1)
-            {
-                return list;
-            } else
-            {
-                throw new Exception(string.Format("Error occurred trying to delete UserList {0}", list));
-            }
+            db.Delete<UserList>(list);
         }
 
 
