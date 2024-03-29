@@ -32,7 +32,7 @@
                                         BackgroundColor="Green"
                                         Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=RecoverSelectedListsCommand}"
                                         CommandParameter="{Binding .}"
-                                        Text="Delete" />
+                                        Text="Recover" />
                                 </SwipeItems>
                             </SwipeView.RightItems>
                             <Grid
