@@ -39,11 +39,13 @@ namespace menu
             switch (action)
             {
                 case "Recover":
-                    //
+                    //移除
+
+                    //从trashuserlist里移除掉对应的项就可以让label消失
                     await DisplayAlert("Option", "You chose to recover", "OK");
                     break;
                 case "Completely Delete":
-                    //
+                    //从trashuserlist里移除掉对应的项就可以让label消失
                     await DisplayAlert("Option", "you chose to completely delete", "OK");
                     break;
             }
