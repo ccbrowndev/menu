@@ -23,6 +23,8 @@ namespace menu
             builder.Services.AddSingleton<MainPage>();
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<MenuDatabase>();
+            builder.Services.AddSingleton<HttpClient>();
+            builder.Services.AddSingleton<SharingService>();
 
 #if DEBUG
     		builder.Logging.AddDebug();
