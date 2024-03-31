@@ -1,9 +1,4 @@
 ﻿using menu.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace menu.Data
 {
@@ -18,7 +13,20 @@ namespace menu.Data
 
         public async Task<bool> ShareList(User user, string shareCode, UserList list)
         {
-
+            try
+            {
+                var result = await azureFunctionService.ShareListAzure(shareCode, user.Uuid, list.pid.ToString(), list.ToAzureString());
+                if (result != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
         }
     }
 }

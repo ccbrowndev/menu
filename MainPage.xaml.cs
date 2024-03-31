@@ -8,7 +8,7 @@ namespace menu
         {
             InitializeComponent();
             BindingContext = vm;
-            UserListCollectionView.SelectionChanged += vm.OnListCollectionSelectionChanged; 
+            UserListCollectionView.SelectionChanged += vm.OnListCollectionSelectionChanged;
         }
 
         private async void OnNavigateButtonClicked(object sender, EventArgs e)

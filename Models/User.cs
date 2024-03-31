@@ -10,7 +10,7 @@ namespace menu.Models
 
         [Column("UUID")]
         public string Uuid { get; set; }
-        
+
         [Ignore]
         public List<UserList> UserLists { get; set; }
     }

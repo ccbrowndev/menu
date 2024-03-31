@@ -2,10 +2,10 @@ namespace menu;
 
 public partial class Enter : ContentPage
 {
-	public Enter()
-	{
-		InitializeComponent();
-	}
+    public Enter()
+    {
+        InitializeComponent();
+    }
 
     private void OnEnterClicked(object sender, EventArgs e)
     {

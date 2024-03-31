@@ -1,5 +1,3 @@
-using menu.ViewModels;
-
 namespace menu
 {
     public partial class RecycleBin : ContentPage

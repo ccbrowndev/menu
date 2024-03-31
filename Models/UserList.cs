@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using Newtonsoft.Json;
+using SQLite;
 
 namespace menu.Models
 {
@@ -20,5 +21,14 @@ namespace menu.Models
         public int pid { get; set; }
         [Ignore]
         public List<ListItem> ListItems { get; set; }
+
+        public string ToAzureString()
+        {
+            AzureListData azureListData = new AzureListData(this.Name, this.ListItems.Select(item => item.ToAzureListItem()).ToList());
+
+            return JsonConvert.SerializeObject(azureListData).ToString();
+        }
+
+        private record AzureListData(string Name, List<AzureListItem> AzureListItems);
     }
 }
