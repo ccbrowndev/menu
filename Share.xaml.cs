@@ -4,18 +4,16 @@ using Microsoft.Maui.Controls;
 using Microsoft.Maui.ApplicationModel;
 using menu.Models;
 using menu.Data;
+using menu.ViewModels;
 
 namespace menu;
 
 public partial class Share : ContentPage
 {
-    private UserList selectedlist;
-    MenuDatabase db;
-    public Share(MenuDatabase database, UserList thelist)
-	{
-		InitializeComponent();
-        selectedlist = thelist;
-        db = database;
+    public Share(MainViewModel vm)
+    {
+        InitializeComponent();
+        BindingContext = vm;
     }
 
     private int _shareCount = 1;

@@ -18,7 +18,7 @@ namespace menu
             var selectedList = viewModel?.SelectedList;
             var db = viewModel?.db;
 
-            var sharePage = new Share(db, selectedList);
+            var sharePage = new Share( );
 
             await Shell.Current.Navigation.PushAsync(sharePage);
         }
