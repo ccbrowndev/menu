@@ -156,8 +156,7 @@ namespace menu.Data
         private readonly User defaultUser = new()
         {
             Id = 0,
-            Uuid = Guid.NewGuid().ToString(),
-            UserLists = new List<UserList>()
+            Uuid = Guid.NewGuid().ToString()
         };
 
         private readonly UserList defaultUserList = new()
