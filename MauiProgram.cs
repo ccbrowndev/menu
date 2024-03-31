@@ -24,7 +24,7 @@ namespace menu
             builder.Services.AddSingleton<MainViewModel>();
             builder.Services.AddSingleton<MenuDatabase>();
             builder.Services.AddSingleton<HttpClient>();
-            builder.Services.AddSingleton<SharingService>();
+            builder.Services.AddSingleton<AzureFunctionService>();
 
 #if DEBUG
     		builder.Logging.AddDebug();

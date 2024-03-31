@@ -17,7 +17,7 @@ public partial class Enter : ContentPage
 
     private string GenerateRandomString(int length)
     {
-        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        const string chars = "abcdefghijklmnopqrstuvwxyz0123456789";
         var random = new Random();
         var randomString = new char[length];
 

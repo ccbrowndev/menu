@@ -14,6 +14,7 @@ namespace menu.Data
             db = new SQLiteConnection(DatabasePath);
             db.CreateTable<UserList>();
             db.CreateTable<ListItem>();
+            db.CreateTable<User>();
         }
 
         public List<UserList> GetUserLists()
@@ -24,6 +25,8 @@ namespace menu.Data
 
             if (lists == null || lists.Count == 0)
             {
+                db.Insert(defaultUser);
+
                 db.Insert(defaultUserList);
 
                 db.Insert(changeTitleItem);
@@ -45,6 +48,8 @@ namespace menu.Data
 
             if (trashLists == null || trashLists.Count == 0)
             {
+                db.Insert(defaultUser);
+
                 db.Insert(defaultUserList);
 
                 db.Insert(changeTitleItem);
@@ -147,6 +152,13 @@ namespace menu.Data
                 throw new Exception(string.Format("Error occurred trying to delete ListItem {0}", li));
             }
         }
+
+        private readonly User defaultUser = new()
+        {
+            Id = 0,
+            Uuid = Guid.NewGuid().ToString(),
+            UserLists = new List<UserList>()
+        };
 
         private readonly UserList defaultUserList = new()
         {
