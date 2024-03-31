@@ -49,12 +49,12 @@ public partial class Share : ContentPage
     private string GenerateClicked(object sender, EventArgs e)
     {
         var random = new Random();
-        string code;
+        string code;                     
         bool isUnique;
 
         do
         {
-            code = new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 10)
+            code = new string(Enumerable.Repeat("abcdefghijklmnopqrstuvwxyz0123456789", 10)
               .Select(s => s[random.Next(s.Length)]).ToArray());
 
             isUnique = !db.GetUserLists().Any(l => l.ShareCode == code);
@@ -62,7 +62,7 @@ public partial class Share : ContentPage
 
         selectedlist.ShareCode = code;
         db.SaveUserList(selectedlist);
-
+         
         return code;
     }
 
