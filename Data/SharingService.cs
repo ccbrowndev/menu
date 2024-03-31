@@ -41,13 +41,40 @@ namespace menu.Data
                 }
                 return null;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 if (ex is JsonSerializationException)
                 {
                     Console.WriteLine("Failure to deserialize the result: " + ex.Message);
                     return null;
-                } else
+                }
+                else
+                {
+                    Console.WriteLine(ex.Message);
+                    return null;
+                }
+            }
+        }
+
+        public async Task<AzureListUpdates> CheckQueue(string userId)
+        {
+            try
+            {
+                var result = await azureFunctionService.CheckQueueAzure(userId);
+                if (result != null)
+                {
+                    return JsonConvert.DeserializeObject<AzureListUpdates>(result);
+                }
+                return null;
+            }
+            catch (Exception ex)
+            {
+                if (ex is JsonSerializationException)
+                {
+                    Console.WriteLine("Failure to deserialize the result: " + ex.Message);
+                    return null;
+                }
+                else
                 {
                     Console.WriteLine(ex.Message);
                     return null;
