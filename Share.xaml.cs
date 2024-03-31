@@ -2,6 +2,7 @@ using System;
 using System.ComponentModel;
 using Microsoft.Maui.Controls;
 using menu.ViewModels;
+using menu.Data;
 
 namespace menu;
 
@@ -40,4 +41,20 @@ public partial class Share : ContentPage
         
     }
 
+    private void CopyClicked(object sender, EventArgs e)
+    {
+        var textToCopy = codeGen.Text;
+
+        Microsoft.Maui.ApplicationModel.DataTransfer.Clipboard.SetTextAsync(textToCopy);
+    }
+
+    private async void returnMainForShare(object sender, EventArgs e)
+    {
+        await Navigation.PopToRootAsync();
+        return;
+
+        //MenuDatabase database = new MenuDatabase();
+        //MainViewModel viewModel = new MainViewModel(database);
+        //await Navigation.PushAsync(new MainPage(viewModel));
+    }
 }

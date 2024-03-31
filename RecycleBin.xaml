@@ -6,6 +6,7 @@
     xmlns:model="clr-namespace:menu.Models"
     xmlns:viewmodel="clr-namespace:menu.ViewModels"
     Title="RecycleBin"
+    Shell.NavBarIsVisible="False"
     x:DataType="viewmodel:MainViewModel">
 
     <Grid
@@ -17,7 +18,7 @@
         <Image Aspect="AspectFill" Source="background.svg" />
 
 
-        <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+        <StackLayout Padding="10,40,0,0" VerticalOptions="FillAndExpand">
 
             <CollectionView
                 Grid.Row="2"
@@ -37,7 +38,7 @@
                             </SwipeView.RightItems>
                             <Grid
                                 Margin="15,0"
-                                Padding="0,10,15,0"
+                                Padding="0,10,15,15"
                                 ColumnDefinitions="Auto, *">
                                 <!--<CheckBox
                         Grid.Column="0"
@@ -62,6 +63,8 @@
                 Text="Delete List"
                 TextColor="White"
                 VerticalOptions="Center" />
+            <Button x:Name="returnMainPage" BorderWidth="2" Text="Back" BorderColor="#DFD8F7" Background="#8CAEDE" TextColor="White" Margin="0,105,40,0" HorizontalOptions="End" WidthRequest="100" FontAttributes="Bold" Clicked="returnMainForBin"  />
+
         </StackLayout>
     </Grid>
 </ContentPage>
