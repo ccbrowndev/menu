@@ -3,8 +3,10 @@
     x:Class="menu.Share"
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-    xmlns:vm="clr-namespace:menu.ViewModels"
-    Title="Share">
+    xmlns:model="clr-namespace:menu.Models"
+    xmlns:viewmodel="clr-namespace:menu.ViewModels"
+    Title="Share"
+    x:DataType="viewmodel:MainViewModel">
 
     <!--  新  -->
 
@@ -88,14 +90,29 @@
                     WidthRequest="100" />
 
                 <!-- <Button Text="Generate" Clicked="GenerateClicked" Margin="0,15,0,15"/> -->
+
                 <Button
-                    Margin="0,15,0,15"
-                    Clicked="GenerateClicked"
-                    Text="Generate" />
+                    Margin="20,0,20,0"
+                    BackgroundColor="#8CAEDE"
+                    BorderColor="#DFD8F7"
+                    BorderWidth="2"
+                    Command="{Binding GenerateShareCodeCommand}"
+                    FontAttributes="Bold"
+                    HorizontalOptions="End"
+                    Text="Generate Code"
+                    TextColor="White"
+                    VerticalOptions="Start" />
+
                 <Entry
-                    x:Name="GeneratedCodeEntry"
-                    IsReadOnly="True"
-                    Text="{Binding ShareCode}" />
+                    Grid.Row="1"
+                    Margin="50,0,50,10"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    Placeholder="Share Code"
+                    ReturnCommand="{Binding GetShareCodeCommand}"
+                    Text="{Binding SelectedList.ShareCode}"
+                    TextColor="White" />
 
                 <!--  x:Name="GeneratedCodeEntry"  -->
                 <HorizontalStackLayout>

@@ -74,7 +74,7 @@ namespace menu.ViewModels
 
         [ObservableProperty]
         string sharedCode;
-        
+
         [ObservableProperty]
         ObservableCollection<UserList> selectedTrashItems = new ObservableCollection<UserList>();
 
@@ -142,20 +142,28 @@ namespace menu.ViewModels
             ListCollection = newListCollection;
         }
 
-
         [RelayCommand]
-        void ShareList()
+        void GetShareCode()
         {
-            if (SelectedList == null)
+            ObservableCollection<UserList> currentListCollection = ListCollection;
+            ObservableCollection<UserList> newListCollection = new();
+
+            foreach (UserList list in currentListCollection)
             {
-                Shell.Current.DisplayAlert("Generate Code", $"no list selected", "OK");
-                return;
+                list.Name = SelectedList.Name;
+                list.Deadline = SelectedList.Deadline;
+                list.IsInTrash = SelectedList.IsInTrash;
+                list.ShareCode = SelectedList.ShareCode;
+                newListCollection.Add(list);
+                db.SaveUserList(list);
+                
             }
 
-            var code = GenerateShareCode();
-            Shell.Current.DisplayAlert("Share Code", $"Your share code: {code}", "OK");
+            ListCollection = newListCollection;
         }
 
+
+        
         [RelayCommand]
         async Task RetrieveListByShareCode(string code)
         {
@@ -168,13 +176,6 @@ namespace menu.ViewModels
 
             SelectedList = list;
             Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
-        }
-
-        //新
-        [RelayCommand]
-        void GetShareCode()
-        {
-            ShareCode = GenerateShareCode();
         }
 
 
@@ -219,8 +220,8 @@ namespace menu.ViewModels
         void SaveList()
         {
             if (Items == null || Items.Count == 0)
-            return;
-            
+                return;
+
             SelectedList.ListItems = Items.ToList();
             db.SaveUserList(SelectedList);
 
@@ -234,6 +235,29 @@ namespace menu.ViewModels
             {
                 db.RestoreFromTrash(li);
                 RefreshTrashList();
+            }
+        }
+
+        [RelayCommand]
+        void SaveShareCode(UserList li)
+        {
+            li = SelectedList;
+            if(li != null)
+            {
+                var random = new Random();
+                string code;
+                bool isUnique;
+
+                do
+                {
+                    code = new string(Enumerable.Repeat("abcdefghijklmnopqrstuvwxyz0123456789", 10)
+                      .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                    isUnique = !db.GetUserLists().Any(l => l.ShareCode == code);
+                } while (!isUnique);
+
+                li.ShareCode = code;
+                db.SaveUserList(li);
             }
         }
 
@@ -293,7 +317,8 @@ namespace menu.ViewModels
             return ListCollection.Where(list => list.Deadline.Date == today).ToList();
         }
 
-        public string GenerateShareCode()
+        [RelayCommand]
+        public void GenerateShareCode()
         {
             var random = new Random();
             string code;
@@ -301,7 +326,7 @@ namespace menu.ViewModels
 
             do
             {
-                code = new string(Enumerable.Repeat("ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789", 10)
+                code = new string(Enumerable.Repeat("abcdefghijklmopqrstuvwxyz0123456789", 10)
                   .Select(s => s[random.Next(s.Length)]).ToArray());
 
                 isUnique = !db.GetUserLists().Any(l => l.ShareCode == code);
@@ -309,8 +334,6 @@ namespace menu.ViewModels
 
             SelectedList.ShareCode = code;
             db.SaveUserList(SelectedList); // 确保更新数据库中的列表
-
-            return code;
         }
 
 
