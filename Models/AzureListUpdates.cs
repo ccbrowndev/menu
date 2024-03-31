@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace menu.Models
+﻿namespace menu.Models
 {
     public class AzureListUpdates
     {
+        public List<AzureList> listUpdates;
     }
 }

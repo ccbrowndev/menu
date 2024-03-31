@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace menu.Models
+﻿namespace menu.Models
 {
-    internal class AzureList
+    public class AzureList
     {
+        public string ListId { get; set; }
+        public string ListData { get; set; }
+        public string OriginalSenderId { get; set; }
     }
 }
