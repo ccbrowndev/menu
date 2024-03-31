@@ -20,6 +20,14 @@ namespace menu
             await Shell.Current.Navigation.PushAsync(share);
         }
 
+        private async void OnNavigateButtonClicked1(object sender, EventArgs e)
+        {
+            var viewModel = BindingContext as MainViewModel;
+            var bin = new RecycleBin(viewModel);
+
+            await Shell.Current.Navigation.PushAsync(bin);
+        }
+
 
     }
 

@@ -6,6 +6,7 @@ using System.Collections.ObjectModel;
 using menu;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
+using System.Collections.Generic;
 
 namespace menu.ViewModels
 {
@@ -18,14 +19,17 @@ namespace menu.ViewModels
             db = database;
             IsVisible = false;
             var displayInfo = DeviceDisplay.MainDisplayInfo;
+
             ListCollectionHeight = (displayInfo.Height / displayInfo.Density) * .25;
             ItemCollectionHeight = (displayInfo.Height / displayInfo.Density) * .5;
 
             ListCollection = new ObservableCollection<UserList>(db.GetUserLists());
             SelectedList = ListCollection.FirstOrDefault();
             Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
-            
-              
+
+            TrashListCollection = new ObservableCollection<UserList>(db.GetTrashUserLists());
+            SelectedTrashList = TrashListCollection.FirstOrDefault();
+            TrashUserLists = new ObservableCollection<UserList>(db.GetTrashLists());
         }
 
         [ObservableProperty]
@@ -42,7 +46,16 @@ namespace menu.ViewModels
         ObservableCollection<UserList> listCollection;
 
         [ObservableProperty]
+        ObservableCollection<UserList> trashListCollection;
+
+        [ObservableProperty]
         ObservableCollection<ListItem> items;
+
+        [ObservableProperty]
+        ObservableCollection<UserList> trashUserLists;
+
+        [ObservableProperty]
+        UserList selectedTrashList;
 
         [ObservableProperty]
         UserList selectedList;
@@ -56,13 +69,14 @@ namespace menu.ViewModels
         [ObservableProperty]
         DateTime deadline = DateTime.Now.AddDays(7);
 
-        //新
         [ObservableProperty]
         private string shareCode;
 
         [ObservableProperty]
         string sharedCode;
-
+        
+        [ObservableProperty]
+        ObservableCollection<UserList> selectedTrashItems = new ObservableCollection<UserList>();
 
         [RelayCommand]
         void ToggleListCollectionVisibility()
@@ -116,6 +130,7 @@ namespace menu.ViewModels
                 {
                     list.Name = SelectedList.Name;
                     list.Deadline = SelectedList.Deadline;
+                    list.IsInTrash = SelectedList.IsInTrash;
                     newListCollection.Add(list);
                     db.SaveUserList(list);
                 } else
@@ -127,7 +142,6 @@ namespace menu.ViewModels
             ListCollection = newListCollection;
         }
 
-        //新 添加两个新的命令：一个用于生成并显示分享代码，另一个用于通过分享代码检索列表。
 
         [RelayCommand]
         void ShareList()
@@ -193,6 +207,7 @@ namespace menu.ViewModels
                 Name = "New List " + (ListCollection.Count + 1),
                 ListItems = new List<ListItem>(),
                 Deadline = Deadline,
+                IsInTrash = false,
             };
 
             ListCollection.Add(newList);
@@ -211,6 +226,58 @@ namespace menu.ViewModels
 
         }
 
+
+        [RelayCommand]
+        void RecoverSelectedLists(UserList li)
+        {
+            if (li != null)
+            {
+                db.RestoreFromTrash(li);
+                RefreshTrashList();
+            }
+        }
+
+
+        [RelayCommand]
+        void DeleteSelectedListsForever()
+        {
+            db.DeleteUserListPermanently();
+            RefreshTrashList();
+        }
+
+
+        public void RefreshTrashList()
+        {
+            TrashUserLists = new ObservableCollection<UserList>(db.GetTrashUserLists());
+        }
+
+        [RelayCommand]
+
+        async Task DeleteList()
+        {
+            if (Items == null) return;
+
+            bool isConfirmed = await Shell.Current.DisplayAlert(
+                "Confirm Delete",
+                $"Are you sure you want to delete '{SelectedList.Name}'?",
+                "Yes", "No");
+
+            if (isConfirmed)
+            {
+                db.MoveToTrash(SelectedList);
+                ListCollection.Remove(SelectedList);
+
+                var welcomeList = ListCollection.FirstOrDefault(l => l.Name == "Welcome") ?? ListCollection.FirstOrDefault();
+                if (welcomeList != null)
+                {
+                    SelectedList = welcomeList;
+                    Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
+                }
+            }
+        }
+
+
+
         public async Task CheckDeadlinesAsync()
         {
             var listsWithTodaysDeadline = GetListsWithTodaysDeadline();
@@ -226,7 +293,6 @@ namespace menu.ViewModels
             return ListCollection.Where(list => list.Deadline.Date == today).ToList();
         }
 
-        //新
         public string GenerateShareCode()
         {
             var random = new Random();
@@ -246,8 +312,6 @@ namespace menu.ViewModels
 
             return code;
         }
-
-
 
 
     }

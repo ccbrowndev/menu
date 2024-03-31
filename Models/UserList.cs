@@ -14,12 +14,12 @@ namespace menu.Models
         public string Name { get; set; }
         [Column("deadline")]
         public DateTime Deadline { get; set; }
-
-        // 新增属性：用于存储分享代码
-        [MaxLength(50)] // 假定分享代码最大长度为10
+        [MaxLength(50)]
         [Column("share_code")]
         public string ShareCode { get; set; }
 
+        [Column("is_in_trash")]
+        public bool IsInTrash { get; set; } = false;
         [Ignore]
         public List<ListItem> ListItems { get; set; }
     }

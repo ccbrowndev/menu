@@ -15,8 +15,4 @@
         Title="Share Center"
         ContentTemplate="{DataTemplate local:ShareCenter}"
         Route="ShareCenter"/>
-    <ShellContent
-        Title="Recycle Bin"
-        ContentTemplate="{DataTemplate local:RecycleBin}"
-        Route="RecycleBin"/>
 </Shell>

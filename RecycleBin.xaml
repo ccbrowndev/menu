@@ -1,58 +1,67 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="menu.RecycleBin"
-             Title="RecycleBin"
-             xmlns:model="clr-namespace:menu.Models"
-             xmlns:viewmodel="clr-namespace:menu.ViewModels"
-             x:DataType="viewmodel:MainViewModel">
-    <Shell.TitleView>
-        <Button
-            BackgroundColor="#90C7F0"
-            FontAttributes="Bold"
-            FontSize="Large"
-            Text="Recycle Bin"
-        />
-    </Shell.TitleView>
-    <ContentPage.ToolbarItems>
-        <ToolbarItem Text="" />
-    </ContentPage.ToolbarItems>
-
+<ContentPage
+    x:Class="menu.RecycleBin"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:menu.Models"
+    xmlns:viewmodel="clr-namespace:menu.ViewModels"
+    Title="RecycleBin"
+    x:DataType="viewmodel:MainViewModel">
 
     <Grid
-            ColumnSpacing="10"
-            RowDefinitions="Auto, 50, Auto, Auto, *"
-            RowSpacing="10"
-            VerticalOptions="FillAndExpand">
+        ColumnSpacing="10"
+        RowDefinitions="Auto, 50, Auto, Auto, *"
+        RowSpacing="10"
+        VerticalOptions="FillAndExpand">
 
-        <Image Grid.Row="0" Aspect="AspectFill" Source="background.svg" />
+        <Image Aspect="AspectFill" Source="background.svg" />
 
-        <VerticalStackLayout
-                Grid.Row="0">
+
+        <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+
             <CollectionView
-                    BackgroundColor="White"
-                    ItemsSource="{Binding Items}"
-                    MaximumHeightRequest="{Binding ItemCollectionHeight}">
+                Grid.Row="2"
+                ItemsSource="{Binding TrashUserLists}"
+                MaximumHeightRequest="{Binding ItemCollectionHeight}">
                 <CollectionView.ItemTemplate>
-                    <DataTemplate x:DataType="{x:Type model:ListItem}">
-                        <Grid
+                    <DataTemplate x:DataType="{x:Type model:UserList}">
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Green"
+                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=RecoverSelectedListsCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Recover" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid
                                 Margin="15,0"
                                 Padding="0,10,15,0"
                                 ColumnDefinitions="Auto, *">
-                            <CheckBox IsChecked="{Binding IsComplete}" />
-                            <Frame Grid.Column="1">
-                                <Label FontSize="18" Text="{Binding Text}" />
-                            </Frame>
-                        </Grid>
+                                <!--<CheckBox
+                        Grid.Column="0"
+                        IsChecked="{Binding IsSelected}"
+                        VerticalOptions="Center" />-->
+                                <Frame Grid.Column="1">
+                                    <Label FontSize="18" Text="{Binding Name}" />
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-
-            <HorizontalStackLayout HeightRequest="45" Margin="20,20,0,15" WidthRequest="235">
-                <Button Text="Recover" Clicked="RecoveredClicked" FontAttributes="Bold" BackgroundColor="Navy"/>
-                <Button Text="Delete" Clicked="DeletedClicked"  FontAttributes="Bold" BackgroundColor="White" Margin="45,0,0,0" TextColor="Navy"/>
-
-            </HorizontalStackLayout>
-        </VerticalStackLayout>
+            <Button
+                Margin="20,50,20,0"
+                BackgroundColor="#8CAEDE"
+                BorderColor="#DFD8F7"
+                BorderWidth="2"
+                Command="{Binding DeleteSelectedListsForeverCommand}"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Text="Delete List"
+                TextColor="White"
+                VerticalOptions="Center" />
+        </StackLayout>
     </Grid>
 </ContentPage>
