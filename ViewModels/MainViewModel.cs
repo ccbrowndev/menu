@@ -298,9 +298,8 @@ namespace menu.ViewModels
                     Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
                 }
             }
+            db.SaveUserList(SelectedList);
         }
-
-
 
         public async Task CheckDeadlinesAsync()
         {
