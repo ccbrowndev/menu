@@ -25,6 +25,7 @@ namespace menu
             builder.Services.AddSingleton<MenuDatabase>();
             builder.Services.AddSingleton<HttpClient>();
             builder.Services.AddSingleton<AzureFunctionService>();
+            builder.Services.AddSingleton<SharingService>();
 
 #if DEBUG
             builder.Logging.AddDebug();
