@@ -1,11 +1,10 @@
 using menu.ViewModels;
-using menu.Data;
 
 namespace menu
 {
     public partial class RecycleBin : ContentPage
     {
-        
+
         public RecycleBin(MainViewModel vm)
         {
             InitializeComponent();

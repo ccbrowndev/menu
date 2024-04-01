@@ -74,7 +74,7 @@ namespace menu.ViewModels
         string sharedCode;
 
         [ObservableProperty]
-        ObservableCollection<UserList> selectedTrashItems = new ObservableCollection<UserList>();
+        ObservableCollection<UserList> selectedTrashItems = new();
 
         [RelayCommand]
         void ToggleListCollectionVisibility()
@@ -155,14 +155,14 @@ namespace menu.ViewModels
                 list.ShareCode = SelectedList.ShareCode;
                 newListCollection.Add(list);
                 db.SaveUserList(list);
-                
+
             }
 
             ListCollection = newListCollection;
         }
 
 
-        
+
         [RelayCommand]
         async Task RetrieveListByShareCode(string code)
         {
@@ -242,7 +242,7 @@ namespace menu.ViewModels
         void SaveShareCode(UserList li)
         {
             li = SelectedList;
-            if(li != null)
+            if (li != null)
             {
                 var random = new Random();
                 string code;

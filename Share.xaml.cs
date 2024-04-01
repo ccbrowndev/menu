@@ -1,8 +1,4 @@
-using System;
-using System.ComponentModel;
-using Microsoft.Maui.Controls;
 using menu.ViewModels;
-using menu.Data;
 
 namespace menu;
 
@@ -15,7 +11,7 @@ public partial class Share : ContentPage
     }
 
     private int _shareCount = 1;
-    
+
 
     private void DecreaseCount(object sender, EventArgs e)
     {

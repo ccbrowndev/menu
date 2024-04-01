@@ -1,7 +1,4 @@
-﻿using menu.Data;
-using menu.ViewModels;
-
-namespace menu
+﻿namespace menu
 {
     public partial class App : Application
     {

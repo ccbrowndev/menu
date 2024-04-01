@@ -1,5 +1,4 @@
-﻿using menu.Models;
-using menu.ViewModels;
+﻿using menu.ViewModels;
 
 namespace menu
 {

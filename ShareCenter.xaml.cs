@@ -1,13 +1,11 @@
-using static System.Net.Mime.MediaTypeNames;
-
 namespace menu;
 
 public partial class ShareCenter : ContentPage
 {
-	public ShareCenter()
-	{
-		InitializeComponent();
-	}
+    public ShareCenter()
+    {
+        InitializeComponent();
+    }
 
     private async void PasteCode(object sender, EventArgs e)
     {
@@ -41,6 +39,6 @@ public partial class ShareCenter : ContentPage
         else
         {
             await Microsoft.Maui.Controls.Application.Current.MainPage.DisplayAlert("Message", "No code has been added.", "OK");
-        }       
+        }
     }
 }

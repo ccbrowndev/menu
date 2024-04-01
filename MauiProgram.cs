@@ -1,7 +1,6 @@
 ﻿using menu.Data;
 using menu.ViewModels;
 using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.Logging;
 
 namespace menu
 {

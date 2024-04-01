@@ -1,6 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using CommunityToolkit.Mvvm.ComponentModel; //新
+using Newtonsoft.Json;
 using SQLite;
-using CommunityToolkit.Mvvm.ComponentModel; //新
 
 namespace menu.Models
 {
