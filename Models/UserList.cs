@@ -28,7 +28,7 @@ namespace menu.Models
 
         public string ToAzureString()
         {
-            AzureListData azureListData = new AzureListData(this.Name, this.ListItems.Select(item => item.ToAzureListItem()).ToList());
+            AzureListData azureListData = new(this.Name, this.ListItems.Select(item => item.ToAzureListItem()).ToList());
 
             return JsonConvert.SerializeObject(azureListData).ToString();
         }

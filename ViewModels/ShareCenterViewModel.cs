@@ -29,13 +29,13 @@ namespace menu.ViewModels
 
             if (result.IsCompletedSuccessfully)
             {
-                UserList newList = processAzureData(result.Result);
+                UserList newList = ProcessAzureData(result.Result);
             }
 
 
         }
 
-        private UserList processAzureData(AzureList azureList)
+        private UserList ProcessAzureData(AzureList azureList)
         {
             try
             {
@@ -43,7 +43,7 @@ namespace menu.ViewModels
                 string listName = listData.Name;
                 List<AzureListItem> listItems = listData.AzureListItems;
 
-                UserList newList = new UserList()
+                UserList newList = new()
                 {
                     Name = listName,
                     UserUuid = azureList.OriginalSenderId,
@@ -53,7 +53,7 @@ namespace menu.ViewModels
                 };
 
                 int newListId = db.SaveUserList(newList);
-                List<ListItem> outListItems = processAzureListItems(newListId, listItems);
+                List<ListItem> outListItems = ProcessAzureListItems(newListId, listItems);
 
                 newList.ListItems = outListItems;
                 return newList;
@@ -72,12 +72,12 @@ namespace menu.ViewModels
             }
         }
 
-        private List<ListItem> processAzureListItems(int dbListId, List<AzureListItem> azureListItems)
+        private List<ListItem> ProcessAzureListItems(int dbListId, List<AzureListItem> azureListItems)
         {
-            List<ListItem> listItems = new List<ListItem>();
+            List<ListItem> listItems = new();
             foreach (AzureListItem ali in azureListItems)
             {
-                ListItem li = new ListItem()
+                ListItem li = new()
                 {
                     Text = ali.Text,
                     IsComplete = ali.IsComplete,

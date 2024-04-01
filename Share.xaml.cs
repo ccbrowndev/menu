@@ -45,7 +45,7 @@ public partial class Share : ContentPage
         Clipboard.SetTextAsync(textToCopy);
     }
 
-    private async void returnMainForShare(object sender, EventArgs e)
+    private async void ReturnMainForShare(object sender, EventArgs e)
     {
         await Navigation.PopToRootAsync();
         return;

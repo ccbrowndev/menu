@@ -5,9 +5,9 @@ namespace menu.Data
 {
     public class MenuDatabase
     {
-        private SQLiteConnection db;
+        private readonly SQLiteConnection db;
 
-        private static string DatabasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "menu.db");
+        private static readonly string DatabasePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "menu.db");
 
         public MenuDatabase()
         {

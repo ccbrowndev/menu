@@ -113,7 +113,7 @@
 
                 <Button Clicked="CopyClicked" Text="COPY" WidthRequest="200" BackgroundColor="#388e3c" FontAttributes="Bold"/>
 
-                <Button x:Name="returnMainPage" Text="Back" Background="White" TextColor="#388e3c" Margin="0,105,40,0" HorizontalOptions="End" WidthRequest="100" FontAttributes="Bold" Clicked="returnMainForShare"  />
+                <Button x:Name="returnMainPage" Text="Back" Background="White" TextColor="#388e3c" Margin="0,105,40,0" HorizontalOptions="End" WidthRequest="100" FontAttributes="Bold" Clicked="ReturnMainForShare"  />
 
             </VerticalStackLayout>
 
