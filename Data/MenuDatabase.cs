@@ -17,6 +17,11 @@ namespace menu.Data
             db.CreateTable<User>();
         }
 
+        public User GetDefaultUser()
+        {
+            return db.Query<User>("SELECT * FROM user WHERE id = 0").FirstOrDefault();
+        }
+
         public List<UserList> GetUserLists()
         {
             List<UserList> lists;

@@ -9,10 +9,12 @@ namespace menu.ViewModels
     public partial class MainViewModel : ObservableObject
     {
         public MenuDatabase db;
+        private readonly SharingService sharingService;
 
-        public MainViewModel(MenuDatabase database)
+        public MainViewModel(MenuDatabase database, SharingService sharingService)
         {
             db = database;
+            this.sharingService = sharingService;
             IsVisible = false;
             var displayInfo = DeviceDisplay.MainDisplayInfo;
 
@@ -315,7 +317,7 @@ namespace menu.ViewModels
         }
 
         [RelayCommand]
-        public void GenerateShareCode()
+        public async void GenerateShareCode()
         {
             var random = new Random();
             string code;
@@ -331,6 +333,9 @@ namespace menu.ViewModels
 
             SelectedList.ShareCode = code;
             db.SaveUserList(SelectedList); // 确保更新数据库中的列表
+
+            User self = db.GetDefaultUser();
+            await sharingService.ShareList(self, code, SelectedList);
         }
 
 

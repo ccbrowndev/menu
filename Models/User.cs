@@ -2,6 +2,7 @@
 
 namespace menu.Models
 {
+    [Table("user")]
     public class User
     {
         [PrimaryKey, AutoIncrement]
