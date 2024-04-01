@@ -81,5 +81,41 @@ namespace menu.Data
                 }
             }
         }
+
+        public async Task<bool> UpdateList(string senderId, UserList list, string recipientIdList)
+        {
+            try
+            {
+                var result = await azureFunctionService.UpdateListAzure( senderId, list.pid.ToString(), recipientIdList, list.ToAzureString());
+                if (result != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateList(string senderId, UserList list, List<string> recipientIdList)
+        {
+            try
+            {
+                var result = await azureFunctionService.UpdateListAzure( senderId, list.pid.ToString(), string.Join(",", recipientIdList), list.ToAzureString());
+                if (result != null)
+                {
+                    return true;
+                }
+                return false;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+                return false;
+            }
+        }
     }
 }
