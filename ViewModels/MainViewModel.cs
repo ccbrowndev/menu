@@ -8,7 +8,7 @@ namespace menu.ViewModels
 {
     public partial class MainViewModel : ObservableObject
     {
-        MenuDatabase db;
+        public MenuDatabase db;
 
         public MainViewModel(MenuDatabase database)
         {
@@ -66,9 +66,13 @@ namespace menu.ViewModels
         DateTime deadline = DateTime.Now.AddDays(7);
 
         [ObservableProperty]
+        private string shareCode;
+
+        [ObservableProperty]
+        string sharedCode;
+
+        [ObservableProperty]
         ObservableCollection<UserList> selectedTrashItems = new ObservableCollection<UserList>();
-
-
 
         [RelayCommand]
         void ToggleListCollectionVisibility()
@@ -135,6 +139,43 @@ namespace menu.ViewModels
             ListCollection = newListCollection;
         }
 
+        [RelayCommand]
+        void GetShareCode()
+        {
+            ObservableCollection<UserList> currentListCollection = ListCollection;
+            ObservableCollection<UserList> newListCollection = new();
+
+            foreach (UserList list in currentListCollection)
+            {
+                list.Name = SelectedList.Name;
+                list.Deadline = SelectedList.Deadline;
+                list.IsInTrash = SelectedList.IsInTrash;
+                list.ShareCode = SelectedList.ShareCode;
+                newListCollection.Add(list);
+                db.SaveUserList(list);
+                
+            }
+
+            ListCollection = newListCollection;
+        }
+
+
+        
+        [RelayCommand]
+        async Task RetrieveListByShareCode(string code)
+        {
+            var list = db.GetUserLists().FirstOrDefault(l => l.ShareCode == code);
+            if (list == null)
+            {
+                await Shell.Current.DisplayAlert("Error", "Invalid share code.", "OK");
+                return;
+            }
+
+            SelectedList = list;
+            Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
+        }
+
+
         public void OnListCollectionSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             try
@@ -186,16 +227,35 @@ namespace menu.ViewModels
 
 
         [RelayCommand]
-        void RecoverSelectedLists()
+        void RecoverSelectedLists(UserList li)
         {
-            if (SelectedTrashItems != null && SelectedTrashItems.Count > 0)
+            if (li != null)
             {
-                foreach (var list in SelectedTrashItems.ToList())
-                {
-                    db.RestoreFromTrash(list);
-                }
+                db.RestoreFromTrash(li);
                 RefreshTrashList();
-                SelectedTrashItems.Clear();
+            }
+        }
+
+        [RelayCommand]
+        void SaveShareCode(UserList li)
+        {
+            li = SelectedList;
+            if(li != null)
+            {
+                var random = new Random();
+                string code;
+                bool isUnique;
+
+                do
+                {
+                    code = new string(Enumerable.Repeat("abcdefghijklmnopqrstuvwxyz0123456789", 10)
+                      .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                    isUnique = !db.GetUserLists().Any(l => l.ShareCode == code);
+                } while (!isUnique);
+
+                li.ShareCode = code;
+                db.SaveUserList(li);
             }
         }
 
@@ -203,15 +263,8 @@ namespace menu.ViewModels
         [RelayCommand]
         void DeleteSelectedListsForever()
         {
-            if (SelectedTrashItems != null && SelectedTrashItems.Count > 0)
-            {
-                foreach (var list in SelectedTrashItems.ToList())
-                {
-                    db.DeleteUserListPermanently(list);
-                }
-                RefreshTrashList();
-                SelectedTrashItems.Clear();
-            }
+            db.DeleteUserListPermanently();
+            RefreshTrashList();
         }
 
 
@@ -243,9 +296,8 @@ namespace menu.ViewModels
                     Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
                 }
             }
+            db.SaveUserList(SelectedList);
         }
-
-
 
         public async Task CheckDeadlinesAsync()
         {
@@ -261,6 +313,26 @@ namespace menu.ViewModels
             var today = DateTime.Now.Date;
             return ListCollection.Where(list => list.Deadline.Date == today).ToList();
         }
+
+        [RelayCommand]
+        public void GenerateShareCode()
+        {
+            var random = new Random();
+            string code;
+            bool isUnique;
+
+            do
+            {
+                code = new string(Enumerable.Repeat("abcdefghijklmopqrstuvwxyz0123456789", 10)
+                  .Select(s => s[random.Next(s.Length)]).ToArray());
+
+                isUnique = !db.GetUserLists().Any(l => l.ShareCode == code);
+            } while (!isUnique);
+
+            SelectedList.ShareCode = code;
+            db.SaveUserList(SelectedList); // 确保更新数据库中的列表
+        }
+
 
     }
 }

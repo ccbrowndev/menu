@@ -1,10 +1,11 @@
 ﻿using Newtonsoft.Json;
 using SQLite;
+using CommunityToolkit.Mvvm.ComponentModel; //新
 
 namespace menu.Models
 {
     [Table("user_lists")]
-    public class UserList
+    public class UserList : ObservableObject //新
     {
         [PrimaryKey, AutoIncrement]
         [Column("id")]
@@ -14,6 +15,10 @@ namespace menu.Models
         public string Name { get; set; }
         [Column("deadline")]
         public DateTime Deadline { get; set; }
+        [MaxLength(50)]
+        [Column("share_code")]
+        public string ShareCode { get; set; }
+
         [Column("is_in_trash")]
         public bool IsInTrash { get; set; } = false;
         [Indexed]

@@ -1,13 +1,21 @@
+using System;
+using System.ComponentModel;
+using Microsoft.Maui.Controls;
+using menu.ViewModels;
+using menu.Data;
+
 namespace menu;
 
 public partial class Share : ContentPage
 {
-    public Share()
+    public Share(MainViewModel vm)
     {
         InitializeComponent();
+        BindingContext = vm;
     }
 
     private int _shareCount = 1;
+    
 
     private void DecreaseCount(object sender, EventArgs e)
     {
@@ -34,21 +42,20 @@ public partial class Share : ContentPage
 
     }
 
-    private void GenerateClicked(object sender, EventArgs e)
+    private void CopyClicked(object sender, EventArgs e)
     {
+        var textToCopy = codeGen.Text;
 
+        Microsoft.Maui.ApplicationModel.DataTransfer.Clipboard.SetTextAsync(textToCopy);
     }
 
-    private async void CopyClicked(object sender, EventArgs e)
+    private async void returnMainForShare(object sender, EventArgs e)
     {
-        string textToCopy = GeneratedCodeEntry.Text;
+        await Navigation.PopToRootAsync();
+        return;
 
-        if (!string.IsNullOrEmpty(textToCopy))
-        {
-            await Clipboard.SetTextAsync(textToCopy);
-
-            await DisplayAlert("Copied", "The code has been copied to clipboard.", "OK");
-        }
+        //MenuDatabase database = new MenuDatabase();
+        //MainViewModel viewModel = new MainViewModel(database);
+        //await Navigation.PushAsync(new MainPage(viewModel));
     }
-
 }

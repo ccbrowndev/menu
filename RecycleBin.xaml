@@ -6,6 +6,7 @@
     xmlns:model="clr-namespace:menu.Models"
     xmlns:viewmodel="clr-namespace:menu.ViewModels"
     Title="RecycleBin"
+    Shell.NavBarIsVisible="False"
     x:DataType="viewmodel:MainViewModel">
     <Shell.TitleView>
         <Label
@@ -21,7 +22,11 @@
         RowSpacing="10"
         VerticalOptions="FillAndExpand">
 
-        <StackLayout Padding="0,10,0,0" VerticalOptions="FillAndExpand">
+        <Image Aspect="AspectFill" Source="background.svg" />
+
+
+        <StackLayout Padding="10,40,0,0" VerticalOptions="FillAndExpand">
+
             <CollectionView
                 Grid.Row="2"
                 ItemsSource="{Binding TrashUserLists}"
@@ -29,17 +34,45 @@
                 >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:UserList}">
-                        <Grid
-                            Margin="15,0"
-                            Padding="0,10,15,0"
-                            ColumnDefinitions="Auto, *">
-                            <Frame Grid.Column="0">
-                                <Label FontSize="18" Text="{Binding Name}" />
-                            </Frame>
-                        </Grid>
+                        <SwipeView>
+                            <SwipeView.RightItems>
+                                <SwipeItems>
+                                    <SwipeItem
+                                        BackgroundColor="Green"
+                                        Command="{Binding Source={x:RelativeSource AncestorType={x:Type viewmodel:MainViewModel}}, Path=RecoverSelectedListsCommand}"
+                                        CommandParameter="{Binding .}"
+                                        Text="Recover" />
+                                </SwipeItems>
+                            </SwipeView.RightItems>
+                            <Grid
+                                Margin="15,0"
+                                Padding="0,10,15,15"
+                                ColumnDefinitions="Auto, *">
+                                <!--<CheckBox
+                        Grid.Column="0"
+                        IsChecked="{Binding IsSelected}"
+                        VerticalOptions="Center" />-->
+                                <Frame Grid.Column="1">
+                                    <Label FontSize="18" Text="{Binding Name}" />
+                                </Frame>
+                            </Grid>
+                        </SwipeView>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
+            <Button
+                Margin="20,50,20,0"
+                BackgroundColor="#8CAEDE"
+                BorderColor="#DFD8F7"
+                BorderWidth="2"
+                Command="{Binding DeleteSelectedListsForeverCommand}"
+                FontAttributes="Bold"
+                HorizontalOptions="Center"
+                Text="Delete List"
+                TextColor="White"
+                VerticalOptions="Center" />
+            <Button x:Name="returnMainPage" BorderWidth="2" Text="Back" BorderColor="#DFD8F7" Background="#8CAEDE" TextColor="White" Margin="0,105,40,0" HorizontalOptions="End" WidthRequest="100" FontAttributes="Bold" Clicked="returnMainForBin"  />
+
         </StackLayout>
     </Grid>
 </ContentPage>

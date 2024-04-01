@@ -1,10 +1,15 @@
+using menu.ViewModels;
+using menu.Data;
+
 namespace menu
 {
     public partial class RecycleBin : ContentPage
     {
-        public RecycleBin()
+        
+        public RecycleBin(MainViewModel vm)
         {
             InitializeComponent();
+            BindingContext = vm;
         }
 
         private void RecoveredClicked(object sender, EventArgs e)
@@ -24,6 +29,16 @@ namespace menu
             {
 
             }
+        }
+
+        private async void returnMainForBin(object sender, EventArgs e)
+        {
+            await Navigation.PopToRootAsync();
+            return;
+
+            //MenuDatabase database = new MenuDatabase();
+            //MainViewModel viewModel = new MainViewModel(database);
+            //await Navigation.PushAsync(new MainPage(viewModel));
         }
     }
 }
