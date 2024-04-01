@@ -21,9 +21,8 @@ namespace menu.Models
 
         [Column("is_in_trash")]
         public bool IsInTrash { get; set; } = false;
-        [Indexed]
-        [Column("user_pid")]
-        public int pid { get; set; }
+        [Column("user_uuid")]
+        public string UserUuid { get; set; }
         [Ignore]
         public List<ListItem> ListItems { get; set; }
 
@@ -34,6 +33,5 @@ namespace menu.Models
             return JsonConvert.SerializeObject(azureListData).ToString();
         }
 
-        private record AzureListData(string Name, List<AzureListItem> AzureListItems);
     }
 }

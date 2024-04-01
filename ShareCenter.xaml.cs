@@ -32,7 +32,7 @@ public partial class ShareCenter : ContentPage
     {
         if (!string.IsNullOrEmpty(paste.Text))
         {
-            //
+
 
             await Shell.Current.GoToAsync("//MainPage");
         }

@@ -16,7 +16,7 @@ namespace menu.Data
         {
             try
             {
-                var result = await azureFunctionService.ShareListAzure(shareCode, user.Uuid, list.pid.ToString(), list.ToAzureString());
+                var result = await azureFunctionService.ShareListAzure(shareCode, user.Uuid, list.UserUuid, list.ToAzureString());
                 if (result != null)
                 {
                     return true;
@@ -86,7 +86,7 @@ namespace menu.Data
         {
             try
             {
-                var result = await azureFunctionService.UpdateListAzure(senderId, list.pid.ToString(), recipientIdList, list.ToAzureString());
+                var result = await azureFunctionService.UpdateListAzure(senderId, list.UserUuid, recipientIdList, list.ToAzureString());
                 if (result != null)
                 {
                     return true;
@@ -104,7 +104,7 @@ namespace menu.Data
         {
             try
             {
-                var result = await azureFunctionService.UpdateListAzure(senderId, list.pid.ToString(), string.Join(",", recipientIdList), list.ToAzureString());
+                var result = await azureFunctionService.UpdateListAzure(senderId, list.UserUuid, string.Join(",", recipientIdList), list.ToAzureString());
                 if (result != null)
                 {
                     return true;

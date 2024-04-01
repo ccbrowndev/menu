@@ -21,7 +21,6 @@ namespace menu.Models
         {
             return new AzureListItem
             {
-                UserListId = this.UserListId.ToString(),
                 Text = this.Text,
                 IsComplete = this.IsComplete
             };

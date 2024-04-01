@@ -42,7 +42,7 @@ public partial class Share : ContentPage
     {
         var textToCopy = codeGen.Text;
 
-        Microsoft.Maui.ApplicationModel.DataTransfer.Clipboard.SetTextAsync(textToCopy);
+        Clipboard.SetTextAsync(textToCopy);
     }
 
     private async void returnMainForShare(object sender, EventArgs e)
