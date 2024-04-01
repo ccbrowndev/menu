@@ -9,7 +9,18 @@ namespace menu
         {
             InitializeComponent();
 
-            MainPage = new AppShell();
+            bool isFirstTime = Preferences.Get("IsFirstTime", true);
+
+            if (isFirstTime)
+            {
+                MainPage = new Enter();
+
+                Preferences.Set("IsFirstTime", false);
+            }
+            else
+            {
+                MainPage = new AppShell();
+            }
         }
 
         protected override void OnStart()

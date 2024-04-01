@@ -3,10 +3,6 @@ using CommunityToolkit.Mvvm.Input;
 using menu.Data;
 using menu.Models;
 using System.Collections.ObjectModel;
-using menu;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Collections.Generic;
 
 namespace menu.ViewModels
 {
@@ -133,7 +129,8 @@ namespace menu.ViewModels
                     list.IsInTrash = SelectedList.IsInTrash;
                     newListCollection.Add(list);
                     db.SaveUserList(list);
-                } else
+                }
+                else
                 {
                     newListCollection.Add(list);
                 }
@@ -188,7 +185,8 @@ namespace menu.ViewModels
                 Items = new ObservableCollection<ListItem>(db.GetListItemsByListId(SelectedList.Id));
 
                 IsVisible = false;
-            } catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 SelectedList = ListCollection.FirstOrDefault();

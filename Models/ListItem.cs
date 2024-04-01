@@ -16,5 +16,15 @@ namespace menu.Models
         public string Text { get; set; }
         [Column("is_complete")]
         public bool IsComplete { get; set; }
+
+        public AzureListItem ToAzureListItem()
+        {
+            return new AzureListItem
+            {
+                UserListId = this.UserListId.ToString(),
+                Text = this.Text,
+                IsComplete = this.IsComplete
+            };
+        }
     }
 }

@@ -19,10 +19,11 @@ public partial class Share : ContentPage
 
     private void DecreaseCount(object sender, EventArgs e)
     {
-        if(_shareCount > 1) {
+        if (_shareCount > 1)
+        {
             _shareCount--;
             ShareCountEntry.Text = _shareCount.ToString();
-        }     
+        }
     }
 
     private void IncreaseCount(object sender, EventArgs e)
@@ -33,12 +34,12 @@ public partial class Share : ContentPage
 
     private void CanViewClicked(object sender, EventArgs e)
     {
-        
+
     }
 
     private void CanEditClicked(object sender, EventArgs e)
     {
-        
+
     }
 
     private void CopyClicked(object sender, EventArgs e)

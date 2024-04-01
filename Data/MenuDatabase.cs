@@ -14,16 +14,19 @@ namespace menu.Data
             db = new SQLiteConnection(DatabasePath);
             db.CreateTable<UserList>();
             db.CreateTable<ListItem>();
+            db.CreateTable<User>();
         }
 
         public List<UserList> GetUserLists()
         {
             List<UserList> lists;
-            
-                lists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 0");
+
+            lists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 0");
 
             if (lists == null || lists.Count == 0)
             {
+                db.Insert(defaultUser);
+
                 db.Insert(defaultUserList);
 
                 db.Insert(changeTitleItem);
@@ -31,7 +34,7 @@ namespace menu.Data
                 db.Insert(addListItem);
                 db.Insert(deleteListItemItem);
 
-                    lists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 0");
+                lists = db.Query<UserList>("SELECT * FROM user_lists WHERE is_in_trash = 0");
             }
 
             return lists;
@@ -45,6 +48,8 @@ namespace menu.Data
 
             if (trashLists == null || trashLists.Count == 0)
             {
+                db.Insert(defaultUser);
+
                 db.Insert(defaultUserList);
 
                 db.Insert(changeTitleItem);
@@ -63,7 +68,7 @@ namespace menu.Data
             if (list.Id != 0)
             {
                 db.Update(list);
-                return list.Id; 
+                return list.Id;
             }
             else
             {
@@ -75,11 +80,12 @@ namespace menu.Data
 
         public void MoveToTrash(UserList list)
         {
-            if(list.Id == 1)
+            if (list.Id == 1)
             {
                 db.Update(list);
             }
-            if(list.Id != 1) {
+            if (list.Id != 1)
+            {
                 list.IsInTrash = true;
                 db.Update(list);
             }
@@ -117,7 +123,8 @@ namespace menu.Data
             if (li.Id != 0)
             {
                 return db.Update(li);
-            } else
+            }
+            else
             {
                 return db.Insert(li);
             }
@@ -129,14 +136,22 @@ namespace menu.Data
             if (result == 0)
             {
                 return null;
-            } else if (result == 1)
+            }
+            else if (result == 1)
             {
                 return li;
-            } else
+            }
+            else
             {
                 throw new Exception(string.Format("Error occurred trying to delete ListItem {0}", li));
             }
         }
+
+        private readonly User defaultUser = new()
+        {
+            Id = 0,
+            Uuid = Guid.NewGuid().ToString()
+        };
 
         private readonly UserList defaultUserList = new()
         {

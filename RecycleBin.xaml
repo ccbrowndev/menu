@@ -8,6 +8,13 @@
     Title="RecycleBin"
     Shell.NavBarIsVisible="False"
     x:DataType="viewmodel:MainViewModel">
+    <Shell.TitleView>
+        <Label
+            BackgroundColor="#90C7F0"
+            FontAttributes="Bold"
+            FontSize="Large"
+            Text="Recycle Bin" />
+    </Shell.TitleView>
 
     <Grid
         ColumnSpacing="10"
@@ -23,7 +30,8 @@
             <CollectionView
                 Grid.Row="2"
                 ItemsSource="{Binding TrashUserLists}"
-                MaximumHeightRequest="{Binding ItemCollectionHeight}">
+                MaximumHeightRequest="{Binding ItemCollectionHeight}"
+                >
                 <CollectionView.ItemTemplate>
                     <DataTemplate x:DataType="{x:Type model:UserList}">
                         <SwipeView>
