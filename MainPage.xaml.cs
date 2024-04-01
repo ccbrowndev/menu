@@ -13,6 +13,13 @@ namespace menu
             UserListCollectionView.SelectionChanged += vm.OnListCollectionSelectionChanged;
         }
 
+        protected override async void OnAppearing()
+        {
+            base.OnAppearing();
+            var viewModel = BindingContext as MainViewModel;
+            await viewModel.CheckDeadlinesAsync();
+        }
+
         private async void OnNavigateButtonClicked(object sender, EventArgs e)
         {
             var viewModel = BindingContext as MainViewModel;

@@ -317,7 +317,7 @@ namespace menu.ViewModels
         }
 
         [RelayCommand]
-        public async void GenerateShareCode()
+        public async Task GenerateShareCode()
         {
             var random = new Random();
             string code;

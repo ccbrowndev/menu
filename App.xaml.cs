@@ -13,16 +13,6 @@ namespace menu
 
         protected override void OnStart()
         {
-            CheckDeadlinesAsync();
-        }
-
-        private async void CheckDeadlinesAsync()
-        {
-            var database = new MenuDatabase();
-
-            var viewModel = new MainViewModel(database);
-
-            await viewModel.CheckDeadlinesAsync();
         }
 
         protected override void OnSleep()
