@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage
+    x:Class="menu.Share"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:model="clr-namespace:menu.Models"
+    xmlns:viewmodel="clr-namespace:menu.ViewModels"
+    Title="Share"
+    Shell.NavBarIsVisible="False"
+    x:DataType="viewmodel:MainViewModel">
+
+    <!--  新  -->
+
+    <Grid
+        ColumnSpacing="10"
+        RowDefinitions="Auto, 50, Auto, Auto, *"
+        RowSpacing="10"
+        VerticalOptions="FillAndExpand">
+
+        <Image Aspect="AspectFill" Source="background2.svg" />
+
+        <Grid Padding="20,10,20,10" VerticalOptions="FillAndExpand">
+
+            <BoxView
+                HorizontalOptions="FillAndExpand"
+                Opacity="0.4"
+                VerticalOptions="FillAndExpand"
+                Color="White" />
+
+            <VerticalStackLayout>
+                <Label
+                    Margin="20,35,20,25"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="Share to :"
+                    TextColor="White" />
+                <HorizontalStackLayout
+                    Margin="20,0,0,25"
+                    HeightRequest="45"
+                    VerticalOptions="Center"
+                    WidthRequest="150">
+                    <Button
+                        BackgroundColor="#388e3c"
+                        Clicked="DecreaseCount"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="-" />
+                    <Label
+                        x:Name="ShareCountEntry"
+                        Margin="15,0,0,0"
+                        FontAttributes="Bold"
+                        Text="1"
+                        VerticalOptions="Center"
+                        WidthRequest="30" />
+                    <Button
+                        BackgroundColor="White"
+                        Clicked="IncreaseCount"
+                        FontAttributes="Bold"
+                        FontSize="20"
+                        Text="+"
+                        TextColor="#388e3c" />
+                </HorizontalStackLayout>
+
+                <Label
+                    Margin="20,0,20,25"
+                    FontAttributes="Bold"
+                    FontSize="25"
+                    Text="Permission :"
+                    TextColor="White" />
+                <HorizontalStackLayout
+                    Margin="20,0,0,25"
+                    HeightRequest="45"
+                    WidthRequest="235">
+                    <Button
+                        BackgroundColor="#388e3c"
+                        Clicked="CanViewClicked"
+                        FontAttributes="Bold"
+                        Text="Can View" />
+                    <Button
+                        Margin="45,0,0,0"
+                        BackgroundColor="White"
+                        Clicked="CanEditClicked"
+                        FontAttributes="Bold"
+                        Text="Can Edit"
+                        TextColor="#388e3c" />
+                </HorizontalStackLayout>
+
+
+                <!-- <Button Text="Generate" Clicked="GenerateClicked" Margin="0,15,0,15"/> -->
+
+                <Button
+                    Margin="20,20,20,25"
+                    BackgroundColor="White"
+                    Command="{Binding GenerateShareCodeCommand}"
+                    FontAttributes="Bold"
+                    HorizontalOptions="End"
+                    Text="Generate Code"
+                    TextColor="#388e3c"
+                    VerticalOptions="Start" />
+
+                <Entry
+                    x:Name="codeGen"
+                    Grid.Row="1"
+                    Margin="50,0,50,45"
+                    FontAttributes="Bold"
+                    FontSize="20"
+                    HorizontalTextAlignment="Center"
+                    Placeholder="Share Code"
+                    ReturnCommand="{Binding GetShareCodeCommand}"
+                    Text="{Binding SelectedList.ShareCode}"
+                    TextColor="White" />
+
+
+                <Button Clicked="CopyClicked" Text="COPY" WidthRequest="200" BackgroundColor="#388e3c" FontAttributes="Bold"/>
+
+                <Button x:Name="returnMainPage" Text="Back" Background="White" TextColor="#388e3c" Margin="0,105,40,0" HorizontalOptions="End" WidthRequest="100" FontAttributes="Bold" Clicked="ReturnMainForShare"  />
+
+            </VerticalStackLayout>
+
+        </Grid>
+
+
+    </Grid>
+
+
+</ContentPage>

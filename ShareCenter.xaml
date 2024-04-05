@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="menu.ShareCenter"
+             Shell.NavBarIsVisible="False"
+             Title="ShareCenter">
+    
+
+    <Grid
+    ColumnSpacing="10"
+    RowDefinitions="Auto, 50, Auto, Auto, *"
+    RowSpacing="10"
+    VerticalOptions="FillAndExpand">
+
+        <Image Aspect="AspectFill" Source="background.svg" />
+
+        <StackLayout WidthRequest="300" HeightRequest="350" VerticalOptions="Start"  Margin="0,190,0,0" Opacity="0.8" BackgroundColor="White"/>
+
+        <VerticalStackLayout  >
+            <Label Text="Enter your Code" HorizontalOptions="Center" TextColor="Black" FontAttributes="Bold" FontSize="25" Margin="0,220,0,0"/>
+            
+            <HorizontalStackLayout Margin="80,35,20,0">
+                <Entry x:Name="paste" Placeholder="Put your code here"  FontSize="18"/>
+                <Button Clicked="PasteCode" Text="Paste" HeightRequest="45" FontSize="12" Margin="25,0,0,0" FontAttributes="Bold"/>
+            </HorizontalStackLayout>
+
+            <HorizontalStackLayout Margin="0,75,0,0"  WidthRequest="250">
+                <Button Text="Cancel" FontSize="15" Clicked="CancelReq" WidthRequest="100" FontAttributes="Bold"/>
+                <Button Text="Confirm" FontSize="15" Clicked="ConfirmReq" WidthRequest="100" FontAttributes="Bold" Margin="50,0,0,0"/>
+            </HorizontalStackLayout>
+
+        </VerticalStackLayout>
+            
+        
+
+    </Grid>
+
+</ContentPage>
